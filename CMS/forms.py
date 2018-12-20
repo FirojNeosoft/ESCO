@@ -19,12 +19,4 @@ class SurveyForm(ModelForm):
           'customer_type': forms.RadioSelect(),
           'billing': forms.RadioSelect(),
         }
-        fieldsets = (
-            ("Contract Information", {
-                'fields': ('survey_completed_by', 'agreement_date', 'account_type'),
-            }),
-            ("Customer & Billing Information", {
-                'fields': ('customer_name', 'completed_by', 'service_address','billing_address', 'customer_phone',\
-                           'customer_email', 'sbc', 'salesperson_name', 'door_to_door','customer_type', 'billing'),
-            }),
-        )
+
