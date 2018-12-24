@@ -30,7 +30,6 @@
                             <div class="box-body">
                                 <form method="post" enctype="multipart/form-data">
                                    {% csrf_token %}
-                                     <!--{{ form.as_p }}-->
                               {% for hidden_field in form.hidden_fields %}
                                 {{ hidden_field.errors }}
                                 {{ hidden_field }}
@@ -55,15 +54,25 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.account_type.label_tag }}
-                                      {{ form.account_type.errors }}
-                                      {{ form.account_type }}
-                                      {{ form.account_type.help_text }}
+                                    <label for="id_account_type_0">Account type:</label>
+
+                                      <label for="id_account_type_0"><input type="radio" name="account_type" value="New Customer" required id="id_account_type_0" {% if form.instance.id and form.instance.account_type == "New Customer" or not form.instance.id %}checked{% endif %}>
+                                              New Customer</label>
+
+                                      <label for="id_account_type_1" style="padding-left:5px;"><input type="radio" name="account_type" value="Renewal" required id="id_account_type_1" {% if form.instance.id and form.instance.account_type == "Renewal" %}checked{% endif %}>Renewal</label>
                                   </div>
                                  </div>
                           </fieldset>
                           <fieldset>
                               <legend><h3>Customer & Billing Information</h3></legend>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.customer_description.label_tag }}
+                                      {{ form.customer_description.errors }}
+                                      {{ form.customer_description }}
+                                      {{ form.customer_description.help_text }}
+                                  </div>
+                                 </div>
                                <div class="form-row">
                                   <div class="form-group col-md-6">
                                     {{ form.customer_name.label_tag }}
@@ -114,14 +123,6 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.sbc.label_tag }}
-                                      {{ form.sbc.errors }}
-                                      {{ form.sbc }}
-                                      {{ form.sbc.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
                                     {{ form.salesperson_name.label_tag }}
                                       {{ form.salesperson_name.errors }}
                                       {{ form.salesperson_name }}
@@ -130,30 +131,632 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.door_to_door.label_tag }}
-                                      {{ form.door_to_door.errors }}
-                                      {{ form.door_to_door }}
-                                      {{ form.door_to_door.help_text }}
+                                   <label for="id_sbc_0">SBC:</label>
+                                  <label for="id_sbc_0"><input type="radio" name="sbc" value="Option1" required id="id_sbc_0" checked>
+                                     Option1</label>
+                                  </div>
+                                 </div>
+
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                 <label for="id_billing_0">Billing:</label>
+                                       <label for="id_billing_0"><input type="radio" name="billing" value="POR" required id="id_billing_0" {% if form.instance.id and form.instance.billing == "POR" or not form.instance.id %}checked{% endif %}>
+                                     POR</label>
+
+                                    <label for="id_billing_1" style="padding-left:5px;"><input type="radio" name="billing" value="DUAL" required id="id_billing_1" {% if form.instance.id and form.instance.billing == "DUAL" %}checked{% endif %}>
+                                     DUAL</label>
+                                  </div>
+                                 </div>
+
+                                 <div class="form-row">
+                                  <div class="form-group col-md-8">
+                                      <label for="id_customer_type_0">Customer Type:</label>
+                                        <label for="id_customer_type_0"><input type="radio" name="customer_type" value="Commercial" required id="id_customer_type_0" {% if form.instance.id and form.instance.customer_type == "Commercial" or not form.instance.id %}checked{% endif %}>
+                                     Commercial</label>
+
+                                       <label for="id_customer_type_1" style="padding-left:5px;"><input type="radio" name="customer_type" value="Residential" required id="id_customer_type_1" {% if form.instance.id and form.instance.customer_type == "Residential" %}checked{% endif %}>
+                                     Residential</label>
+
+                                    <label for="id_customer_type_2" style="padding-left:5px;"><input type="radio" name="customer_type" value="Industrial" required id="id_customer_type_2" {% if form.instance.id and form.instance.customer_type == "Industrial" %}checked{% endif %}>
+                                     Industrial</label>
+
+                                    <label for="id_customer_type_3" style="padding-left:5px;"><input type="radio" name="customer_type" value="Religious" required id="id_customer_type_3" {% if form.instance.id and form.instance.customer_type == "Religious" %}checked{% endif %}>
+                                     Religious</label>
+
+                                    <label for="id_customer_type_4" style="padding-left:5px;"><input type="radio" name="customer_type" value="Anders" required id="id_customer_type_4" {% if form.instance.id and form.instance.customer_type == "Anders" %}checked{% endif %}>
+                                     Anders</label>
                                   </div>
                                  </div>
                                  <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.customer_type.label_tag }}
-                                      {{ form.customer_type.errors }}
-                                      {{ form.customer_type }}
-                                      {{ form.customer_type.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.billing.label_tag }}
-                                      {{ form.billing.errors }}
-                                      {{ form.billing }}
-                                      {{ form.billing.help_text }}
+                                  <div class="form-group col-md-4">
+                                        <label for="id_door_to_door_0">Door To Door:</label>
+
+                                          <label for="id_door_to_door_0"><input type="radio" name="door_to_door" value="Yes" required id="id_door_to_door_0" {% if form.instance.id and form.instance.door_to_door == "Yes" or not form.instance.id %}checked{% endif %}>
+                                         Yes</label>
+
+                                        <label for="id_door_to_door_1"><input type="radio" name="door_to_door" value="No" required id="id_door_to_door_1" {% if form.instance.id and form.instance.door_to_door == "No" %}checked{% endif %}>
+                                         No</label>
                                   </div>
                                  </div>
                           </fieldset>
 
+                          <fieldset>
+                              <legend><h3>Pricing & Utility Information</h3></legend>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.utility_description.label_tag }}
+                                      {{ form.utility_description.errors }}
+                                      {{ form.utility_description }}
+                                      {{ form.utility_description.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.utility_pool.label_tag }}
+                                      {{ form.utility_pool.errors }}
+                                      {{ form.utility_pool }}
+                                      {{ form.utility_pool.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-8">
+                                     <label for="id_passthru_0">Passthru(s):</label>
+
+                                    <label for="id_passthru_0"><input type="radio" name="passthru" value="GRT" required id="id_passthru_0" {% if form.instance.id and form.instance.passthru == "GRT" or not form.instance.id %}checked{% endif %}>
+                                     GRT</label>
+
+                                    <label for="id_passthru_1"><input type="radio" name="passthru" value="REC/ZEC" required id="id_passthru_1" {% if form.instance.id and form.instance.passthru == "REC/ZEC" %}checked{% endif %}>
+                                     REC/ZEC</label>
+
+                                    <label for="id_passthru_2"><input type="radio" name="passthru" value="ICAP" required id="id_passthru_2" {% if form.instance.id and form.instance.passthru == "ICAP" %}checked{% endif %}>
+                                     ICAP</label>
+
+                                    <label for="id_passthru_3"><input type="radio" name="passthru" value="TRANS" required id="id_passthru_3" {% if form.instance.id and form.instance.passthru == "TRANS" %}checked{% endif %}>
+                                     TRANS</label>
+
+                                    <label for="id_passthru_4"><input type="radio" name="passthru" value="OPTION5" required id="id_passthru_4" {% if form.instance.id and form.instance.passthru == "OPTION5" %}checked{% endif %}>
+                                     OPTION5</label>
+
+                                    <label for="id_passthru_5"><input type="radio" name="passthru" value="OPTION6" required id="id_passthru_5" {% if form.instance.id and form.instance.passthru == "OPTION6" %}checked{% endif %}>
+                                     OPTION6</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-8">
+                                     <label for="id_rate_class_0">Rate Class:</label>
+
+                                    <label for="id_rate_class_0"><input type="radio" name="rate_class" value="OPTION1" required id="id_rate_class_0" {% if form.instance.id and form.instance.rate_class == "OPTION1" or not form.instance.id %}checked{% endif %}>
+                                     OPTION1</label>
+
+                                    <label for="id_rate_class_1"><input type="radio" name="rate_class" value="OPTION2" required id="id_rate_class_1" {% if form.instance.id and form.instance.rate_class == "OPTION2" %}checked{% endif %}>
+                                     OPTION2</label>
+
+                                    <label for="id_rate_class_2"><input type="radio" name="rate_class" value="OPTION3" required id="id_rate_class_2" {% if form.instance.id and form.instance.rate_class == "OPTION3" %}checked{% endif %}>
+                                     OPTION3</label>
+
+                                    <label for="id_rate_class_3"><input type="radio" name="rate_class" value="OPTION4" required id="id_rate_class_3" {% if form.instance.id and form.instance.rate_class == "OPTION4" %}checked{% endif %}>
+                                     OPTION4</label>
+
+                                    <label for="id_rate_class_4"><input type="radio" name="rate_class" value="OPTION5" required id="id_rate_class_4" {% if form.instance.id and form.instance.rate_class == "OPTION5" %}checked{% endif %}>
+                                     OPTION5</label>
+                                    <label for="id_rate_class_5"><input type="radio" name="rate_class" value="OPTION6" required id="id_rate_class_5" {% if form.instance.id and form.instance.rate_class == "OPTION6" %}checked{% endif %}>
+                                     OPTION6</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-8">
+                                       <label for="id_gas_rate_class_0">Gas Rate Class:</label>
+
+                                     <label for="id_gas_rate_class_0"><input type="radio" name="gas_rate_class" value="OPTION1" required id="id_gas_rate_class_0" {% if form.instance.id and form.instance.gas_rate_class == "OPTION1" or not form.instance.id %}checked{% endif %}>
+                                     OPTION1</label>
+                                    <label for="id_gas_rate_class_1"><input type="radio" name="gas_rate_class" value="OPTION2" required id="id_gas_rate_class_1" {% if form.instance.id and form.instance.gas_rate_class == "OPTION2" %}checked{% endif %}>
+                                     OPTION2</label>
+
+                                    <label for="id_gas_rate_class_2"><input type="radio" name="gas_rate_class" value="OPTION3" required id="id_gas_rate_class_2" {% if form.instance.id and form.instance.gas_rate_class == "OPTION3" %}checked{% endif %}>
+                                     OPTION3</label>
+
+                                    <label for="id_gas_rate_class_3"><input type="radio" name="gas_rate_class" value="OPTION4" required id="id_gas_rate_class_3" {% if form.instance.id and form.instance.gas_rate_class == "OPTION4" %}checked{% endif %}>
+                                     OPTION4</label>
+
+                                    <label for="id_gas_rate_class_4"><input type="radio" name="gas_rate_class" value="OPTION5" required id="id_gas_rate_class_4" {% if form.instance.id and form.instance.gas_rate_class == "OPTION5" %}checked{% endif %}>
+                                     OPTION5</label>
+
+                                    <label for="id_gas_rate_class_5"><input type="radio" name="gas_rate_class" value="OPTION6" required id="id_gas_rate_class_5" {% if form.instance.id and form.instance.gas_rate_class == "OPTION6" %}checked{% endif %}>
+                                     OPTION6</label>
+                                  </div>
+                                 </div>
+
+                                 <div class="form-row">
+                                  <div class="form-group col-md-10">
+                                    <label for="id_electric_utility_0">Utility/LDC - Electric:</label>
+
+                                    <label for="id_electric_utility_0"><input type="radio" name="electric_utility" value="ConEdison" required id="id_electric_utility_0" {% if form.instance.id and form.instance.electric_utility == "ConEdison" or not form.instance.id %}checked{% endif %}>
+                                     ConEdison</label>
+
+                                    <label for="id_electric_utility_1"><input type="radio" name="electric_utility" value="PSEG-LIPA" required id="id_electric_utility_1" {% if form.instance.id and form.instance.electric_utility == "PSEG-LIPA" %}checked{% endif %}>
+                                     PSEG-LIPA</label>
+
+                                    <label for="id_electric_utility_2"><input type="radio" name="electric_utility" value="National Grid" required id="id_electric_utility_2" {% if form.instance.id and form.instance.electric_utility == "National Grid" %}checked{% endif %}>
+                                     National Grid</label>
+
+                                    <label for="id_electric_utility_3"><input type="radio" name="electric_utility" value="NYSEG" required id="id_electric_utility_3" {% if form.instance.id and form.instance.electric_utility == "NYSEG" %}checked{% endif %}>
+                                     NYSEG</label>
+
+                                    <label for="id_electric_utility_4"><input type="radio" name="electric_utility" value="RGE" required id="id_electric_utility_4" {% if form.instance.id and form.instance.electric_utility == "RGE" %}checked{% endif %}>
+                                     RGE</label>
+
+                                    <label for="id_electric_utility_5"><input type="radio" name="electric_utility" value="CHUD" required id="id_electric_utility_5" {% if form.instance.id and form.instance.electric_utility == "CHUD" %}checked{% endif %}>
+                                     CHUD</label>
+                                    <label for="id_electric_utility_6"><input type="radio" name="electric_utility" value="OPTION7" required id="id_electric_utility_6" {% if form.instance.id and form.instance.electric_utility == "OPTION7" %}checked{% endif %}>
+                                     OPTION7</label>
+
+                                    <label for="id_electric_utility_7"><input type="radio" name="electric_utility" value="OPTION8" required id="id_electric_utility_7" {% if form.instance.id and form.instance.electric_utility == "OPTION8" %}checked{% endif %}>
+                                     OPTION8</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-10">
+                                    <label for="id_gas_utility_0">Utility/LDC - Gas:</label>
+                                      <label for="id_gas_utility_0"><input type="radio" name="gas_utility" value="ConEdison" required id="id_gas_utility_0" {% if form.instance.id and form.instance.gas_utility == "ConEdison" or not form.instance.id %}checked{% endif %}>
+                                             ConEdison</label>
+
+                                        <label for="id_gas_utility_1"><input type="radio" name="gas_utility" value="PSEG-LIPA" required id="id_gas_utility_1" {% if form.instance.id and form.instance.gas_utility == "PSEG-LIPA" %}checked{% endif %}>
+                                         PSEG-LIPA</label>
+
+                                        <label for="id_gas_utility_2"><input type="radio" name="gas_utility" value="National Grid" required id="id_gas_utility_2" {% if form.instance.id and form.instance.gas_utility == "National Grid" %}checked{% endif %}>
+                                         National Grid</label>
+
+                                        <label for="id_gas_utility_3"><input type="radio" name="gas_utility" value="NYSEG" required id="id_gas_utility_3" {% if form.instance.id and form.instance.gas_utility == "NYSEG" %}checked{% endif %}>
+                                         NYSEG</label>
+
+                                        <label for="id_gas_utility_4"><input type="radio" name="gas_utility" value="RGE" required id="id_gas_utility_4" {% if form.instance.id and form.instance.gas_utility == "RGE" %}checked{% endif %}>
+                                         RGE</label>
+
+                                        <label for="id_gas_utility_5"><input type="radio" name="gas_utility" value="CHUD" required id="id_gas_utility_5" {% if form.instance.id and form.instance.gas_utility == "CHUD" %}checked{% endif %}>
+                                         CHUD</label>
+
+                                        <label for="id_gas_utility_6"><input type="radio" name="gas_utility" value="OPTION7" required id="id_gas_utility_6" {% if form.instance.id and form.instance.gas_utility == "OPTION7" %}checked{% endif %}>
+                                         OPTION7</label>
+                                        <label for="id_gas_utility_7"><input type="radio" name="gas_utility" value="OPTION8" required id="id_gas_utility_7" {% if form.instance.id and form.instance.gas_utility == "OPTION8" %}checked{% endif %}>
+                                         OPTION8</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_utility_account_type_0">Account Type:</label>
+
+                                    <label for="id_utility_account_type_0"><input type="radio" name="utility_account_type" value="OPTION1" required id="id_utility_account_type_0" {% if form.instance.id and form.instance.utility_account_type == "OPTION1" or not form.instance.id %}checked{% endif %}>
+                                     OPTION1</label>
+
+                                    <label for="id_utility_account_type_1"><input type="radio" name="utility_account_type" value="OPTION2" required id="id_utility_account_type_1" {% if form.instance.id and form.instance.utility_account_type == "OPTION2" %}checked{% endif %}>
+                                     OPTION2</label>
+
+                                    <label for="id_utility_account_type_2"><input type="radio" name="utility_account_type" value="OPTION3" required id="id_utility_account_type_2" {% if form.instance.id and form.instance.utility_account_type == "OPTION3" %}checked{% endif %}>
+                                     OPTION3</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-4">
+                                    {{ form.utility_account_nos.label_tag }}
+                                      {{ form.utility_account_nos.errors }}
+                                      {{ form.utility_account_nos }}
+                                      {{ form.utility_account_nos.help_text }}
+                                  </div>
+                                 </div>
+                          </fieldset>
+                          <fieldset>
+                              <legend><h3>Gas Information</h3></legend>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.gas_description.label_tag }}
+                                      {{ form.gas_description.errors }}
+                                      {{ form.gas_description }}
+                                      {{ form.gas_description.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_commodity_gas_0">Commodity Gas:</label>
+                                    <label for="id_commodity_gas_0"><input type="radio" name="commodity_gas" value="Yes" required id="id_commodity_gas_0" {% if form.instance.id and form.instance.commodity_gas == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+
+                                    <label for="id_commodity_gas_1"><input type="radio" name="commodity_gas" value="No" required id="id_commodity_gas_1" {% if form.instance.id and form.instance.commodity_gas == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_delivery_type_0">Delivery Type:</label>
+
+                                    <label for="id_delivery_type_0"><input type="radio" name="delivery_type" value="Firm" required id="id_delivery_type_0" {% if form.instance.id and form.instance.delivery_type == "Firm" or not form.instance.id %}checked{% endif %}>
+                                     Firm</label>
+
+                                    <label for="id_delivery_type_1"><input type="radio" name="delivery_type" value="Interruptible" required id="id_delivery_type_1" {% if form.instance.id and form.instance.delivery_type == "Interruptible" %}checked{% endif %}>
+                                     Interruptible</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                     <label for="id_gas_price_plan_0">Price Plan- Gas:</label>
+
+                                    <label for="id_gas_price_plan_0"><input type="radio" name="gas_price_plan" value="Fixed" required id="id_gas_price_plan_0" {% if form.instance.id and form.instance.gas_price_plan == "Fixed" or not form.instance.id %}checked{% endif %}>
+                                     Fixed</label>
+
+                                    <label for="id_gas_price_plan_1"><input type="radio" name="gas_price_plan" value="Variable" required id="id_gas_price_plan_1" {% if form.instance.id and form.instance.gas_price_plan == "Variable" %}checked{% endif %}>
+                                     Variable</label>
+
+                                    <label for="id_gas_price_plan_2"><input type="radio" name="gas_price_plan" value="Index" required id="id_gas_price_plan_2" {% if form.instance.id and form.instance.gas_price_plan == "Index" %}checked{% endif %}>
+                                     Index</label>
+                                  </div>
+                                 </div>
+                          </fieldset>
+                          <fieldset>
+                              <legend><h3>Electric Information</h3></legend>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.electric_description.label_tag }}
+                                      {{ form.electric_description.errors }}
+                                      {{ form.electric_description }}
+                                      {{ form.electric_description.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_electric_0">Electric:</label>
+                                    <label for="id_electric_0"><input type="radio" name="electric" value="Yes" required id="id_electric_0" {% if form.instance.id and form.instance.electric == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+                                    <label for="id_electric_1"><input type="radio" name="electric" value="No" required id="id_electric_1" {% if form.instance.id and form.instance.electric == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                     <label for="id_green_0">100% Green:</label>
+                                    <label for="id_green_0"><input type="radio" name="green" value="Yes" required id="id_green_0" {% if form.instance.id and form.instance.green == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+                                    <label for="id_green_1"><input type="radio" name="green" value="No" required id="id_green_1" {% if form.instance.id and form.instance.green == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_Zone_0">Zone:</label>
+                                     <label for="id_Zone_0"><input type="radio" name="Zone" value="NYISO Zone A through K" required id="id_Zone_0" {% if form.instance.id and form.instance.Zone == "NYISO Zone A through K" or not form.instance.id %}checked{% endif %}>
+                                     NYISO Zone A through K</label>
+                                    <label for="id_Zone_1"><input type="radio" name="Zone" value="Other" required id="id_Zone_1" {% if form.instance.id and form.instance.Zone == "Other" %}checked{% endif %}>
+                                     Other</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_electric_price_type_0">Electric Price Type:</label>
+                                        <label for="id_electric_price_type_0"><input type="radio" name="electric_price_type" value="Fixed" required id="id_electric_price_type_0" {% if form.instance.id and form.instance.electric_price_type == "Fixed" or not form.instance.id %}checked{% endif %}>
+                                         Fixed</label>
+
+                                        <label for="id_electric_price_type_1"><input type="radio" name="electric_price_type" value="Variable" required id="id_electric_price_type_1" {% if form.instance.id and form.instance.electric_price_type == "Variable" %}checked{% endif %}>
+                                         Variable</label>
+                                        <label for="id_electric_price_type_2"><input type="radio" name="electric_price_type" value="Index" required id="id_electric_price_type_2" {% if form.instance.id and form.instance.electric_price_type == "Index" %}checked{% endif %}>
+                                         Index</label>
+                                  </div>
+                                 </div>
+                          </fieldset>
+                          <fieldset>
+                              <legend><h3>Commodity Billing Information</h3></legend>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.billing_description.label_tag }}
+                                      {{ form.billing_description.errors }}
+                                      {{ form.billing_description }}
+                                      {{ form.billing_description.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                     <label for="id_therm_0">Therm:</label>
+
+                                     <label for="id_therm_0"><input type="radio" name="therm" value="Yes" required id="id_therm_0" {% if form.instance.id and form.instance.therm == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+
+                                    <label for="id_therm_1"><input type="radio" name="therm" value="No" required id="id_therm_1" {% if form.instance.id and form.instance.therm == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_tax_exempt_0">Tax Exempt:</label>
+                                    <label for="id_tax_exempt_0"><input type="radio" name="tax_exempt" value="Yes" required id="id_tax_exempt_0" {% if form.instance.id and form.instance.tax_exempt == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+                                    <label for="id_tax_exempt_1"><input type="radio" name="tax_exempt" value="No" required id="id_tax_exempt_1" {% if form.instance.id and form.instance.tax_exempt == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="id_monthly_budget_0">Monthly Budget:</label>
+                                    <label for="id_monthly_budget_0"><input type="radio" name="monthly_budget" value="Yes" required id="id_monthly_budget_0" {% if form.instance.id and form.instance.monthly_budget == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+                                    <label for="id_monthly_budget_1"><input type="radio" name="monthly_budget" value="No" required id="id_monthly_budget_1" {% if form.instance.id and form.instance.monthly_budget == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.budget_amount.label_tag }}
+                                      {{ form.budget_amount.errors }}
+                                      {{ form.budget_amount }}
+                                      {{ form.budget_amount.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.electric_bandwidth_usage.label_tag }}
+                                      {{ form.electric_bandwidth_usage.errors }}
+                                      {{ form.electric_bandwidth_usage }}
+                                      {{ form.electric_bandwidth_usage.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.gas_bandwidth_usage.label_tag }}
+                                      {{ form.gas_bandwidth_usage.errors }}
+                                      {{ form.gas_bandwidth_usage }}
+                                      {{ form.gas_bandwidth_usage.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.electric_fixed_rate.label_tag }}
+                                      {{ form.electric_fixed_rate.errors }}
+                                      {{ form.electric_fixed_rate }}
+                                      {{ form.electric_fixed_rate.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.electric_index_rate.label_tag }}
+                                      {{ form.electric_index_rate.errors }}
+                                      {{ form.electric_index_rate }}
+                                      {{ form.electric_index_rate.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.gas_fixed_rate.label_tag }}
+                                      {{ form.gas_fixed_rate.errors }}
+                                      {{ form.gas_fixed_rate }}
+                                      {{ form.gas_fixed_rate.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.gas_index_rate.label_tag }}
+                                      {{ form.gas_index_rate.errors }}
+                                      {{ form.gas_index_rate }}
+                                      {{ form.gas_index_rate.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.agreement_length.label_tag }}
+                                      {{ form.agreement_length.errors }}
+                                      {{ form.agreement_length }}
+                                      {{ form.agreement_length.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.contract_start_date.label_tag }}
+                                      {{ form.contract_start_date.errors }}
+                                      {{ form.contract_start_date }}
+                                      {{ form.contract_start_date.help_text }}
+                                  </div>
+                                 </div>
+                          </fieldset>
+                          <fieldset>
+                              <legend><h3>Deal Booking - Internal</h3></legend>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.deal_description.label_tag }}
+                                      {{ form.deal_description.errors }}
+                                      {{ form.deal_description }}
+                                      {{ form.deal_description.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                   <label for="id_internal_data_available_0">Internal Data Available:</label>
+                                    <label for="id_internal_data_available_0"><input type="radio" name="internal_data_available" value="Yes" required id="id_internal_data_available_0" {% if form.instance.id and form.instance.internal_data_available == "Yes" or not form.instance.id %}checked{% endif %}>
+                                     Yes</label>
+
+                                    <label for="id_internal_data_available_1"><input type="radio" name="internal_data_available" value="No" required id="id_internal_data_available_1" {% if form.instance.id and form.instance.internal_data_available == "No" %}checked{% endif %}>
+                                     No</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.utility_service_class.label_tag }}
+                                      {{ form.utility_service_class.errors }}
+                                      {{ form.utility_service_class }}
+                                      {{ form.utility_service_class.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.usage_from_date.label_tag }}
+                                      {{ form.usage_from_date.errors }}
+                                      {{ form.usage_from_date }}
+                                      {{ form.usage_from_date.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.usage_to_date.label_tag }}
+                                      {{ form.usage_to_date.errors }}
+                                      {{ form.usage_to_date }}
+                                      {{ form.usage_to_date.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.broker_margin.label_tag }}
+                                      {{ form.broker_margin.errors }}
+                                      {{ form.broker_margin }}
+                                      {{ form.broker_margin.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.base_icap.label_tag }}
+                                      {{ form.base_icap.errors }}
+                                      {{ form.base_icap }}
+                                      {{ form.base_icap.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.base_trans_tag.label_tag }}
+                                      {{ form.base_trans_tag.errors }}
+                                      {{ form.base_trans_tag }}
+                                      {{ form.base_trans_tag.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.base.label_tag }}
+                                      {{ form.base.errors }}
+                                      {{ form.base }}
+                                      {{ form.base.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.slope.label_tag }}
+                                      {{ form.slope.errors }}
+                                      {{ form.slope }}
+                                      {{ form.slope.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.term_volume.label_tag }}
+                                      {{ form.term_volume.errors }}
+                                      {{ form.term_volume }}
+                                      {{ form.term_volume.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.utilized_term_net_margin.label_tag }}
+                                      {{ form.utilized_term_net_margin.errors }}
+                                      {{ form.utilized_term_net_margin }}
+                                      {{ form.utilized_term_net_margin.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.salesperson_or_team.label_tag }}
+                                      {{ form.salesperson_or_team.errors }}
+                                      {{ form.salesperson_or_team }}
+                                      {{ form.salesperson_or_team.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.energy_deal_component.label_tag }}
+                                      {{ form.energy_deal_component.errors }}
+                                      {{ form.energy_deal_component }}
+                                      {{ form.energy_deal_component.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.capacity_deal_component.label_tag }}
+                                      {{ form.capacity_deal_component.errors }}
+                                      {{ form.capacity_deal_component }}
+                                      {{ form.capacity_deal_component.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.line_looses_deal_component.label_tag }}
+                                      {{ form.line_looses_deal_component.errors }}
+                                      {{ form.line_looses_deal_component }}
+                                      {{ form.line_looses_deal_component.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.rec_or_zec.label_tag }}
+                                      {{ form.rec_or_zec.errors }}
+                                      {{ form.rec_or_zec }}
+                                      {{ form.rec_or_zec.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.srec.label_tag }}
+                                      {{ form.srec.errors }}
+                                      {{ form.srec }}
+                                      {{ form.srec.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.nits.label_tag }}
+                                      {{ form.nits.errors }}
+                                      {{ form.nits }}
+                                      {{ form.nits.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.taxes.label_tag }}
+                                      {{ form.taxes.errors }}
+                                      {{ form.taxes }}
+                                      {{ form.taxes.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.swing_rate.label_tag }}
+                                      {{ form.swing_rate.errors }}
+                                      {{ form.swing_rate }}
+                                      {{ form.swing_rate.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.hedge_type.label_tag }}
+                                      {{ form.hedge_type.errors }}
+                                      {{ form.hedge_type }}
+                                      {{ form.hedge_type.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.hedge_product_volume.label_tag }}
+                                      {{ form.hedge_product_volume.errors }}
+                                      {{ form.hedge_product_volume }}
+                                      {{ form.hedge_product_volume.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.hedge_price.label_tag }}
+                                      {{ form.hedge_price.errors }}
+                                      {{ form.hedge_price }}
+                                      {{ form.hedge_price.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.estimated_annual_hedge_volume.label_tag }}
+                                      {{ form.estimated_annual_hedge_volume.errors }}
+                                      {{ form.estimated_annual_hedge_volume }}
+                                      {{ form.estimated_annual_hedge_volume.help_text }}
+                                  </div>
+                                 </div>
+                          </fieldset>
                                 <!--<div class="ln_solid"></div>-->
                               <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -192,6 +795,61 @@
    $("#id_customer_phone").addClass( "form-control" );
    $("#id_customer_email").addClass( "form-control" );
    $("#id_salesperson_name").addClass( "form-control" );
+   $("#id_customer_description").addClass( "form-control" );
+   $("#id_customer_description").attr( "cols", 40 );
+   $("#id_customer_description").attr( "rows", 2 );
+   $("#id_utility_description").addClass( "form-control" );
+   $("#id_utility_description").attr( "cols", 40 );
+   $("#id_utility_description").attr( "rows", 2 );
+   $("#id_gas_description").addClass( "form-control" );
+   $("#id_gas_description").attr( "cols", 40 );
+   $("#id_gas_description").attr( "rows", 2 );
+   $("#id_utility_pool").addClass( "form-control" );
+   $("#id_utility_account_nos").addClass( "form-control" );
+   $("#id_electric_description").addClass( "form-control" );
+   $("#id_electric_description").attr( "cols", 40 );
+   $("#id_electric_description").attr( "rows", 2 );
+   $("#id_billing_description").addClass( "form-control" );
+   $("#id_billing_description").attr( "cols", 40 );
+   $("#id_billing_description").attr( "rows", 2 );
+   $("#id_budget_amount").addClass( "form-control" );
+   $("#id_electric_bandwidth_usage").addClass( "form-control" );
+   $("#id_gas_bandwidth_usage").addClass( "form-control" );
+   $("#id_electric_fixed_rate").addClass( "form-control" );
+   $("#id_electric_index_rate").addClass( "form-control" );
+   $("#id_gas_fixed_rate").addClass( "form-control" );
+   $("#id_gas_index_rate").addClass( "form-control" );
+   $("#id_agreement_length").addClass( "form-control" );
+   $("#id_contract_start_date").addClass( "form-control" );
+   $('#id_contract_start_date').datepicker({'dateFormat': 'yy-mm-dd'});
+   $("#id_deal_description").addClass( "form-control" );
+   $("#id_deal_description").attr( "cols", 40 );
+   $("#id_deal_description").attr( "rows", 2 );
+   $("#id_utility_service_class").addClass( "form-control" );
+   $("#id_broker_margin").addClass( "form-control" );
+   $("#id_usage_from_date").addClass( "form-control" );
+   $('#id_usage_from_date').datepicker({'dateFormat': 'yy-mm-dd'});
+   $("#id_usage_to_date").addClass( "form-control" );
+   $('#id_usage_to_date').datepicker({'dateFormat': 'yy-mm-dd'});
+   $("#id_base_icap").addClass( "form-control" );
+   $("#id_base_trans_tag").addClass( "form-control" );
+   $("#id_base").addClass( "form-control" );
+   $("#id_slope").addClass( "form-control" );
+   $("#id_term_volume").addClass( "form-control" );
+   $("#id_utilized_term_net_margin").addClass( "form-control" );
+   $("#id_salesperson_or_team").addClass( "form-control" );
+   $("#id_energy_deal_component").addClass( "form-control" );
+   $("#id_capacity_deal_component").addClass( "form-control" );
+   $("#id_line_looses_deal_component").addClass( "form-control" );
+   $("#id_rec_or_zec").addClass( "form-control" );
+   $("#id_srec").addClass( "form-control" );
+   $("#id_nits").addClass( "form-control" );
+   $("#id_taxes").addClass( "form-control" );
+   $("#id_swing_rate").addClass( "form-control" );
+   $("#id_hedge_type").addClass( "form-control" );
+   $("#id_hedge_product_volume").addClass( "form-control" );
+   $("#id_hedge_price").addClass( "form-control" );
+   $("#id_estimated_annual_hedge_volume").addClass( "form-control" );
     });
 </script>
 <style>

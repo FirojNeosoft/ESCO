@@ -185,8 +185,22 @@ LOGGING = {
 # Required choices variables
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))
+BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
 SBC = (('Option1', 'Option1'),)
 CUSTOMER_TYPE = (('Commercial', 'Commercial'), ('Residential', 'Residential'), ('Industrial', 'Industrial'),\
                  ('Religious', 'Religious'), ('Anders', 'Anders'))
 BILLING = (('POR', 'POR'), ('DUAL', 'DUAL'))
+PASSTHRU = (('GRT', 'GRT'), ('REC/ZEC', 'REC/ZEC'), ('ICAP', 'ICAP'), ('TRANS', 'TRANS'), ('OPTION5', 'OPTION5'),\
+            ('OPTION6', 'OPTION6'))
+RATE_CLASS = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'), ('OPTION4', 'OPTION4'), ('OPTION5', 'OPTION5'),\
+            ('OPTION6', 'OPTION6'))
+ELECTRIC_UTILITY = (('ConEdison', 'ConEdison'), ('PSEG-LIPA', 'PSEG-LIPA'), ('National Grid', 'National Grid'), ('NYSEG', 'NYSEG'), ('RGE', 'RGE'),\
+            ('CHUD', 'CHUD'), ('OPTION7', 'OPTION7'), ('OPTION8', 'OPTION8'))
+GAS_UTILITY = (('ConEdison', 'ConEdison'), ('PSEG-LIPA', 'PSEG-LIPA'), ('National Grid', 'National Grid'), ('NYSEG', 'NYSEG'), ('RGE', 'RGE'),\
+            ('CHUD', 'CHUD'), ('OPTION7', 'OPTION7'), ('OPTION8', 'OPTION8'))
+UTILITY_ACCOUNT_TYPE = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'))
+DELIVERY_TYPE = (('Firm', 'Firm'), ('Interruptible', 'Interruptible'))
+PRICE_PLAN = (('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index'))
+ZONE = (('NYISO Zone A through K', 'NYISO Zone A through K'), ('Other', 'Other'))
+
