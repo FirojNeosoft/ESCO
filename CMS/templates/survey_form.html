@@ -758,9 +758,19 @@
    $("#id_utility_service_class").addClass( "form-control" );
    $("#id_broker_margin").addClass( "form-control" );
    $("#id_usage_from_date").addClass( "form-control" );
-   $('#id_usage_from_date').datepicker({'dateFormat': 'mm/dd/yy'});
+   $('#id_usage_from_date').datepicker({
+       'dateFormat': 'mm/dd/yy',
+       onSelect: function(selected) {
+          $("#id_usage_to_date").datepicker("option","minDate", selected)
+        }
+    });
    $("#id_usage_to_date").addClass( "form-control" );
-   $('#id_usage_to_date').datepicker({'dateFormat': 'mm/dd/yy'});
+   $('#id_usage_to_date').datepicker({
+       'dateFormat': 'mm/dd/yy',
+        onSelect: function(selected) {
+           $("#id_usage_from_date").datepicker("option","maxDate", selected)
+        }
+   });
    $("#id_base_icap").addClass( "form-control" );
    $("#id_base_trans_tag").addClass( "form-control" );
    $("#id_base").addClass( "form-control" );
