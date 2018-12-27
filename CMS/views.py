@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -5,6 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from CMS.models import *
 from CMS.forms import *
+from CMS.resources import *
 
 
 class ListSurveyView(ListView):
@@ -45,3 +47,11 @@ class DeleteTaskView(DeleteView):
     model = Survey
     template_name = 'survey_confirm_delete.html'
     success_url = reverse_lazy('list_surveys')
+
+
+def survey_export_csv(request):
+    survey_resource = SurveyResource()
+    dataset = survey_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="survey.csv"'
+    return response

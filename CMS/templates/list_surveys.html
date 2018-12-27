@@ -7,6 +7,7 @@
             <div class="title_left">
                 <h3>Survey</h3>
             </div>
+           <a href="{% url 'download_surveys' %}" class="list-inline pull-right btn btn-success downloadControl"><i class="fa fa-download"></i></a>
             <div class="clearfix"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -34,20 +35,21 @@
                                 <table id="surveys_table" class="cell-border hover row-border order-column">
                                     <thead>
                                     <tr>
-                                      <th>Survey Completed By</th>
-                                      <th>Customer Name</th>
-                                      <th>Salesperson Name</th>
-                                      <th>Created At</th>
+                                      <th class="sorting">Survey Completed By</th>
+                                      <th class="sorting">Customer Name</th>
+                                      <th class="sorting">Salesperson Name</th>
+                                      <th class="sorting">Created At</th>
                                       <th class="no-sort">Action</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for survey in survey_list %}
-                                      <tr>
-                                        <td>{{ survey.survey_completed_by }}</td>
-                                        <td>{{ survey.customer_name }}</td>
-                                        <td>{{ survey.salesperson_name }}</td>
-                                        <td>{{ survey.created_at }}</td>
+                                      <tr class="survey" id="{{ survey.id }}" >
+                                          <td>{{ survey.survey_completed_by.username }}</td>
+                                          <td>{{ survey.customer_full_name }}</td>
+                                          <td>{{ survey.salesperson_full_name }}</td>
+                                          <td>{{ survey.created_at|date:'M d,Y h:m A' }}</td>
                                         <td>
                                           <a class="fa fa-pencil-square-o" href="{% url 'update_survey' survey.id %}"></a>
                                           <a class="fa fa-times client_delete_icon" href="{% url 'delete_survey' survey.id %}" obj_name='' style="padding-left:50px;"></a>
@@ -68,6 +70,10 @@
 <script>
   $(document).ready(function(){
   $('#surveys_table').DataTable();
+   $(".survey").on('click', function(){
+    var survey_id = $(this).attr('id');
+    window.location.href = '/cms/'+survey_id+'/edit/';
+  });
   });
 </script>
 {% endblock %}

@@ -76,34 +76,42 @@
                                  </div>
                                <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_name.label_tag }}
-                                      <span style="color:red;">{{ form.customer_name.errors }}</span>
-                                      {{ form.customer_name }}
-                                      {{ form.customer_name.help_text }}
+                                    {{ form.customer_first_name.label_tag }}
+                                      <span style="color:red;">{{ form.customer_first_name.errors }}</span>
+                                      {{ form.customer_first_name }}
+                                      {{ form.customer_first_name.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.completed_by.label_tag }}
-                                      <span style="color:red;">{{ form.completed_by.errors }}</span>
-                                      {{ form.completed_by }}
-                                      {{ form.completed_by.help_text }}
+                                    {{ form.customer_last_name.label_tag }}
+                                      <span style="color:red;">{{ form.customer_last_name.errors }}</span>
+                                      {{ form.customer_last_name }}
+                                      {{ form.customer_last_name.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.service_address.label_tag }}
+                                      <label>Service Address:</label>
                                       <span style="color:red;">{{ form.service_address.errors }}</span>
-                                      {{ form.service_address }}
-                                      {{ form.service_address.help_text }}
+                                      <p>{{ form.service_address_line1 }}</p>
+                                      <p>{{ form.service_address_line2 }}</p>
+                                      <p>{{ form.service_address_city }}</p>
+                                      <p>{{ form.service_address_state }}</p>
+                                      <p>{{ form.service_address_country }}</p>
+                                      <p>{{ form.service_address_zip_code }}</p>
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.billing_address.label_tag }}
+                                      <label>Billing Address</label>
                                       <span style="color:red;">{{ form.billing_address.errors }}</span>
-                                      {{ form.billing_address }}
-                                      {{ form.billing_address.help_text }}
+                                      <p>{{ form.billing_address_line1 }}</p>
+                                      <p>{{ form.billing_address_line2 }}</p>
+                                      <p>{{ form.billing_address_city }}</p>
+                                      <p>{{ form.billing_address_state }}</p>
+                                      <p>{{ form.billing_address_country }}</p>
+                                      <p>{{ form.billing_address_zip_code }}</p>
                                   </div>
                                  </div>
                                  <div class="form-row">
@@ -124,10 +132,18 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.salesperson_name.label_tag }}
-                                      <span style="color:red;">{{ form.salesperson_name.errors }}</span>
-                                      {{ form.salesperson_name }}
-                                      {{ form.salesperson_name.help_text }}
+                                    {{ form.salesperson_first_name.label_tag }}
+                                      <span style="color:red;">{{ form.salesperson_first_name.errors }}</span>
+                                      {{ form.salesperson_first_name }}
+                                      {{ form.salesperson_first_name.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    {{ form.salesperson_last_name.label_tag }}
+                                      <span style="color:red;">{{ form.salesperson_last_name.errors }}</span>
+                                      {{ form.salesperson_last_name }}
+                                      {{ form.salesperson_last_name.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
@@ -694,23 +710,21 @@
   $(document).ready(function(){
    $("#id_survey_completed_by").addClass( "form-control" );
    $("#id_agreement_date").addClass( "form-control" );
-   $('#id_agreement_date').datepicker({'dateFormat': 'yy-mm-dd'});
-   $("#id_customer_name").addClass( "form-control" );
+   $('#id_agreement_date').datepicker({'dateFormat': 'mm/dd/yy'});
+   $("#id_customer_first_name").addClass( "form-control" );
+   $("#id_customer_last_name").addClass( "form-control" );
    $("#id_completed_by").addClass( "form-control" );
-   $("#id_service_address").addClass( "form-control" );
-   $("#id_billing_address").addClass( "form-control" );
    $("#id_customer_phone").addClass( "form-control" );
    $("#id_customer_email").addClass( "form-control" );
-   $("#id_salesperson_name").addClass( "form-control" );
+   $("#id_salesperson_first_name").addClass( "form-control" );
+   $("#id_salesperson_last_name").addClass( "form-control" );
    $("#id_customer_type").addClass( "form-control" );
-
    $("#id_passthru").addClass( "form-control" );
    $("#id_rate_class").addClass( "form-control" );
    $("#id_gas_rate_class").addClass( "form-control" );
    $("#id_electric_utility").addClass( "form-control" );
    $("#id_gas_utility").addClass( "form-control" );
    $("#id_utility_account_type").addClass( "form-control" );
-
    $("#id_customer_description").addClass( "form-control" );
    $("#id_customer_description").attr( "cols", 40 );
    $("#id_customer_description").attr( "rows", 2 );
@@ -737,16 +751,16 @@
    $("#id_gas_index_rate").addClass( "form-control" );
    $("#id_agreement_length").addClass( "form-control" );
    $("#id_contract_start_date").addClass( "form-control" );
-   $('#id_contract_start_date').datepicker({'dateFormat': 'yy-mm-dd'});
+   $('#id_contract_start_date').datepicker({'dateFormat': 'mm/dd/yy'});
    $("#id_deal_description").addClass( "form-control" );
    $("#id_deal_description").attr( "cols", 40 );
    $("#id_deal_description").attr( "rows", 2 );
    $("#id_utility_service_class").addClass( "form-control" );
    $("#id_broker_margin").addClass( "form-control" );
    $("#id_usage_from_date").addClass( "form-control" );
-   $('#id_usage_from_date').datepicker({'dateFormat': 'yy-mm-dd'});
+   $('#id_usage_from_date').datepicker({'dateFormat': 'mm/dd/yy'});
    $("#id_usage_to_date").addClass( "form-control" );
-   $('#id_usage_to_date').datepicker({'dateFormat': 'yy-mm-dd'});
+   $('#id_usage_to_date').datepicker({'dateFormat': 'mm/dd/yy'});
    $("#id_base_icap").addClass( "form-control" );
    $("#id_base_trans_tag").addClass( "form-control" );
    $("#id_base").addClass( "form-control" );

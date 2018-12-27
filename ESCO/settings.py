@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'CMS',
 ]
 
@@ -116,6 +117,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ('%m-%d-%Y')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -203,4 +205,7 @@ UTILITY_ACCOUNT_TYPE = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION
 DELIVERY_TYPE = (('Firm', 'Firm'), ('Interruptible', 'Interruptible'))
 PRICE_PLAN = (('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index'))
 ZONE = (('NYISO Zone A through K', 'NYISO Zone A through K'), ('Other', 'Other'))
+
+# config for django-import-export package
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 

@@ -4,6 +4,6 @@ from CMS.models import *
 
 
 class SurveyAdmin(admin.ModelAdmin):
-    list_display = ('survey_completed_by', 'customer_name', 'salesperson_name', 'created_at')
+    list_display = ('survey_completed_by', 'customer_full_name', 'salesperson_full_name', 'created_at')
 
 admin.site.register(Survey, SurveyAdmin)

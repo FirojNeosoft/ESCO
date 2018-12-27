@@ -5,26 +5,34 @@ from CMS.models import *
 
 
 class SurveyForm(ModelForm):
-
+    agreement_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+                      widget=forms.DateInput(format = '%m/%d/%Y'))
+    contract_start_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+                      widget=forms.DateInput(format = '%m/%d/%Y'))
+    usage_from_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+                      widget=forms.DateInput(format = '%m/%d/%Y'))
+    usage_to_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+                      widget=forms.DateInput(format = '%m/%d/%Y'))
     class Meta:
         model = Survey
         exclude = ('created_at',)
         widgets = {
-          'survey_completed_by': forms.TextInput(attrs={'placeholder': 'First Name, Last Name'}),
-          'customer_name': forms.TextInput(attrs={'placeholder': 'First Name, Last Name'}),
-          'completed_by': forms.TextInput(attrs={'placeholder': 'First Name, Last Name'}),
-          'salesperson_name': forms.TextInput(attrs={'placeholder': 'First Name, Last Name'}),
+          'service_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
+          'service_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
+          'service_address_city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
+          'service_address_state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
+          'service_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
+          'service_address_zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code', 'class': 'form-control'}),
+          'billing_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
+          'billing_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
+          'billing_address_city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
+          'billing_address_state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
+          'billing_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
+          'billing_address_zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code', 'class': 'form-control'}),
           'account_type': forms.RadioSelect(),
           'sbc': forms.RadioSelect(),
-          # 'customer_type': forms.RadioSelect(),
           'door_to_door': forms.RadioSelect(),
           'billing': forms.RadioSelect(),
-          # 'passthru': forms.RadioSelect(),
-          # 'rate_class': forms.RadioSelect(),
-          # 'gas_rate_class': forms.RadioSelect(),
-          # 'electric_utility': forms.RadioSelect(),
-          # 'gas_utility': forms.RadioSelect(),
-          # 'utility_account_type': forms.RadioSelect(),
           'commodity_gas': forms.RadioSelect(),
           'delivery_type': forms.RadioSelect(),
           'gas_price_plan': forms.RadioSelect(),
@@ -37,4 +45,5 @@ class SurveyForm(ModelForm):
           'monthly_budget': forms.RadioSelect(),
           'internal_data_available': forms.RadioSelect()
         }
+
 
