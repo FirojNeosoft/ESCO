@@ -52,6 +52,8 @@ class DeleteTaskView(DeleteView):
 def survey_export_csv(request):
     survey_resource = SurveyResource()
     dataset = survey_resource.export()
-    response = HttpResponse(dataset.csv, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="survey.csv"'
+    # response = HttpResponse(dataset.csv, content_type='text/csv')
+    # response['Content-Disposition'] = 'attachment; filename="survey.csv"'
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="survey.xls"'
     return response
