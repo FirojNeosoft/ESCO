@@ -85,6 +85,20 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'sql_server.pyodbc',
+#         'NAME': 'ESCO_CMS',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '166.62.119.178\SQLEXPRESS2014',
+#         'PORT': '11433',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#         },
+#     }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -189,7 +203,7 @@ GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))
 BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
-SBC = (('Option1', 'Option1'),)
+SBC = (('Yes', 'Yes'),)
 CUSTOMER_TYPE = (('Commercial', 'Commercial'), ('Residential', 'Residential'), ('Industrial', 'Industrial'),\
                  ('Religious', 'Religious'), ('Anders', 'Anders'))
 BILLING = (('POR', 'POR'), ('DUAL', 'DUAL'))
@@ -204,7 +218,9 @@ GAS_UTILITY = (('ConEdison', 'ConEdison'), ('PSEG-LIPA', 'PSEG-LIPA'), ('Nationa
 UTILITY_ACCOUNT_TYPE = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'))
 DELIVERY_TYPE = (('Firm', 'Firm'), ('Interruptible', 'Interruptible'))
 PRICE_PLAN = (('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index'))
-ZONE = (('NYISO Zone A through K', 'NYISO Zone A through K'), ('Other', 'Other'))
+ZONE = (('Zone A', 'Zone A'), ('Zone B', 'Zone B'), ('Zone C', 'Zone C'), ('Zone D', 'Zone D'), ('Zone E', 'Zone E'), \
+        ('Zone F', 'Zone F'), ('Zone G', 'Zone G'), ('Zone H', 'Zone H'), ('Zone I', 'Zone I'), ('Zone J', 'Zone J'), \
+        ('Zone K', 'Zone K'), ('PSEG', 'PSEG'), ('JCPL', 'JCPL'), ('ACEC', 'ACEC'), ('DPL', 'DPL'))
 
 # config for django-import-export package
 IMPORT_EXPORT_USE_TRANSACTIONS = True

@@ -36,30 +36,22 @@
                               {% endfor %}
                           <fieldset style="border: 1px;">
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Contract Information</h3></legend>
-                               <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                      {{ form.survey_completed_by.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.survey_completed_by.errors }}</span>
-                                      {{ form.survey_completed_by }}
-                                      {{ form.survey_completed_by.help_text }}
-                                  </div>
-                                 </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.agreement_date.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.agreement_date.errors }}</span>
-                                      {{ form.agreement_date }}
-                                      {{ form.agreement_date.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="id_account_type_0">Account type:</label> <span style="color:red;">*</span>
+                                    1. <label for="id_account_type_0">Account type:</label> <span style="color:red;">*</span>
 
                                       <label for="id_account_type_0"><input type="radio" name="account_type" value="New Customer" required id="id_account_type_0" {% if form.instance.id and form.instance.account_type == "New Customer" or not form.instance.id %}checked{% endif %}>
                                               New Customer</label>
 
                                       <label for="id_account_type_1" style="padding-left:5px;"><input type="radio" name="account_type" value="Renewal" required id="id_account_type_1" {% if form.instance.id and form.instance.account_type == "Renewal" %}checked{% endif %}>Renewal</label>
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                      2. {{ form.survey_completed_by.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.survey_completed_by.errors }}</span>
+                                      {{ form.survey_completed_by }}
+                                      {{ form.survey_completed_by.help_text }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -68,7 +60,7 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Customer & Billing Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_description.label_tag }}
+                                    3. {{ form.customer_description.label_tag }}
                                       <span style="color:red;">{{ form.customer_description.errors }}</span>
                                       {{ form.customer_description }}
                                       {{ form.customer_description.help_text }}
@@ -76,7 +68,7 @@
                                  </div>
                                <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_first_name.label_tag }} <span style="color:red;">*</span>
+                                    4. {{ form.customer_first_name.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.customer_first_name.errors }}</span>
                                       {{ form.customer_first_name }}
                                       {{ form.customer_first_name.help_text }}
@@ -84,7 +76,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_last_name.label_tag }} <span style="color:red;">*</span>
+                                    5. {{ form.customer_last_name.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.customer_last_name.errors }}</span>
                                       {{ form.customer_last_name }}
                                       {{ form.customer_last_name.help_text }}
@@ -92,7 +84,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      <label>Service Address:</label> <span style="color:red;">*</span>
+                                      6. <label>Service Address:</label> <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.service_address.errors }}</span>
                                       <p>{{ form.service_address_line1 }}</p>
                                       <p>{{ form.service_address_line2 }}</p>
@@ -104,7 +96,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      <label>Billing Address</label> <span style="color:red;">*</span>
+                                      7. <label>Billing Address</label> <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.billing_address.errors }}</span>
                                       <p>{{ form.billing_address_line1 }}</p>
                                       <p>{{ form.billing_address_line2 }}</p>
@@ -116,7 +108,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_phone.label_tag }} <span style="color:red;">*</span>
+                                    8. {{ form.customer_phone.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.customer_phone.errors }}</span>
                                       {{ form.customer_phone }}
                                       {{ form.customer_phone.help_text }}
@@ -124,7 +116,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_email.label_tag }} <span style="color:red;">*</span>
+                                    9. {{ form.customer_email.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.customer_email.errors }}</span>
                                       {{ form.customer_email }}
                                       {{ form.customer_email.help_text }}
@@ -132,7 +124,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.salesperson_first_name.label_tag }} <span style="color:red;">*</span>
+                                    10. {{ form.salesperson_first_name.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.salesperson_first_name.errors }}</span>
                                       {{ form.salesperson_first_name }}
                                       {{ form.salesperson_first_name.help_text }}
@@ -140,7 +132,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.salesperson_last_name.label_tag }} <span style="color:red;">*</span>
+                                    11. {{ form.salesperson_last_name.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.salesperson_last_name.errors }}</span>
                                       {{ form.salesperson_last_name }}
                                       {{ form.salesperson_last_name.help_text }}
@@ -148,23 +140,31 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                   <label for="id_sbc_0">SBC:</label> <span style="color:red;">*</span>
-                                  <label for="id_sbc_0"><input type="radio" name="sbc" value="Option1" required id="id_sbc_0" checked>
-                                     Option1</label>
+                                     12. {{ form.sbc.label_tag }}
+                                      <span style="color:red;">{{ form.sbc.errors }}</span>
+                                      {{ form.sbc }}
+                                      {{ form.sbc.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.customer_type.label_tag }} <span style="color:red;">*</span>
+                                    13. {{ form.customer_type.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.customer_type.errors }}</span>
                                       {{ form.customer_type }}
                                       {{ form.customer_type.help_text }}
                                   </div>
                                  </div>
-
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                 <label for="id_billing_0">Billing:</label> <span style="color:red;">*</span>
+                                    14. {{ form.agreement_date.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.agreement_date.errors }}</span>
+                                      {{ form.agreement_date }}
+                                      {{ form.agreement_date.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                     15. <label for="id_billing_0">Billing:</label> <span style="color:red;">*</span>
                                        <label for="id_billing_0"><input type="radio" name="billing" value="POR" required id="id_billing_0" {% if form.instance.id and form.instance.billing == "POR" or not form.instance.id %}checked{% endif %}>
                                      POR</label>
 
@@ -176,7 +176,7 @@
 
                                  <div class="form-row">
                                   <div class="form-group col-md-4">
-                                        <label for="id_door_to_door_0">Door To Door:</label> <span style="color:red;">*</span>
+                                     16.  <label for="id_door_to_door_0">Door To Door:</label> <span style="color:red;">*</span>
 
                                           <label for="id_door_to_door_0"><input type="radio" name="door_to_door" value="Yes" required id="id_door_to_door_0" {% if form.instance.id and form.instance.door_to_door == "Yes" or not form.instance.id %}checked{% endif %}>
                                          Yes</label>
@@ -191,7 +191,7 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Pricing & Utility Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.utility_description.label_tag }}
+                                    17. {{ form.utility_description.label_tag }}
                                       <span style="color:red;">{{ form.utility_description.errors }}</span>
                                       {{ form.utility_description }}
                                       {{ form.utility_description.help_text }}
@@ -199,7 +199,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.utility_pool.label_tag }} <span style="color:red;">*</span>
+                                    18. {{ form.utility_pool.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.utility_pool.errors }}</span>
                                       {{ form.utility_pool }}
                                       {{ form.utility_pool.help_text }}
@@ -207,15 +207,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.passthru.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.passthru.errors }}</span>
-                                      {{ form.passthru }}
-                                      {{ form.passthru.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.rate_class.label_tag }} <span style="color:red;">*</span>
+                                    19. {{ form.rate_class.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.rate_class.errors }}</span>
                                       {{ form.rate_class }}
                                       {{ form.rate_class.help_text }}
@@ -223,7 +215,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.gas_rate_class.label_tag }} <span style="color:red;">*</span>
+                                    20. {{ form.gas_rate_class.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_rate_class.errors }}</span>
                                       {{ form.gas_rate_class }}
                                       {{ form.gas_rate_class.help_text }}
@@ -232,7 +224,7 @@
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.electric_utility.label_tag }} <span style="color:red;">*</span>
+                                    21. {{ form.electric_utility.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_utility.errors }}</span>
                                       {{ form.electric_utility }}
                                       {{ form.electric_utility.help_text }}
@@ -240,7 +232,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.gas_utility.label_tag }} <span style="color:red;">*</span>
+                                    22. {{ form.gas_utility.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_utility.errors }}</span>
                                       {{ form.gas_utility }}
                                       {{ form.gas_utility.help_text }}
@@ -248,7 +240,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.utility_account_type.label_tag }} <span style="color:red;">*</span>
+                                    23. {{ form.utility_account_type.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.utility_account_type.errors }}</span>
                                       {{ form.utility_account_type }}
                                       {{ form.utility_account_type.help_text }}
@@ -256,27 +248,27 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.utility_account_nos.label_tag }}
+                                    24. {{ form.utility_account_nos.label_tag }}
                                       <span style="color:red;">{{ form.utility_account_nos.errors }}</span>
                                       {{ form.utility_account_nos }}
                                       {{ form.utility_account_nos.help_text }}
                                   </div>
                                  </div>
-                          </fieldset>
-                           <br>
-                          <fieldset>
-                              <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Gas Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.gas_description.label_tag }}
-                                      <span style="color:red;">{{ form.gas_description.errors }}</span>
-                                      {{ form.gas_description }}
-                                      {{ form.gas_description.help_text }}
+                                    25. {{ form.passthru.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.passthru.errors }}</span>
+                                      {{ form.passthru }}
+                                      {{ form.passthru.help_text }}
                                   </div>
                                  </div>
+                          </fieldset>
+                           <br>
+                          <fieldset class="form-group col-md-4">
+                              <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Gas Information</h3></legend>
                                  <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="id_commodity_gas_0">Commodity Gas:</label> <span style="color:red;">*</span>
+                                  <div class="form-group">
+                                    26. <label for="id_commodity_gas_0">Commodity Gas:</label> <span style="color:red;">*</span>
                                     <label for="id_commodity_gas_0"><input type="radio" name="commodity_gas" value="Yes" required id="id_commodity_gas_0" {% if form.instance.id and form.instance.commodity_gas == "Yes" or not form.instance.id %}checked{% endif %}>
                                      Yes</label>
 
@@ -285,79 +277,56 @@
                                   </div>
                                  </div>
                                  <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="id_delivery_type_0">Delivery Type:</label> <span style="color:red;">*</span>
-
-                                    <label for="id_delivery_type_0"><input type="radio" name="delivery_type" value="Firm" required id="id_delivery_type_0" {% if form.instance.id and form.instance.delivery_type == "Firm" or not form.instance.id %}checked{% endif %}>
-                                     Firm</label>
-
-                                    <label for="id_delivery_type_1"><input type="radio" name="delivery_type" value="Interruptible" required id="id_delivery_type_1" {% if form.instance.id and form.instance.delivery_type == "Interruptible" %}checked{% endif %}>
-                                     Interruptible</label>
+                                  <div class="form-group">
+                                    27. {{ form.delivery_type.label_tag }}
+                                      <span style="color:red;">{{ form.delivery_type.errors }}</span>
+                                      {{ form.delivery_type }}
+                                      {{ form.delivery_type.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                     <label for="id_gas_price_plan_0">Price Plan- Gas:</label> <span style="color:red;">*</span>
-
-                                    <label for="id_gas_price_plan_0"><input type="radio" name="gas_price_plan" value="Fixed" required id="id_gas_price_plan_0" {% if form.instance.id and form.instance.gas_price_plan == "Fixed" or not form.instance.id %}checked{% endif %}>
-                                     Fixed</label>
-
-                                    <label for="id_gas_price_plan_1"><input type="radio" name="gas_price_plan" value="Variable" required id="id_gas_price_plan_1" {% if form.instance.id and form.instance.gas_price_plan == "Variable" %}checked{% endif %}>
-                                     Variable</label>
-
-                                    <label for="id_gas_price_plan_2"><input type="radio" name="gas_price_plan" value="Index" required id="id_gas_price_plan_2" {% if form.instance.id and form.instance.gas_price_plan == "Index" %}checked{% endif %}>
-                                     Index</label>
+                                  <div class="form-group">
+                                    28. {{ form.gas_price_plan.label_tag }}
+                                      <span style="color:red;">{{ form.gas_price_plan.errors }}</span>
+                                      {{ form.gas_price_plan }}
+                                      {{ form.gas_price_plan.help_text }}
                                   </div>
                                  </div>
                           </fieldset>
-                          <br>
                           <fieldset>
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Electric Information</h3></legend>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.electric_description.label_tag }}
-                                      <span style="color:red;">{{ form.electric_description.errors }}</span>
-                                      {{ form.electric_description }}
-                                      {{ form.electric_description.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="id_electric_0">Electric:</label> <span style="color:red;">*</span>
+
+                                 <div class="form-row col-md-6">
+                                  <div class="form-group">
+                                    29. <label for="id_electric_0">Electric:</label> <span style="color:red;">*</span>
                                     <label for="id_electric_0"><input type="radio" name="electric" value="Yes" required id="id_electric_0" {% if form.instance.id and form.instance.electric == "Yes" or not form.instance.id %}checked{% endif %}>
                                      Yes</label>
                                     <label for="id_electric_1"><input type="radio" name="electric" value="No" required id="id_electric_1" {% if form.instance.id and form.instance.electric == "No" %}checked{% endif %}>
                                      No</label>
                                   </div>
                                  </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                     <label for="id_green_0">100% Green:</label> <span style="color:red;">*</span>
-                                    <label for="id_green_0"><input type="radio" name="green" value="Yes" required id="id_green_0" {% if form.instance.id and form.instance.green == "Yes" or not form.instance.id %}checked{% endif %}>
-                                     Yes</label>
-                                    <label for="id_green_1"><input type="radio" name="green" value="No" required id="id_green_1" {% if form.instance.id and form.instance.green == "No" %}checked{% endif %}>
-                                     No</label>
+                                 <div class="form-row col-md-6">
+                                  <div class="form-group">
+                                    30. {{ form.green.label_tag }}
+                                      <span style="color:red;">{{ form.green.errors }}</span>
+                                      {{ form.green }}
+                                      {{ form.green.help_text }}
                                   </div>
                                  </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="id_Zone_0">Zone:</label> <span style="color:red;">*</span>
-                                     <label for="id_Zone_0"><input type="radio" name="Zone" value="NYISO Zone A through K" required id="id_Zone_0" {% if form.instance.id and form.instance.Zone == "NYISO Zone A through K" or not form.instance.id %}checked{% endif %}>
-                                     NYISO Zone A through K</label>
-                                    <label for="id_Zone_1"><input type="radio" name="Zone" value="Other" required id="id_Zone_1" {% if form.instance.id and form.instance.Zone == "Other" %}checked{% endif %}>
-                                     Other</label>
+                                 <div class="form-row col-md-6">
+                                  <div class="form-group">
+                                    31. {{ form.Zone.label_tag }}
+                                      <span style="color:red;">{{ form.Zone.errors }}</span>
+                                      {{ form.Zone }}
+                                      {{ form.Zone.help_text }}
                                   </div>
                                  </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="id_electric_price_type_0">Electric Price Type:</label> <span style="color:red;">*</span>
-                                        <label for="id_electric_price_type_0"><input type="radio" name="electric_price_type" value="Fixed" required id="id_electric_price_type_0" {% if form.instance.id and form.instance.electric_price_type == "Fixed" or not form.instance.id %}checked{% endif %}>
-                                         Fixed</label>
-
-                                        <label for="id_electric_price_type_1"><input type="radio" name="electric_price_type" value="Variable" required id="id_electric_price_type_1" {% if form.instance.id and form.instance.electric_price_type == "Variable" %}checked{% endif %}>
-                                         Variable</label>
-                                        <label for="id_electric_price_type_2"><input type="radio" name="electric_price_type" value="Index" required id="id_electric_price_type_2" {% if form.instance.id and form.instance.electric_price_type == "Index" %}checked{% endif %}>
-                                         Index</label>
+                                 <div class="form-row col-md-6">
+                                  <div class="form-group">
+                                    32. {{ form.electric_price_type.label_tag }}
+                                      <span style="color:red;">{{ form.electric_price_type.errors }}</span>
+                                      {{ form.electric_price_type }}
+                                      {{ form.electric_price_type.help_text }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -366,15 +335,7 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Commodity Billing Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.billing_description.label_tag }}
-                                      <span style="color:red;">{{ form.billing_description.errors }}</span>
-                                      {{ form.billing_description }}
-                                      {{ form.billing_description.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                     <label for="id_therm_0">Therm:</label> <span style="color:red;">*</span>
+                                     33. <label for="id_therm_0">Therm:</label> <span style="color:red;">*</span>
 
                                      <label for="id_therm_0"><input type="radio" name="therm" value="Yes" required id="id_therm_0" {% if form.instance.id and form.instance.therm == "Yes" or not form.instance.id %}checked{% endif %}>
                                      Yes</label>
@@ -385,7 +346,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    <label for="id_tax_exempt_0">Tax Exempt:</label> <span style="color:red;">*</span>
+                                    34. <label for="id_tax_exempt_0">Tax Exempt:</label> <span style="color:red;">*</span>
                                     <label for="id_tax_exempt_0"><input type="radio" name="tax_exempt" value="Yes" required id="id_tax_exempt_0" {% if form.instance.id and form.instance.tax_exempt == "Yes" or not form.instance.id %}checked{% endif %}>
                                      Yes</label>
                                     <label for="id_tax_exempt_1"><input type="radio" name="tax_exempt" value="No" required id="id_tax_exempt_1" {% if form.instance.id and form.instance.tax_exempt == "No" %}checked{% endif %}>
@@ -394,7 +355,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    <label for="id_monthly_budget_0">Monthly Budget:</label> <span style="color:red;">*</span>
+                                    35. <label for="id_monthly_budget_0">Monthly Budget:</label> <span style="color:red;">*</span>
                                     <label for="id_monthly_budget_0"><input type="radio" name="monthly_budget" value="Yes" required id="id_monthly_budget_0" {% if form.instance.id and form.instance.monthly_budget == "Yes" or not form.instance.id %}checked{% endif %}>
                                      Yes</label>
                                     <label for="id_monthly_budget_1"><input type="radio" name="monthly_budget" value="No" required id="id_monthly_budget_1" {% if form.instance.id and form.instance.monthly_budget == "No" %}checked{% endif %}>
@@ -403,7 +364,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.budget_amount.label_tag }} <span style="color:red;">*</span>
+                                    36. {{ form.budget_amount.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.budget_amount.errors }}</span>
                                       {{ form.budget_amount }}
                                       {{ form.budget_amount.help_text }}
@@ -411,7 +372,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
+                                    37. {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_bandwidth_usage.errors }}</span>
                                       {{ form.electric_bandwidth_usage }}
                                       {{ form.electric_bandwidth_usage.help_text }}
@@ -419,7 +380,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
+                                    38. {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_bandwidth_usage.errors }}</span>
                                       {{ form.gas_bandwidth_usage }}
                                       {{ form.gas_bandwidth_usage.help_text }}
@@ -427,7 +388,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
+                                    39. {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_fixed_rate.errors }}</span>
                                       {{ form.electric_fixed_rate }}
                                       {{ form.electric_fixed_rate.help_text }}
@@ -435,7 +396,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
+                                    40. {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_index_rate.errors }}</span>
                                       {{ form.electric_index_rate }}
                                       {{ form.electric_index_rate.help_text }}
@@ -443,7 +404,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
+                                    41. {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_fixed_rate.errors }}</span>
                                       {{ form.gas_fixed_rate }}
                                       {{ form.gas_fixed_rate.help_text }}
@@ -451,7 +412,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
+                                    42. {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_index_rate.errors }}</span>
                                       {{ form.gas_index_rate }}
                                       {{ form.gas_index_rate.help_text }}
@@ -459,7 +420,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.agreement_length.label_tag }} <span style="color:red;">*</span>
+                                    43. {{ form.agreement_length.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.agreement_length.errors }}</span>
                                       {{ form.agreement_length }}
                                       {{ form.agreement_length.help_text }}
@@ -467,219 +428,227 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    {{ form.contract_start_date.label_tag }} <span style="color:red;">*</span>
+                                    44. {{ form.contract_start_date.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.contract_start_date.errors }}</span>
                                       {{ form.contract_start_date }}
                                       {{ form.contract_start_date.help_text }}
                                   </div>
                                  </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    45. {{ form.document.label_tag }}
+                                      <span style="color:red;">{{ form.document.errors }}</span>
+                                      {{ form.document }}
+                                      {{ form.document.help_text }}
+                                  </div>
+                                 </div>
                           </fieldset>
                            <br>
-                          <fieldset>
-                              <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Deal Booking - Internal</h3></legend>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.deal_description.label_tag }}
-                                      <span style="color:red;">{{ form.deal_description.errors }}</span>
-                                      {{ form.deal_description }}
-                                      {{ form.deal_description.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                   <label for="id_internal_data_available_0">Internal Data Available:</label> <span style="color:red;">*</span>
-                                    <label for="id_internal_data_available_0"><input type="radio" name="internal_data_available" value="Yes" required id="id_internal_data_available_0" {% if form.instance.id and form.instance.internal_data_available == "Yes" or not form.instance.id %}checked{% endif %}>
-                                     Yes</label>
+                          <!--<fieldset>-->
+                              <!--<legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Deal Booking - Internal</h3></legend>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.deal_description.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.deal_description.errors }}</span>-->
+                                      <!--{{ form.deal_description }}-->
+                                      <!--{{ form.deal_description.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                   <!--<label for="id_internal_data_available_0">Internal Data Available:</label> <span style="color:red;">*</span>-->
+                                    <!--<label for="id_internal_data_available_0"><input type="radio" name="internal_data_available" value="Yes" required id="id_internal_data_available_0" {% if form.instance.id and form.instance.internal_data_available == "Yes" or not form.instance.id %}checked{% endif %}>-->
+                                     <!--Yes</label>-->
 
-                                    <label for="id_internal_data_available_1"><input type="radio" name="internal_data_available" value="No" required id="id_internal_data_available_1" {% if form.instance.id and form.instance.internal_data_available == "No" %}checked{% endif %}>
-                                     No</label>
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.utility_service_class.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.utility_service_class.errors }}</span>
-                                      {{ form.utility_service_class }}
-                                      {{ form.utility_service_class.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.usage_from_date.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.usage_from_date.errors }}</span>
-                                      {{ form.usage_from_date }}
-                                      {{ form.usage_from_date.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.usage_to_date.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.usage_to_date.errors }}</span>
-                                      {{ form.usage_to_date }}
-                                      {{ form.usage_to_date.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.broker_margin.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.broker_margin.errors }}</span>
-                                      {{ form.broker_margin }}
-                                      {{ form.broker_margin.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.base_icap.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.base_icap.errors }}</span>
-                                      {{ form.base_icap }}
-                                      {{ form.base_icap.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.base_trans_tag.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.base_trans_tag.errors }}</span>
-                                      {{ form.base_trans_tag }}
-                                      {{ form.base_trans_tag.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.base.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.base.errors }}</span>
-                                      {{ form.base }}
-                                      {{ form.base.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.slope.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.slope.errors }}</span>
-                                      {{ form.slope }}
-                                      {{ form.slope.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.term_volume.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.term_volume.errors }}</span>
-                                      {{ form.term_volume }}
-                                      {{ form.term_volume.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.utilized_term_net_margin.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.utilized_term_net_margin.errors }}</span>
-                                      {{ form.utilized_term_net_margin }}
-                                      {{ form.utilized_term_net_margin.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.salesperson_or_team.label_tag }}
-                                      <span style="color:red;">{{ form.salesperson_or_team.errors }}</span>
-                                      {{ form.salesperson_or_team }}
-                                      {{ form.salesperson_or_team.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.energy_deal_component.label_tag }}
-                                      <span style="color:red;">{{ form.energy_deal_component.errors }}</span>
-                                      {{ form.energy_deal_component }}
-                                      {{ form.energy_deal_component.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.capacity_deal_component.label_tag }}
-                                      <span style="color:red;">{{ form.capacity_deal_component.errors }}</span>
-                                      {{ form.capacity_deal_component }}
-                                      {{ form.capacity_deal_component.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.line_looses_deal_component.label_tag }}
-                                      <span style="color:red;">{{ form.line_looses_deal_component.errors }}</span>
-                                      {{ form.line_looses_deal_component }}
-                                      {{ form.line_looses_deal_component.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.rec_or_zec.label_tag }}
-                                      <span style="color:red;">{{ form.rec_or_zec.errors }}</span>
-                                      {{ form.rec_or_zec }}
-                                      {{ form.rec_or_zec.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.srec.label_tag }}
-                                      <span style="color:red;">{{ form.srec.errors }}</span>
-                                      {{ form.srec }}
-                                      {{ form.srec.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.nits.label_tag }}
-                                      <span style="color:red;">{{ form.nits.errors }}</span>
-                                      {{ form.nits }}
-                                      {{ form.nits.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.taxes.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.taxes.errors }}</span>
-                                      {{ form.taxes }}
-                                      {{ form.taxes.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.swing_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.swing_rate.errors }}</span>
-                                      {{ form.swing_rate }}
-                                      {{ form.swing_rate.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.hedge_type.label_tag }}
-                                      <span style="color:red;">{{ form.hedge_type.errors }}</span>
-                                      {{ form.hedge_type }}
-                                      {{ form.hedge_type.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.hedge_product_volume.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.hedge_product_volume.errors }}</span>
-                                      {{ form.hedge_product_volume }}
-                                      {{ form.hedge_product_volume.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.hedge_price.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.hedge_price.errors }}</span>
-                                      {{ form.hedge_price }}
-                                      {{ form.hedge_price.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    {{ form.estimated_annual_hedge_volume.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.estimated_annual_hedge_volume.errors }}</span>
-                                      {{ form.estimated_annual_hedge_volume }}
-                                      {{ form.estimated_annual_hedge_volume.help_text }}
-                                  </div>
-                                 </div>
-                          </fieldset>
+                                    <!--<label for="id_internal_data_available_1"><input type="radio" name="internal_data_available" value="No" required id="id_internal_data_available_1" {% if form.instance.id and form.instance.internal_data_available == "No" %}checked{% endif %}>-->
+                                     <!--No</label>-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.utility_service_class.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.utility_service_class.errors }}</span>-->
+                                      <!--{{ form.utility_service_class }}-->
+                                      <!--{{ form.utility_service_class.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.usage_from_date.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.usage_from_date.errors }}</span>-->
+                                      <!--{{ form.usage_from_date }}-->
+                                      <!--{{ form.usage_from_date.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.usage_to_date.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.usage_to_date.errors }}</span>-->
+                                      <!--{{ form.usage_to_date }}-->
+                                      <!--{{ form.usage_to_date.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.broker_margin.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.broker_margin.errors }}</span>-->
+                                      <!--{{ form.broker_margin }}-->
+                                      <!--{{ form.broker_margin.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.base_icap.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.base_icap.errors }}</span>-->
+                                      <!--{{ form.base_icap }}-->
+                                      <!--{{ form.base_icap.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.base_trans_tag.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.base_trans_tag.errors }}</span>-->
+                                      <!--{{ form.base_trans_tag }}-->
+                                      <!--{{ form.base_trans_tag.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.base.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.base.errors }}</span>-->
+                                      <!--{{ form.base }}-->
+                                      <!--{{ form.base.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.slope.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.slope.errors }}</span>-->
+                                      <!--{{ form.slope }}-->
+                                      <!--{{ form.slope.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.term_volume.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.term_volume.errors }}</span>-->
+                                      <!--{{ form.term_volume }}-->
+                                      <!--{{ form.term_volume.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.utilized_term_net_margin.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.utilized_term_net_margin.errors }}</span>-->
+                                      <!--{{ form.utilized_term_net_margin }}-->
+                                      <!--{{ form.utilized_term_net_margin.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.salesperson_or_team.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.salesperson_or_team.errors }}</span>-->
+                                      <!--{{ form.salesperson_or_team }}-->
+                                      <!--{{ form.salesperson_or_team.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.energy_deal_component.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.energy_deal_component.errors }}</span>-->
+                                      <!--{{ form.energy_deal_component }}-->
+                                      <!--{{ form.energy_deal_component.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.capacity_deal_component.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.capacity_deal_component.errors }}</span>-->
+                                      <!--{{ form.capacity_deal_component }}-->
+                                      <!--{{ form.capacity_deal_component.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.line_looses_deal_component.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.line_looses_deal_component.errors }}</span>-->
+                                      <!--{{ form.line_looses_deal_component }}-->
+                                      <!--{{ form.line_looses_deal_component.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.rec_or_zec.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.rec_or_zec.errors }}</span>-->
+                                      <!--{{ form.rec_or_zec }}-->
+                                      <!--{{ form.rec_or_zec.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.srec.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.srec.errors }}</span>-->
+                                      <!--{{ form.srec }}-->
+                                      <!--{{ form.srec.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.nits.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.nits.errors }}</span>-->
+                                      <!--{{ form.nits }}-->
+                                      <!--{{ form.nits.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.taxes.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.taxes.errors }}</span>-->
+                                      <!--{{ form.taxes }}-->
+                                      <!--{{ form.taxes.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.swing_rate.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.swing_rate.errors }}</span>-->
+                                      <!--{{ form.swing_rate }}-->
+                                      <!--{{ form.swing_rate.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.hedge_type.label_tag }}-->
+                                      <!--<span style="color:red;">{{ form.hedge_type.errors }}</span>-->
+                                      <!--{{ form.hedge_type }}-->
+                                      <!--{{ form.hedge_type.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.hedge_product_volume.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.hedge_product_volume.errors }}</span>-->
+                                      <!--{{ form.hedge_product_volume }}-->
+                                      <!--{{ form.hedge_product_volume.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.hedge_price.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.hedge_price.errors }}</span>-->
+                                      <!--{{ form.hedge_price }}-->
+                                      <!--{{ form.hedge_price.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ form.estimated_annual_hedge_volume.label_tag }} <span style="color:red;">*</span>-->
+                                      <!--<span style="color:red;">{{ form.estimated_annual_hedge_volume.errors }}</span>-->
+                                      <!--{{ form.estimated_annual_hedge_volume }}-->
+                                      <!--{{ form.estimated_annual_hedge_volume.help_text }}-->
+                                  <!--</div>-->
+                                 <!--</div>-->
+                          <!--</fieldset>-->
                                 <!--<div class="ln_solid"></div>-->
                               <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -722,8 +691,10 @@
    $("#id_customer_email").addClass( "form-control" );
    $("#id_salesperson_first_name").addClass( "form-control" );
    $("#id_salesperson_last_name").addClass( "form-control" );
+   $("#id_sbc").addClass( "form-control" );
    $("#id_customer_type").addClass( "form-control" );
    $("#id_passthru").addClass( "form-control" );
+   $("#id_passthru").bootstrapDualListbox();
    $("#id_rate_class").addClass( "form-control" );
    $("#id_gas_rate_class").addClass( "form-control" );
    $("#id_electric_utility").addClass( "form-control" );
@@ -733,6 +704,12 @@
    $("#id_utility_description").addClass( "form-control" );
    $("#id_gas_description").addClass( "form-control" );
    $("#id_utility_pool").addClass( "form-control" );
+   $("#id_delivery_type").addClass( "form-control" );
+   $("#id_gas_price_plan").addClass( "form-control" );
+   $("#id_green").addClass( "form-control" );
+   $("#id_electric_price_type").addClass( "form-control" );
+   $("#id_Zone").addClass( "form-control" );
+   $("#id_Zone").bootstrapDualListbox();
    $("#id_utility_account_nos").addClass( "form-control" );
    $("#id_electric_description").addClass( "form-control" );
    $("#id_billing_description").addClass( "form-control" );

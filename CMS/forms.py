@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.forms import ModelForm
 
 from CMS.models import *
@@ -9,13 +10,15 @@ class SurveyForm(ModelForm):
                       widget=forms.DateInput(format = '%m/%d/%Y'))
     contract_start_date = forms.DateField(input_formats = ('%m/%d/%Y',),
                       widget=forms.DateInput(format = '%m/%d/%Y'))
-    usage_from_date = forms.DateField(input_formats = ('%m/%d/%Y',),
-                      widget=forms.DateInput(format = '%m/%d/%Y'))
-    usage_to_date = forms.DateField(input_formats = ('%m/%d/%Y',),
-                      widget=forms.DateInput(format = '%m/%d/%Y'))
+    # usage_from_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+    #                   widget=forms.DateInput(format = '%m/%d/%Y'))
+    # usage_to_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+    #                   widget=forms.DateInput(format = '%m/%d/%Y'))
+    # zone = forms.MultipleChoiceField(choices=settings.ZONE)
+
     class Meta:
         model = Survey
-        exclude = ('created_at',)
+        exclude = ('gas_description', 'electric_description', 'billing_description','created_at')
         widgets = {
           'service_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
           'service_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
@@ -34,22 +37,43 @@ class SurveyForm(ModelForm):
           'gas_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200 }),
           'electric_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
           'billing_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
-          'deal_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
+          # 'deal_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
           'account_type': forms.RadioSelect(),
-          'sbc': forms.RadioSelect(),
           'door_to_door': forms.RadioSelect(),
           'billing': forms.RadioSelect(),
           'commodity_gas': forms.RadioSelect(),
-          'delivery_type': forms.RadioSelect(),
-          'gas_price_plan': forms.RadioSelect(),
+          # 'delivery_type': forms.RadioSelect(),
+          # 'gas_price_plan': forms.RadioSelect(),
           'electric': forms.RadioSelect(),
-          'green': forms.RadioSelect(),
-          'Zone': forms.RadioSelect(),
-          'electric_price_type': forms.RadioSelect(),
+          # 'green': forms.RadioSelect(),
+          # 'Zone': forms.RadioSelect(),
+          # 'electric_price_type': forms.RadioSelect(),
           'therm': forms.RadioSelect(),
           'tax_exempt': forms.RadioSelect(),
           'monthly_budget': forms.RadioSelect(),
-          'internal_data_available': forms.RadioSelect()
+          # 'internal_data_available': forms.RadioSelect()
         }
 
-
+    def clean(self):
+        gas = self.cleaned_data['commodity_gas']
+        electric = self.cleaned_data['electric']
+        if gas == 'Yes' and not self.cleaned_data['delivery_type']:
+            self._errors['delivery_type'] = self.error_class(['This field is required'])
+        if gas == 'Yes' and not self.cleaned_data['gas_price_plan']:
+            self._errors['gas_price_plan'] = self.error_class(['This field is required'])
+        if electric == 'Yes' and not self.cleaned_data['green']:
+            self._errors['green'] = self.error_class(['This field is required'])
+        if electric == 'Yes' and not self.cleaned_data['electric_price_type']:
+            self._errors['electric_price_type'] = self.error_class(['This field is required'])
+        if electric == 'Yes' and not self.cleaned_data['Zone']:
+            self._errors['Zone'] = self.error_class(['This field is required'])
+        if self.cleaned_data['gas_price_plan'] == 'Fixed' and not self.cleaned_data['gas_fixed_rate']:
+            self._errors['gas_fixed_rate'] = self.error_class(['This field is required'])
+        if self.cleaned_data['gas_price_plan'] == 'Index' and not self.cleaned_data['gas_index_rate']:
+            self._errors['gas_index_rate'] = self.error_class(['This field is required'])
+        if self.cleaned_data['electric_price_type'] == 'Fixed' and not self.cleaned_data['electric_fixed_rate']:
+            self._errors['electric_fixed_rate'] = self.error_class(['This field is required'])
+        if self.cleaned_data['electric_price_type'] == 'Index' and not self.cleaned_data['electric_index_rate']:
+            self._errors['electric_index_rate'] = self.error_class(['This field is required'])
+        if not self.cleaned_data['passthru']:
+            self._errors['passthru'] = self.error_class(['This field is required'])
