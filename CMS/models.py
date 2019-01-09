@@ -89,16 +89,16 @@ class Survey(models.Model):
                                     null=False, default='Yes')
     monthly_budget = models.CharField('Monthly Budget', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='Yes')
-    budget_amount = models.DecimalField('Budget Amount', max_digits=10, decimal_places=2, default=0)
-    electric_bandwidth_usage = models.CharField('Bandwidth Usage- Electric', max_length=512, blank=False, null=False)
-    gas_bandwidth_usage = models.CharField('Bandwidth Usage- Gas', max_length=512, blank=False, null=False)
-    electric_fixed_rate = models.DecimalField('Electric Fixed Rate $/kWh', max_digits=10, decimal_places=4, blank=True,\
+    budget_amount = models.DecimalField('Budget Amount', max_digits=10, decimal_places=2, blank=True, null=True, default=0)
+    electric_bandwidth_usage = models.DecimalField('Bandwidth Usage- Electric(%)', max_digits=10, decimal_places=2, default=0)
+    gas_bandwidth_usage = models.DecimalField('Bandwidth Usage- Gas(%)', max_digits=10, decimal_places=2, default=0)
+    electric_fixed_rate = models.DecimalField('Electric Fixed Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
                                     null=True)
-    electric_index_rate = models.DecimalField('Electric Index Rate $/kWh', max_digits=10, decimal_places=4, blank=True,\
+    electric_index_rate = models.DecimalField('Electric Index Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
                                     null=True)
-    gas_fixed_rate = models.DecimalField('Gas Fixed Rate $/kWh', max_digits=10, decimal_places=4, blank=True,\
+    gas_fixed_rate = models.DecimalField('Gas Fixed Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
                                     null=True)
-    gas_index_rate = models.DecimalField('Gas Index Rate $/kWh', max_digits=10, decimal_places=4, blank=True,\
+    gas_index_rate = models.DecimalField('Gas Index Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
                                     null=True)
     agreement_length = models.PositiveIntegerField('Length of Agreement (in months)', blank=False, null=False, default=0)
     contract_start_date = models.DateField('Contractual Start Date', blank=False, null=False)

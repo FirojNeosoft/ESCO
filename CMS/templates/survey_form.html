@@ -34,24 +34,24 @@
                                 {{ hidden_field.errors }}
                                 {{ hidden_field }}
                               {% endfor %}
+                         <div class="form-row">
+                          <div class="form-group">
+                              1.  {{ form.survey_completed_by.label_tag }} <span style="color:red;">*</span>
+                              <span style="color:red;">{{ form.survey_completed_by.errors }}</span>
+                              {{ form.survey_completed_by }}
+                              {{ form.survey_completed_by.help_text }}
+                          </div>
+                         </div>
                           <fieldset style="border: 1px;">
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Contract Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    1. <label for="id_account_type_0">Account type:</label> <span style="color:red;">*</span>
+                                    2. <label for="id_account_type_0">Account type:</label> <span style="color:red;">*</span>
 
                                       <label for="id_account_type_0"><input type="radio" name="account_type" value="New Customer" required id="id_account_type_0" {% if form.instance.id and form.instance.account_type == "New Customer" or not form.instance.id %}checked{% endif %}>
                                               New Customer</label>
 
                                       <label for="id_account_type_1" style="padding-left:5px;"><input type="radio" name="account_type" value="Renewal" required id="id_account_type_1" {% if form.instance.id and form.instance.account_type == "Renewal" %}checked{% endif %}>Renewal</label>
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                      2. {{ form.survey_completed_by.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.survey_completed_by.errors }}</span>
-                                      {{ form.survey_completed_by }}
-                                      {{ form.survey_completed_by.help_text }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -364,7 +364,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    36. {{ form.budget_amount.label_tag }} <span style="color:red;">*</span>
+                                    36. {{ form.budget_amount.label_tag }}
                                       <span style="color:red;">{{ form.budget_amount.errors }}</span>
                                       {{ form.budget_amount }}
                                       {{ form.budget_amount.help_text }}
@@ -372,15 +372,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    37. {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_bandwidth_usage.errors }}</span>
-                                      {{ form.electric_bandwidth_usage }}
-                                      {{ form.electric_bandwidth_usage.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    38. {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
+                                    37. {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_bandwidth_usage.errors }}</span>
                                       {{ form.gas_bandwidth_usage }}
                                       {{ form.gas_bandwidth_usage.help_text }}
@@ -388,23 +380,15 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    39. {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_fixed_rate.errors }}</span>
-                                      {{ form.electric_fixed_rate }}
-                                      {{ form.electric_fixed_rate.help_text }}
+                                    38. {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.electric_bandwidth_usage.errors }}</span>
+                                      {{ form.electric_bandwidth_usage }}
+                                      {{ form.electric_bandwidth_usage.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    40. {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_index_rate.errors }}</span>
-                                      {{ form.electric_index_rate }}
-                                      {{ form.electric_index_rate.help_text }}
-                                  </div>
-                                 </div>
-                                 <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    41. {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
+                                    39. {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_fixed_rate.errors }}</span>
                                       {{ form.gas_fixed_rate }}
                                       {{ form.gas_fixed_rate.help_text }}
@@ -412,12 +396,29 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    42. {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
+                                    40. {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.electric_fixed_rate.errors }}</span>
+                                      {{ form.electric_fixed_rate }}
+                                      {{ form.electric_fixed_rate.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    41. {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_index_rate.errors }}</span>
                                       {{ form.gas_index_rate }}
                                       {{ form.gas_index_rate.help_text }}
                                   </div>
                                  </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    42. {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.electric_index_rate.errors }}</span>
+                                      {{ form.electric_index_rate }}
+                                      {{ form.electric_index_rate.help_text }}
+                                  </div>
+                                 </div>
+
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
                                     43. {{ form.agreement_length.label_tag }} <span style="color:red;">*</span>
@@ -677,7 +678,7 @@
 {% block static %}
 <script>
   $(document).ready(function(){
-   $("#id_survey_completed_by").addClass( "form-control" );
+   <!--$("#id_survey_completed_by").addClass( "form-control" );-->
    $("#id_agreement_date").addClass( "form-control" );
    $('#id_agreement_date').datepicker({'dateFormat': 'mm/dd/yy',
        'maxDate': 3650,
@@ -776,6 +777,17 @@
 }
 .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
     width: 50%;
+}
+#id_survey_completed_by{
+ width:20%;
+ border: 1px solid #ccc;
+ height: 34px;
+ background-color: #fff;
+ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+ padding: 6px 12px;
+ margin-left: 10px;
+font-size: 14px;
+line-height: 1.42857143;
 }
 </style>
 {% endblock %}
