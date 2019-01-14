@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -40,13 +40,18 @@ class UpdateSurveyView(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('list_surveys')
 
 
-class DeleteTaskView(DeleteView):
+class DeleteSurveyView(DeleteView):
     """
     Delete existing survey
     """
     model = Survey
     template_name = 'survey_confirm_delete.html'
     success_url = reverse_lazy('list_surveys')
+
+
+class DetailSurveyView(DetailView):
+    model = Survey
+    template_name = 'survey_detail.html'
 
 
 def survey_export_csv(request):

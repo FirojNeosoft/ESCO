@@ -5,7 +5,7 @@
 {% block body %}
 <div class="page-title">
     <div class="title_left">
-        <h3>{% if form.instance.id %}Edit {% else %}Add New {% endif %}Survey</h3>
+        <h3>Survey Details</h3>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -17,15 +17,6 @@
                       <div class="row">
                         <div class="col-xs-12">
                           <div class="">
-                            <div class="box-header">
-                              {% if messages %}
-                                <ul class="messages alert alert-danger">
-                                  {% for message in messages %}
-                                    {{ message }}
-                                  {% endfor %}
-                                </ul>
-                              {% endif %}
-                            </div>
                             <!-- /.box-header -->
                             <div class="box-body">
                                 <form method="post" enctype="multipart/form-data">
@@ -37,31 +28,24 @@
                         <fieldset>
                          <div class="form-row">
                           <div class="form-group col-md-6">
-                              1.  {{ form.survey_completed_by.label_tag }} <span style="color:red;">*</span>
-                              <span style="color:red;">{{ form.survey_completed_by.errors }}</span>
-                              {{ form.survey_completed_by }}
-                              {{ form.survey_completed_by.help_text }}
+                              1.  <label>Survey completed by: </label>
+                              {{ object.survey_completed_by }}
                           </div>
                          </div>
-                                        </fieldset>
+                        </fieldset>
                           <fieldset style="border: 1px;">
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Contract Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    2. <label for="id_account_type_0">Account type:</label> <span style="color:red;">*</span>
+                                    2. <label>Account type: </label>
+                                      {{ object.account_type }}
 
-                                      <label for="id_account_type_0"><input type="radio" name="account_type" value="New Customer" required id="id_account_type_0" {% if form.instance.id and form.instance.account_type == "New Customer" or not form.instance.id %}checked{% endif %}>
-                                              New Customer</label>
-
-                                      <label for="id_account_type_1" style="padding-left:5px;"><input type="radio" name="account_type" value="Renewal" required id="id_account_type_1" {% if form.instance.id and form.instance.account_type == "Renewal" %}checked{% endif %}>Renewal</label>
                                   </div>
                                  </div>
                                 <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      3. {{ form.agreement_date.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.agreement_date.errors }}</span>
-                                      {{ form.agreement_date }}
-                                      {{ form.agreement_date.help_text }}
+                                      3. <label>Agreement Date: </label>
+                                      {{ object.agreement_date }}
                                    </div>
                                 </div>
                           </fieldset>
@@ -70,106 +54,77 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Customer & Billing Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    4. {{ form.customer_description.label_tag }}
-                                      <span style="color:red;">{{ form.customer_description.errors }}</span>
-                                      {{ form.customer_description }}
-                                      {{ form.customer_description.help_text }}
+                                      4. <label>Customer Description: </label>
+                                      {{ object.customer_description }}
                                   </div>
                                  </div>
                                <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    5. {{ form.customer_name.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.customer_name.errors }}</span>
-                                      {{ form.customer_name }}
-                                      {{ form.customer_name.help_text }}
+                                      5. <label>Customer Name: </label>
+                                      {{ object.customer_name }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    6. {{ form.salesperson_name.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.salesperson_name.errors }}</span>
-                                      {{ form.salesperson_name }}
-                                      {{ form.salesperson_name.help_text }}
+                                      6. <label>Salesperson name: </label>
+                                      {{ object.salesperson_name }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      7. <label>Service Address:</label> <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.service_address.errors }}</span>
-                                      <p>{{ form.service_address_line1 }}</p>
-                                      <p>{{ form.service_address_line2 }}</p>
-                                      <p>{{ form.service_address_city }}</p>
-                                      <p>{{ form.service_address_state }}</p>
-                                      <p>{{ form.service_address_country }}</p>
-                                      <p>{{ form.service_address_zip_code }}</p>
+                                      7. <label>Service Address: </label>
+                                      <p>{{ object.service_address_line1 }}</p>
+                                      <p>{{ object.service_address_line2 }}</p>
+                                      <p>{{ object.service_address_city }}</p>
+                                      <p>{{ object.service_address_state }}- {{ object.service_address_zip_code }}</p>
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      8. <label>Billing Address</label> <span style="color:red;">*</span>  <input type="checkbox" name="sameas" id="check-address" /> Same as service address
-                                      <span style="color:red;">{{ form.billing_address.errors }}</span>
-                                      <p>{{ form.billing_address_line1 }}</p>
-                                      <p>{{ form.billing_address_line2 }}</p>
-                                      <p>{{ form.billing_address_city }}</p>
-                                      <p>{{ form.billing_address_state }}</p>
-                                      <p>{{ form.billing_address_country }}</p>
-                                      <p>{{ form.billing_address_zip_code }}</p>
+                                      8. <label>Billing Address: </label>
+                                      <p>{{ object.billing_address_line1 }}</p>
+                                      <p>{{ object.billing_address_line2 }}</p>
+                                      <p>{{ object.billing_address_city }}</p>
+                                      <p>{{ object.billing_address_state }}- {{ object.billing_address_zip_code }}</p>
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    9. {{ form.customer_phone.label_tag }}
-                                      <span style="color:red;">{{ form.customer_phone.errors }}</span>
-                                      {{ form.customer_phone }}
-                                      {{ form.customer_phone.help_text }}
+                                      9. <label>Customer Phone: </label>
+                                      {{ object.customer_phone }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    10. {{ form.customer_email.label_tag }}
-                                      <span style="color:red;">{{ form.customer_email.errors }}</span>
-                                      {{ form.customer_email }}
-                                      {{ form.customer_email.help_text }}
+                                    10. <label>Customer Email: </label>
+                                       {{ object.customer_email }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                     11. {{ form.sbc.label_tag }}
-                                      <span style="color:red;">{{ form.sbc.errors }}</span>
-                                      {{ form.sbc }}
-                                      {{ form.sbc.help_text }}
+                                     11. <label>SBC: </label>
+                                      {{ object.sbc }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    12. {{ form.customer_type.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.customer_type.errors }}</span>
-                                      {{ form.customer_type }}
-                                      {{ form.customer_type.help_text }}
+                                      12. <label>Customer Type: </label>
+                                      {{ object.customer_type }}
                                   </div>
                                  </div>
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                     13. <label for="id_billing_0">Billing:</label> <span style="color:red;">*</span>
-                                       <label for="id_billing_0"><input type="radio" name="billing" value="POR" required id="id_billing_0" {% if form.instance.id and form.instance.billing == "POR" or not form.instance.id %}checked{% endif %}>
-                                     POR</label>
-
-                                    <label for="id_billing_1" style="padding-left:5px;"><input type="radio" name="billing" value="DUAL" required id="id_billing_1" {% if form.instance.id and form.instance.billing == "DUAL" %}checked{% endif %}>
-                                     DUAL</label>
+                                     13. <label>Billing: </label>
+                                      {{ object.billing }}
                                   </div>
                                  </div>
 
 
                                  <div class="form-row">
                                   <div class="form-group col-md-4">
-                                     14.  <label for="id_door_to_door_0">Door To Door:</label> <span style="color:red;">*</span>
-
-                                          <label for="id_door_to_door_0"><input type="radio" name="door_to_door" value="Yes" required id="id_door_to_door_0" {% if form.instance.id and form.instance.door_to_door == "Yes" %}checked{% endif %}>
-                                         Yes</label>
-
-                                        <label for="id_door_to_door_1"><input type="radio" name="door_to_door" value="No" required id="id_door_to_door_1" {% if form.instance.id and form.instance.door_to_door == "No" or not form.instance.id %}checked{% endif %}>
-                                         No</label>
+                                     14. <label>Door to door: </label>
+                                      {{ object.door_to_door }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -178,75 +133,57 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Pricing & Utility Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    15. {{ form.utility_description.label_tag }}
-                                      <span style="color:red;">{{ form.utility_description.errors }}</span>
-                                      {{ form.utility_description }}
-                                      {{ form.utility_description.help_text }}
+                                      15. <label>Utility Description: </label>
+                                      {{ object.utility_description }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    16. {{ form.utility_pool.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.utility_pool.errors }}</span>
-                                      {{ form.utility_pool }}
-                                      {{ form.utility_pool.help_text }}
+                                    16. <label>Utility Pool(%): </label>
+                                      {{ object.utility_pool }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    17. {{ form.rate_class.label_tag }}
-                                      <span style="color:red;">{{ form.rate_class.errors }}</span>
-                                      {{ form.rate_class }}
-                                      {{ form.rate_class.help_text }}
+                                    17. <label>Rate Class: </label>
+                                      {{ object.rate_class }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    18. {{ form.gas_rate_class.label_tag }}
-                                      <span style="color:red;">{{ form.gas_rate_class.errors }}</span>
-                                      {{ form.gas_rate_class }}
-                                      {{ form.gas_rate_class.help_text }}
+                                      18. <label>Gas Rate Class: </label>
+                                      {{ object.gas_rate_class }}
                                   </div>
                                  </div>
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    19. {{ form.electric_utility.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_utility.errors }}</span>
-                                      {{ form.electric_utility }}
-                                      {{ form.electric_utility.help_text }}
+                                      19. <label>Electric Utility: </label>
+                                      {{ object.electric_utility }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    20. {{ form.gas_utility.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.gas_utility.errors }}</span>
-                                      {{ form.gas_utility }}
-                                      {{ form.gas_utility.help_text }}
+                                    20. <label>Gas Utility: </label>
+                                      {{ object.gas_utility }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    21. {{ form.utility_account_type.label_tag }}
-                                      <span style="color:red;">{{ form.utility_account_type.errors }}</span>
-                                      {{ form.utility_account_type }}
-                                      {{ form.utility_account_type.help_text }}
+                                    21. <label>Account Type: </label>
+                                      {{ object.utility_account_type }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    22. {{ form.utility_account_nos.label_tag }}
-                                      <span style="color:red;">{{ form.utility_account_nos.errors }}</span>
-                                      {{ form.utility_account_nos }}
-                                      {{ form.utility_account_nos.help_text }}
+                                    22. <label>Account Nos: </label>
+                                      {{ object.utility_account_nos }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    23. {{ form.passthru.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.passthru.errors }}</span>
-                                      {{ form.passthru }}
-                                      {{ form.passthru.help_text }}
+                                      23. <label>Passthru: </label>
+                                      {{ object.passthru.name }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -255,28 +192,20 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Gas Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    24. <label for="id_commodity_gas_0">Commodity Gas:</label> <span style="color:red;">*</span>
-                                    <label for="id_commodity_gas_0"><input type="radio" name="commodity_gas" value="Yes" required id="id_commodity_gas_0" {% if form.instance.id and form.instance.commodity_gas == "Yes"%}checked{% endif %}>
-                                     Yes</label>
-
-                                    <label for="id_commodity_gas_1"><input type="radio" name="commodity_gas" value="No" required id="id_commodity_gas_1" {% if form.instance.id and form.instance.commodity_gas == "No" or not form.instance.id  %}checked{% endif %}>
-                                     No</label>
+                                    24. <label>Commodity Gas: </label>
+                                       {{ object.commodity_gas }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    25. {{ form.delivery_type.label_tag }}
-                                      <span style="color:red;">{{ form.delivery_type.errors }}</span>
-                                      {{ form.delivery_type }}
-                                      {{ form.delivery_type.help_text }}
+                                      25. <label>Delivery Type: </label>
+                                      {{ object.delivery_type }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    26. {{ form.gas_price_plan.label_tag }}
-                                      <span style="color:red;">{{ form.gas_price_plan.errors }}</span>
-                                      {{ form.gas_price_plan }}
-                                      {{ form.gas_price_plan.help_text }}
+                                      26. <label>Gas Price Plan</label>
+                                      {{ object.gas_price_plan }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -285,149 +214,109 @@
 
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    27. <label for="id_electric_0">Electric:</label> <span style="color:red;">*</span>
-                                    <label for="id_electric_0"><input type="radio" name="electric" value="Yes" required id="id_electric_0" {% if form.instance.id and form.instance.electric == "Yes"%}checked{% endif %}>
-                                     Yes</label>
-                                    <label for="id_electric_1"><input type="radio" name="electric" value="No" required id="id_electric_1" {% if form.instance.id and form.instance.electric == "No" or not form.instance.id  %}checked{% endif %}>
-                                     No</label>
+                                    27. <label>Electric:</label>
+                                        {{ object.electric }}
                                   </div>
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    28. {{ form.green.label_tag }}
-                                      <span style="color:red;">{{ form.green.errors }}</span>
-                                      {{ form.green }}
-                                      {{ form.green.help_text }}
+                                      28. <label>Green: </label>
+                                      {{ object.green }}
                                   </div>
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    29. {{ form.Zone.label_tag }}
-                                      <span style="color:red;">{{ form.Zone.errors }}</span>
-                                      {{ form.Zone }}
-                                      {{ form.Zone.help_text }}
+                                      29. <label>Zone: </label>
+                                      {{ object.Zone.name }}
                                   </div>
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    30. {{ form.electric_price_type.label_tag }}
-                                      <span style="color:red;">{{ form.electric_price_type.errors }}</span>
-                                      {{ form.electric_price_type }}
-                                      {{ form.electric_price_type.help_text }}
+                                      30. <label>Electric Price Type: </label>
+                                          {{ object.electric_price_type }}
                                   </div>
                                  </div>
                           </fieldset>
                            <br>
-                          <fieldset>
+                          <fieldset class="form-row col-md-12">
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Commodity Billing Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                     31. <label for="id_therm_0">Therm:</label> <span style="color:red;">*</span>
-
-                                     <label for="id_therm_0"><input type="radio" name="therm" value="Yes" required id="id_therm_0" {% if form.instance.id and form.instance.therm == "Yes" %}checked{% endif %}>
-                                     Yes</label>
-
-                                    <label for="id_therm_1"><input type="radio" name="therm" value="No" required id="id_therm_1" {% if form.instance.id and form.instance.therm == "No" or not form.instance.id  %}checked{% endif %}>
-                                     No</label>
+                                     31. <label>Therm:</label>
+                                          {{ object.therm }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    32. <label for="id_tax_exempt_0">Tax Exempt:</label> <span style="color:red;">*</span>
-                                    <label for="id_tax_exempt_0"><input type="radio" name="tax_exempt" value="Yes" required id="id_tax_exempt_0" {% if form.instance.id and form.instance.tax_exempt == "Yes" %}checked{% endif %}>
-                                     Yes</label>
-                                    <label for="id_tax_exempt_1"><input type="radio" name="tax_exempt" value="No" required id="id_tax_exempt_1" {% if form.instance.id and form.instance.tax_exempt == "No" or not form.instance.id  %}checked{% endif %}>
-                                     No</label>
+                                    32. <label>Tax Exempt:</label>
+                                      {{ object.tax_exempt }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    33. <label for="id_monthly_budget_0">Monthly Budget:</label> <span style="color:red;">*</span>
-                                    <label for="id_monthly_budget_0"><input type="radio" name="monthly_budget" value="Yes" required id="id_monthly_budget_0" {% if form.instance.id and form.instance.monthly_budget == "Yes" %}checked{% endif %}>
-                                     Yes</label>
-                                    <label for="id_monthly_budget_1"><input type="radio" name="monthly_budget" value="No" required id="id_monthly_budget_1" {% if form.instance.id and form.instance.monthly_budget == "No" or not form.instance.id  %}checked{% endif %}>
-                                     No</label>
+                                    33. <label>Monthly Budget:</label>
+                                      {{ object.monthly_budget }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    34. {{ form.budget_amount.label_tag }}
-                                      <span style="color:red;">{{ form.budget_amount.errors }}</span>
-                                      {{ form.budget_amount }}
-                                      {{ form.budget_amount.help_text }}
+                                      34. <label>Budget Amount: </label>
+                                      {{ object.budget_amount }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    35. {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.gas_bandwidth_usage.errors }}</span>
-                                      {{ form.gas_bandwidth_usage }}
-                                      {{ form.gas_bandwidth_usage.help_text }}
+                                      35. <label>Gas Bandwidth Usage: </label>
+                                      {{ object.gas_bandwidth_usage }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    36. {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_bandwidth_usage.errors }}</span>
-                                      {{ form.electric_bandwidth_usage }}
-                                      {{ form.electric_bandwidth_usage.help_text }}
+                                      36. <label>Electric Bandwidth Usage: </label>
+                                      {{ object.electric_bandwidth_usage }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    37. {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.gas_fixed_rate.errors }}</span>
-                                      {{ form.gas_fixed_rate }}
-                                      {{ form.gas_fixed_rate.help_text }}
+                                      37. <label>Gas Fixed Rate: </label>
+                                      {{ object.gas_fixed_rate }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    38. {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_fixed_rate.errors }}</span>
-                                      {{ form.electric_fixed_rate }}
-                                      {{ form.electric_fixed_rate.help_text }}
+                                      38. <label>Electric Fixed Rate: </label>
+                                      {{ object.electric_fixed_rate }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    39. {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.gas_index_rate.errors }}</span>
+                                      39. <label>Gas Index Rate: </label>
                                       {{ form.gas_index_rate }}
-                                      {{ form.gas_index_rate.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    40. {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.electric_index_rate.errors }}</span>
-                                      {{ form.electric_index_rate }}
-                                      {{ form.electric_index_rate.help_text }}
+                                      40. <label>Electric Index Rate: </label>
+                                      {{ object.electric_index_rate }}
                                   </div>
                                  </div>
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    41. {{ form.agreement_length.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.agreement_length.errors }}</span>
-                                      {{ form.agreement_length }}
-                                      {{ form.agreement_length.help_text }}
+                                      41. <label>Agreement Lenght: </label>
+                                      {{ object.agreement_length }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    42. {{ form.contract_start_date.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.contract_start_date.errors }}</span>
-                                      {{ form.contract_start_date }}
-                                      {{ form.contract_start_date.help_text }}
+                                      42. <label>Contract Start Date: </label>
+                                      {{ object.contract_start_date }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    43. {{ form.document.label_tag }}
-                                      <span style="color:red;">{{ form.document.errors }}</span>
-                                      {{ form.document }}
-                                      {{ form.document.help_text }}
+                                      43. <label>Document: </label>
+                                      {{ object.document }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -637,14 +526,12 @@
                                   <!--</div>-->
                                  <!--</div>-->
                           <!--</fieldset>-->
-                                <!--<div class="ln_solid"></div>-->
                               <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                  <a href="{% url 'list_surveys' %}" class='btn btn-primary' >Cancel</a>
-                                  <button class="btn btn-primary" type="reset">Reset</button>
-                                  <input type="submit" class="btn btn-success"/>
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
+                                  <a href="{% url 'list_surveys' %}" class='btn btn-primary' >Back</a>
                                 </div>
                               </div>
+                                <!--<div class="ln_solid"></div>-->
                                 </form>
                             </div>
                             <!-- /.box-body -->
@@ -660,123 +547,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block static %}
-<script>
-  $(document).ready(function(){
-   $("#id_survey_completed_by").addClass( "form-control" );
-   $("#id_agreement_date").addClass( "form-control" );
-   $('#id_agreement_date').datepicker({'dateFormat': 'mm/dd/yy',
-       'maxDate': 3650,
-       changeMonth: true,
-       changeYear: true,
-       });
-   $("#id_customer_name").addClass( "form-control" );
-   $("#id_completed_by").addClass( "form-control" );
-   $("#id_customer_phone").addClass( "form-control" );
-   $("#id_customer_email").addClass( "form-control" );
-   $("#id_salesperson_name").addClass( "form-control" );
-   $("#id_sbc").addClass( "form-control" );
-   $("#id_customer_type").addClass( "form-control" );
-   $("#id_passthru").addClass( "form-control" );
-   $("#id_passthru").bootstrapDualListbox();
-   $("#id_rate_class").addClass( "form-control" );
-   $("#id_gas_rate_class").addClass( "form-control" );
-   $("#id_electric_utility").addClass( "form-control" );
-   $("#id_gas_utility").addClass( "form-control" );
-   $("#id_utility_account_type").addClass( "form-control" );
-   $("#id_customer_description").addClass( "form-control" );
-   $("#id_utility_description").addClass( "form-control" );
-   $("#id_gas_description").addClass( "form-control" );
-   $("#id_utility_pool").addClass( "form-control" );
-   $("#id_delivery_type").addClass( "form-control" );
-   $("#id_gas_price_plan").addClass( "form-control" );
-   $("#id_green").addClass( "form-control" );
-   $("#id_electric_price_type").addClass( "form-control" );
-   $("#id_Zone").addClass( "form-control" );
-   $("#id_Zone").bootstrapDualListbox();
-   $("#id_utility_account_nos").addClass( "form-control" );
-   $("#id_electric_description").addClass( "form-control" );
-   $("#id_billing_description").addClass( "form-control" );
-   $("#id_budget_amount").addClass( "form-control" );
-   $("#id_electric_bandwidth_usage").addClass( "form-control" );
-   $("#id_gas_bandwidth_usage").addClass( "form-control" );
-   $("#id_electric_fixed_rate").addClass( "form-control" );
-   $("#id_electric_index_rate").addClass( "form-control" );
-   $("#id_gas_fixed_rate").addClass( "form-control" );
-   $("#id_gas_index_rate").addClass( "form-control" );
-   $("#id_agreement_length").addClass( "form-control" );
-   $("#id_contract_start_date").addClass( "form-control" );
-   $('#id_contract_start_date').datepicker({'dateFormat': 'mm/dd/yy',
-       'maxDate': 3650,
-       changeMonth: true,
-       changeYear: true,
-       });
-   $("#id_deal_description").addClass( "form-control" );
-   $("#id_utility_service_class").addClass( "form-control" );
-   $("#id_broker_margin").addClass( "form-control" );
-   $("#id_usage_from_date").addClass( "form-control" );
-   $('#id_usage_from_date').datepicker({
-       'dateFormat': 'mm/dd/yy',
-        changeMonth: true,
-       changeYear: true,
-       onSelect: function(selected) {
-          $("#id_usage_to_date").datepicker("option","minDate", selected)
-        }
-    });
-   $("#id_usage_to_date").addClass( "form-control" );
-   $('#id_usage_to_date').datepicker({
-       'dateFormat': 'mm/dd/yy',
-       changeMonth: true,
-       changeYear: true,
-       'maxDate': 3650,
-        onSelect: function(selected) {
-           $("#id_usage_from_date").datepicker("option","maxDate", selected)
-        }
-   });
-   $("#id_base_icap").addClass( "form-control" );
-   $("#id_base_trans_tag").addClass( "form-control" );
-   $("#id_base").addClass( "form-control" );
-   $("#id_slope").addClass( "form-control" );
-   $("#id_term_volume").addClass( "form-control" );
-   $("#id_utilized_term_net_margin").addClass( "form-control" );
-   $("#id_salesperson_or_team").addClass( "form-control" );
-   $("#id_energy_deal_component").addClass( "form-control" );
-   $("#id_capacity_deal_component").addClass( "form-control" );
-   $("#id_line_looses_deal_component").addClass( "form-control" );
-   $("#id_rec_or_zec").addClass( "form-control" );
-   $("#id_srec").addClass( "form-control" );
-   $("#id_nits").addClass( "form-control" );
-   $("#id_taxes").addClass( "form-control" );
-   $("#id_swing_rate").addClass( "form-control" );
-   $("#id_hedge_type").addClass( "form-control" );
-   $("#id_hedge_product_volume").addClass( "form-control" );
-   $("#id_hedge_price").addClass( "form-control" );
-   $("#id_estimated_annual_hedge_volume").addClass( "form-control" );
-    });
-    $('#check-address').on('change', function (e) {
-      if ($('#check-address').is(":checked")){
-        $("#id_billing_address_line1").val($("#id_service_address_line1").val());
-        $("#id_billing_address_line2").val($("#id_service_address_line2").val());
-        $("#id_billing_address_city").val($("#id_service_address_city").val());
-        $("#id_billing_address_state").val($("#id_service_address_state").val());
-        $("#id_billing_address_zip_code").val($("#id_service_address_zip_code").val());
-      }else{
-        $("#id_billing_address_line1").val("");
-        $("#id_billing_address_line2").val("");
-        $("#id_billing_address_city").val("");
-        $("#id_billing_address_state").val("");
-        $("#id_billing_address_zip_code").val("");
-      }
-    });
-</script>
-<style>
-.form-group .btn {
-    margin-bottom: 0px;
-}
-.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
-    width: 50%;
-}
-</style>
 {% endblock %}

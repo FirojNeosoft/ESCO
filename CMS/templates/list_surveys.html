@@ -47,11 +47,12 @@
                                     {% for survey in survey_list %}
                                       <tr class="survey" id="{{ survey.id }}" >
                                           <td>{{ survey.survey_completed_by.username }}</td>
-                                          <td>{{ survey.customer_full_name }}</td>
-                                          <td>{{ survey.salesperson_full_name }}</td>
+                                          <td>{{ survey.customer_name }}</td>
+                                          <td>{{ survey.salesperson_name }}</td>
                                           <td>{{ survey.created_at|date:'M d,Y h:m A' }}</td>
                                         <td>
-                                          <a class="fa fa-pencil-square-o" href="{% url 'update_survey' survey.id %}"></a>
+                                          <a class="fa fa-eye" href="{% url 'survey_detail' survey.id %}"></a>
+                                          <a class="fa fa-pencil-square-o" href="{% url 'update_survey' survey.id %}" style="padding-left:50px;"></a>
                                           <a class="fa fa-times client_delete_icon" href="{% url 'delete_survey' survey.id %}" obj_name='' style="padding-left:50px;"></a>
                                         </td>
                                       </tr>

@@ -16,6 +16,15 @@ class SurveyForm(ModelForm):
     #                   widget=forms.DateInput(format = '%m/%d/%Y'))
     # zone = forms.MultipleChoiceField(choices=settings.ZONE)
 
+
+    def __init__(self, *args, **kwargs):
+        super(SurveyForm, self).__init__(*args, **kwargs)
+        passthru = Passthru.objects.get(name='Not listed')
+        zone = Zone.objects.get(name='Not listed')
+        self.fields['passthru'].initial = passthru
+        self.fields['Zone'].initial = zone
+        self.fields['green'].initial = 'No'
+
     class Meta:
         model = Survey
         exclude = ('gas_description', 'electric_description', 'billing_description','created_at')

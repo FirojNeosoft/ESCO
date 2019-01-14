@@ -207,7 +207,7 @@ SBC = (('Yes', 'Yes'),)
 CUSTOMER_TYPE = (('Commercial', 'Commercial'), ('Residential', 'Residential'), ('Industrial', 'Industrial'),\
                  ('Religious', 'Religious'), ('Anders', 'Anders'))
 BILLING = (('POR', 'POR'), ('DUAL', 'DUAL'))
-PASSTHRU = (('GRT', 'GRT'), ('REC/ZEC', 'REC/ZEC'), ('ICAP', 'ICAP'), ('TRANS', 'TRANS'), ('OPTION5', 'OPTION5'),\
+PASSTHRU = (('Not listed', 'Not listed'), ('GRT', 'GRT'), ('REC/ZEC', 'REC/ZEC'), ('ICAP', 'ICAP'), ('TRANS', 'TRANS'), ('OPTION5', 'OPTION5'),\
             ('OPTION6', 'OPTION6'))
 RATE_CLASS = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'), ('OPTION4', 'OPTION4'), ('OPTION5', 'OPTION5'),\
             ('OPTION6', 'OPTION6'))
@@ -218,7 +218,7 @@ GAS_UTILITY = (('ConEdison', 'ConEdison'), ('PSEG-LIPA', 'PSEG-LIPA'), ('Nationa
 UTILITY_ACCOUNT_TYPE = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'))
 DELIVERY_TYPE = (('Firm', 'Firm'), ('Interruptible', 'Interruptible'))
 PRICE_PLAN = (('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index'))
-ZONE = (('Zone A', 'Zone A'), ('Zone B', 'Zone B'), ('Zone C', 'Zone C'), ('Zone D', 'Zone D'), ('Zone E', 'Zone E'), \
+ZONE = (('Not listed', 'Not listed'), ('Zone A', 'Zone A'), ('Zone B', 'Zone B'), ('Zone C', 'Zone C'), ('Zone D', 'Zone D'), ('Zone E', 'Zone E'), \
         ('Zone F', 'Zone F'), ('Zone G', 'Zone G'), ('Zone H', 'Zone H'), ('Zone I', 'Zone I'), ('Zone J', 'Zone J'), \
         ('Zone K', 'Zone K'), ('PSEG', 'PSEG'), ('JCPL', 'JCPL'), ('ACEC', 'ACEC'), ('DPL', 'DPL'))
 
