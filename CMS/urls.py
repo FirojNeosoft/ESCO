@@ -12,5 +12,10 @@ urlpatterns = [
       path('<int:pk>/delete/', DeleteSurveyView.as_view(), name='delete_survey'),
       path('<int:pk>/detail/', DetailSurveyView.as_view(), name='survey_detail'),
 
+      path('users/', ListUsersView.as_view(), name='list_users'),
+      path('user/add/', CreateUserView.as_view(), name='add_user'),
+      path('user/<int:pk>/edit/', UpdateUserView.as_view(), name='update_user'),
+      path('user/<int:pk>/delete/', DeleteUserView.as_view(), name='delete_user'),
+
       path('download/', survey_export_csv, name='download_surveys'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
