@@ -5,7 +5,7 @@
 {% block body %}
        <div class="page-title">
             <div class="title_left">
-                <h3>Survey</h3>
+                <h3>Contract</h3>
             </div>
            <a href="{% url 'download_surveys' %}" class="list-inline pull-right btn btn-success downloadControl"><i class="fa fa-download"></i></a>
             <div class="clearfix"></div>
@@ -15,7 +15,7 @@
                         <div class="">
                             <ul class="list-inline pull-right controls">
                                 <li>
-                                    <a class="btn btn-primary download-excel" href="{% url 'add_survey' %}"> <i class="fa fa-plus"></i> Add New Survey</a>
+                                    <a class="btn btn-primary download-excel" href="{% url 'add_survey' %}"> <i class="fa fa-plus"></i> Add New Contract</a>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>
@@ -39,6 +39,9 @@
                                       <th class="sorting">Customer Name</th>
                                       <th class="sorting">Salesperson Name</th>
                                       <th class="sorting">Created At</th>
+                                      <th class="sorting">Created By</th>
+                                      <th class="sorting">Modified At</th>
+                                      <th class="sorting">Modified By</th>
                                       <th class="no-sort">Action</th>
 
                                     </tr>
@@ -50,6 +53,9 @@
                                           <td>{{ survey.customer_name }}</td>
                                           <td>{{ survey.salesperson_name }}</td>
                                           <td>{{ survey.created_at|date:'M d,Y h:m A' }}</td>
+                                          <td>{{ survey.created_by.username}}</td>
+                                          <td>{{ survey.modified_at|date:'M d,Y h:m A' }}</td>
+                                          <td>{{ survey.modified_by.username }}</td>
                                         <td>
                                           <a class="fa fa-eye" href="{% url 'survey_detail' survey.id %}"></a>
                                           <a class="fa fa-pencil-square-o" href="{% url 'update_survey' survey.id %}" style="padding-left:50px;"></a>

@@ -27,7 +27,8 @@ class SurveyForm(ModelForm):
 
     class Meta:
         model = Survey
-        exclude = ('gas_description', 'electric_description', 'billing_description','created_at')
+        exclude = ('gas_description', 'electric_description', 'billing_description','created_at', 'created_by',\
+                   'modified_at', 'modified_by')
         widgets = {
           'service_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
           'service_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),

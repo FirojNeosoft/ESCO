@@ -1,4 +1,4 @@
-import logging
+import logging, datetime
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
@@ -91,6 +91,22 @@ class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = "Survey was created successfully"
     success_url = reverse_lazy('list_surveys')
 
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            survey = form.save()
+            survey.created_by = request.user
+            survey.save()
+        else:
+            logger.error(form.errors)
+            messages.error(request, form.errors)
+            return redirect('add_survey')
+        return HttpResponseRedirect(reverse('list_surveys'))
+
 
 class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
@@ -101,6 +117,24 @@ class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'survey_form.html'
     success_message = "Survey was updated successfully"
     success_url = reverse_lazy('list_surveys')
+
+    def post(self, request, pk):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        self.object = Survey.objects.get(id=pk)
+        form = self.get_form()
+        if form.is_valid():
+            survey = form.save()
+            survey.modified_by = request.user
+            survey.modified_at = datetime.datetime.now()
+            survey.save()
+        else:
+            logger.error(form.errors)
+            messages.error(request, form.errors)
+            return redirect('update_survey', pk)
+        return HttpResponseRedirect(reverse('list_surveys'))
 
 
 class DeleteSurveyView(LoginRequiredMixin, DeleteView):
