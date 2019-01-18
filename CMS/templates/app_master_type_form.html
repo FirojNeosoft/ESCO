@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+<div class="page-title">
+    <div class="title_left">
+        <h3>{% if form.instance.id %}Edit {% else %}Add New {% endif %}Type</h3>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <section class="content">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="">
+                            <div class="box-header">
+                              {% if messages %}
+                                <ul class="messages alert alert-danger">
+                                  {% for message in messages %}
+                                    {{ message }}
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <form method="post" enctype="multipart/form-data">
+                                   {% csrf_token %}
+                              {% for hidden_field in form.hidden_fields %}
+                                {{ hidden_field.errors }}
+                                {{ hidden_field }}
+                              {% endfor %}
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  {{ form.type.label_tag }} <span style="color:red;">*</span>
+                                  <span style="color:red;">{{ form.type.errors }}</span>
+                                  {{ form.type }}
+                                  {{ form.type.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  {{ form.name.label_tag }} <span style="color:red;">*</span>
+                                  <span style="color:red;">{{ form.name.errors }}</span>
+                                  {{ form.name }}
+                                  {{ form.name.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  {{ form.status.label_tag }}
+                                  <span style="color:red;">{{ form.status.errors }}</span>
+                                  {{ form.status }}
+                                  {{ form.status.help_text }}
+                              </div>
+                             </div>
+                              <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                  <a href="{% url 'list_master_types' %}" class='btn btn-primary' >Cancel</a>
+                                  <button class="btn btn-primary" type="reset">Reset</button>
+                                  <input type="submit" class="btn btn-success"/>
+                                </div>
+                              </div>
+                                </form>
+                            </div>
+                            <!-- /.box-body -->
+                          </div>
+                          <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block static %}
+<script>
+  $(document).ready(function(){
+   $("#id_type").addClass( "form-control" );
+   $("#id_name").addClass( "form-control" );
+   $("#id_status").addClass( "form-control" );
+   });
+</script>
+<style>
+.form-group .btn {
+    margin-bottom: 0px;
+}
+</style>
+{% endblock %}

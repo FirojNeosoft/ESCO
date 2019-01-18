@@ -5,6 +5,12 @@ from django.forms import ModelForm
 from CMS.models import *
 
 
+class ApplicationMasterTypesForm(ModelForm):
+    class Meta:
+        model = ApplicationMasterTypes
+        exclude = ('created_at', 'created_by', 'modified_at', 'modified_by')
+
+
 class SurveyForm(ModelForm):
     agreement_date = forms.DateField(input_formats = ('%m/%d/%Y',),
                       widget=forms.DateInput(format = '%m/%d/%Y'))
@@ -19,27 +25,28 @@ class SurveyForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SurveyForm, self).__init__(*args, **kwargs)
-        passthru = Passthru.objects.get(name='Not listed')
-        zone = Zone.objects.get(name='Not listed')
+        passthru = ApplicationMasterTypes.objects.get(type='Passthru', name='Not listed')
+        zone = ApplicationMasterTypes.objects.get(type='Zone', name='Not listed')
         self.fields['passthru'].initial = passthru
-        self.fields['Zone'].initial = zone
+        self.fields['zone'].initial = zone
         self.fields['green'].initial = 'No'
 
     class Meta:
         model = Survey
-        exclude = ('gas_description', 'electric_description', 'billing_description','created_at')
+        exclude = ('gas_description', 'electric_description', 'billing_description','created_at', 'created_by',\
+                   'modified_at', 'modified_by')
         widgets = {
           'service_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
           'service_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
           'service_address_city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
           'service_address_state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
-          'service_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
+          # 'service_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
           'service_address_zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code', 'class': 'form-control'}),
           'billing_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
           'billing_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
           'billing_address_city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
           'billing_address_state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
-          'billing_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
+          # 'billing_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
           'billing_address_zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code', 'class': 'form-control'}),
           'customer_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200 }),
           'utility_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
@@ -55,7 +62,7 @@ class SurveyForm(ModelForm):
           # 'gas_price_plan': forms.RadioSelect(),
           'electric': forms.RadioSelect(),
           # 'green': forms.RadioSelect(),
-          # 'Zone': forms.RadioSelect(),
+          # 'zone': forms.RadioSelect(),
           # 'electric_price_type': forms.RadioSelect(),
           'therm': forms.RadioSelect(),
           'tax_exempt': forms.RadioSelect(),
@@ -74,8 +81,8 @@ class SurveyForm(ModelForm):
             self._errors['green'] = self.error_class(['This field is required'])
         if electric == 'Yes' and not self.cleaned_data['electric_price_type']:
             self._errors['electric_price_type'] = self.error_class(['This field is required'])
-        if electric == 'Yes' and not self.cleaned_data['Zone']:
-            self._errors['Zone'] = self.error_class(['This field is required'])
+        if electric == 'Yes' and not self.cleaned_data['zone']:
+            self._errors['zone'] = self.error_class(['This field is required'])
         if self.cleaned_data['gas_price_plan'] == 'Fixed' and not self.cleaned_data['gas_fixed_rate']:
             self._errors['gas_fixed_rate'] = self.error_class(['This field is required'])
         if self.cleaned_data['gas_price_plan'] == 'Index' and not self.cleaned_data['gas_index_rate']:

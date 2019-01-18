@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+       <div class="page-title">
+            <div class="title_left">
+                <h3>Types</h3>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="">
+                            <ul class="list-inline pull-right controls">
+                                <li>
+                                    <a class="btn btn-primary download-excel" href="{% url 'add_master_type' %}"> <i class="fa fa-plus"></i> Add New Type</a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="box-header" >
+                                {% if messages %}
+                                  <ul>
+                                    {% for message in messages %}
+                                      <li class="alert alert-success">{{ message }}</li>
+                                    {% endfor %}
+                                  </ul>
+                                {% endif %}
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <div class="table-responsive">
+                                <table id="type_table" class="cell-border hover row-border order-column">
+                                    <thead>
+                                    <tr>
+                                      <th class="sorting">Category</th>
+                                      <th class="sorting">Name</th>
+                                      <th class="sorting">Status</th>
+                                      <th class="no-sort">Action</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for type in applicationmastertypes_list %}
+                                      <tr class="master_type" id="{{ type.id }}" >
+                                          <td>{{ type.type }}</td>
+                                          <td>{{ type.name }}</td>
+                                          <td>{{ type.status }}</td>
+                                        <td>
+                                          <a class="fa fa-pencil-square-o" href="{% url 'update_master_type' type.id %}" style="padding-left:50px;"></a>
+                                          <a class="fa fa-times client_delete_icon" href="{% url 'delete_master_type' type.id %}" obj_name='' style="padding-left:50px;"></a>
+                                        </td>
+                                      </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block static %}
+<script>
+  $(document).ready(function(){
+  $('#type_table').DataTable();
+   $(".master_type").on('click', function(){
+    var type_id = $(this).attr('id');
+    window.location.href = '/cms/type/'+type_id+'/edit/';
+  });
+  });
+</script>
+{% endblock %}

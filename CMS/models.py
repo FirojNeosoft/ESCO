@@ -1,13 +1,18 @@
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
-from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class ApplicationMasterTypes(models.Model):
     name = models.CharField(max_length=64, blank=False, null=False)
     type = models.CharField(max_length=128, choices=settings.MASTER_TYPES, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, blank=True, related_name='type_created_by', null=True,
+                                   on_delete=models.SET_NULL)
+    modified_at = models.DateTimeField(blank=True, null=True)
+    modified_by = models.ForeignKey(User, blank=True, related_name='type_modified_by', null=True,
+                                on_delete=models.SET_NULL)
     status = models.CharField(max_length=10, choices=settings.STATUS_CHOICES, default='Active')
 
     def __str__(self):
@@ -130,7 +135,14 @@ class Survey(models.Model):
     # hedge_price = models.DecimalField('Hedge Price', max_digits=10, decimal_places=2, default=0)
     # estimated_annual_hedge_volume = models.PositiveIntegerField('Est. Annual equivalent hedged volume', blank=False,\
     #                                                             null=False, default=0)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, blank=True, related_name='survey_created_by', null=True,
+                                   on_delete=models.SET_NULL)
+    modified_at = models.DateTimeField(blank=True, null=True)
+
+
+    modified_by = models.ForeignKey(User, blank=True, related_name='survey_modified_by', null=True,
+                                on_delete=models.SET_NULL)
 
     def __str__(self):
         return '%s' % (self.customer_name)
