@@ -5,26 +5,24 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 
 
-class Passthru(models.Model):
-    name = models.CharField(max_length=20,choices=settings.PASSTHRU, unique=True)
+class ApplicationMasterTypes(models.Model):
+    name = models.CharField(max_length=64, blank=False, null=False)
+    type = models.CharField(max_length=128, choices=settings.MASTER_TYPES, blank=False, null=False)
+    status = models.CharField(max_length=10, choices=settings.STATUS_CHOICES, default='Active')
 
     def __str__(self):
         return self.name
 
-
-class Zone(models.Model):
-    name = models.CharField(max_length=20,choices=settings.ZONE, unique=True)
-
-    def __str__(self):
-        return self.name
+    class meta:
+        unique_together = ('name', 'type')
 
 
 class Survey(models.Model):
     """
     Survey model
     """
-    survey_completed_by = models.ForeignKey(User, related_name='survey', blank=False, null=False, on_delete=models.CASCADE)
-    agreement_date = models.DateField('Agreement Date', blank=False, null=False)
+    survey_completed_by = models.ForeignKey(User, related_name='survey', blank=True, null=True, on_delete=models.SET_NULL)
+    agreement_date = models.DateField('Agreement Date', blank=True, null=True)
     account_type = models.CharField(max_length=16, choices=settings.ACCOUNT_TYPE, blank=False, null=False, default='New Customer')
     customer_description = models.TextField(null=True, blank=True)
     customer_name = models.CharField('Customer Name', max_length=512, blank=False, null=False)
@@ -33,13 +31,13 @@ class Survey(models.Model):
     service_address_city = models.CharField(max_length=128, blank=False, null=False)
     service_address_state = models.CharField(max_length=128, blank=False, null=False)
     # service_address_country = models.CharField(max_length=128, blank=False, null=False)
-    service_address_zip_code = models.PositiveIntegerField('Zip Code', blank=False, null=False)
+    service_address_zip_code = models.PositiveIntegerField('Zip Code', blank=True, null=True)
     billing_address_line1 = models.CharField(max_length=128, blank=True, null=True)
     billing_address_line2 = models.CharField(max_length=128, blank=True, null=True)
     billing_address_city = models.CharField(max_length=128, blank=False, null=False)
     billing_address_state = models.CharField(max_length=128, blank=False, null=False)
     # billing_address_country = models.CharField(max_length=128, blank=False, null=False)
-    billing_address_zip_code = models.PositiveIntegerField('Zip Code', blank=False, null=False)
+    billing_address_zip_code = models.PositiveIntegerField('Zip Code', blank=True, null=True)
     customer_phone = models.CharField('Customer Phone', validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
         message="Phone number must be entered in the format:'+999999999'. Up to 15 digits allowed.")], max_length=15,\
         blank=True, null=True)
@@ -48,25 +46,30 @@ class Survey(models.Model):
     salesperson_name = models.CharField('Salesperson/Broker Name', max_length=512, blank=False, null=False)
     door_to_door = models.CharField('Door To Door', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
-    customer_type = models.CharField('Customer Type', max_length=32, choices=settings.CUSTOMER_TYPE, blank=False, \
-                                     null=False, default='Commercial')
+    customer_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Customer Type', 'status':'Active'},\
+                                      related_name='contract_cust_type', blank=False, null=False, default='Residential',\
+                                                                                          on_delete=models.SET_DEFAULT)
     billing = models.CharField('Billing', max_length=16, choices=settings.BILLING, blank=False, null=False, default='POR')
     utility_description = models.TextField(null=True, blank=True)
-    passthru = models.ManyToManyField(Passthru, blank=True, default='Not listed')
+    passthru = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to={'type': 'Passthru', 'status':'Active'},\
+                                      related_name='contract_passthru', default='Not listed')
     rate_class = models.CharField('Rate Class', max_length=8, blank=True, null=True)
     gas_rate_class = models.CharField('Gas Rate Class', max_length=8, blank=True, null=True)
     utility_pool = models.DecimalField('Utility Pool(%)', max_digits=10, decimal_places=2, default=0)
-    electric_utility = models.CharField('Utility/LDC - Electric', max_length=16, choices=settings.ELECTRIC_UTILITY, \
-                                        blank=False, null=False, default='ConEdison')
-    gas_utility = models.CharField('Utility/LDC - Gas', max_length=16, choices=settings.GAS_UTILITY, blank=False, null=False,
-                               default='ConEdison')
+    electric_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Electric Utility Type', 'status':'Active'},
+                      related_name='contract_electric_utility', blank=False, null=False, default='ConEdison',\
+                                         on_delete=models.SET_DEFAULT)
+
+    gas_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Gas Utility Type', 'status':'Active'},
+                      related_name='contract_gas_utility', blank=False, null=False, default='ConEdison',\
+                                         on_delete=models.SET_DEFAULT)
     utility_account_type = models.CharField('Account Type', max_length=8, blank=True, null=True)
     utility_account_nos = models.CharField('Utility Account #s', max_length=1024, blank=True, null=True)
     gas_description = models.TextField(null=True, blank=True)
     commodity_gas = models.CharField('Commodity Gas', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
-    delivery_type = models.CharField('Delivery Type', max_length=16, choices=settings.DELIVERY_TYPE, blank=True,\
-                                    null=True)
+    delivery_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Delivery Type', 'status':'Active'},
+                      related_name='contract_delivery_type', blank=True, null=True, on_delete=models.SET_NULL)
     gas_price_plan = models.CharField('Price Plan- Gas', max_length=8, choices=settings.PRICE_PLAN, blank=True,\
                                     null=True)
     electric_description = models.TextField(null=True, blank=True)
@@ -74,7 +77,8 @@ class Survey(models.Model):
                                     null=False, default='No')
     green = models.CharField('100% Green', max_length=3, choices=settings.BINARY_CHOICES, blank=True,\
                                     null=True)
-    Zone = models.ManyToManyField(Zone, blank=True, default='Not listed')
+    zone = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to={'type': 'Zone', 'status':'Active'},\
+                                      related_name='contract_zone', default='Not listed')
     electric_price_type = models.CharField('Electric Price Type', max_length=8, choices=settings.PRICE_PLAN, blank=True,\
                                     null=True)
     billing_description = models.TextField(null=True, blank=True)
@@ -95,8 +99,8 @@ class Survey(models.Model):
                                     null=True)
     gas_index_rate = models.DecimalField('Gas Index Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
                                     null=True)
-    agreement_length = models.PositiveIntegerField('Length of Agreement (in months)', blank=False, null=False)
-    contract_start_date = models.DateField('Contractual Start Date', blank=False, null=False)
+    agreement_length = models.PositiveIntegerField('Length of Agreement (in months)', blank=True, null=True)
+    contract_start_date = models.DateField('Contractual Start Date', blank=True, null=True)
     document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
     # deal_description = models.TextField(null=True, blank=True)
     # internal_data_available = models.CharField('Internal Data Available', max_length=3, choices=settings.BINARY_CHOICES,\

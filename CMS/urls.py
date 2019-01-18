@@ -13,4 +13,5 @@ urlpatterns = [
       path('<int:pk>/detail/', DetailSurveyView.as_view(), name='survey_detail'),
 
       path('download/', survey_export_csv, name='download_surveys'),
+      path('upload/', ImportDataView.as_view(), name='upload_surveys'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

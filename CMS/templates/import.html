@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+                                    <div class="form-group">
+                                        <input type="file" name="myfile">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                  <button class="btn btn-primary" type="submit">Upload</button>
+                                </div>
+                              </div>
+  </form>
+{% endblock %}
