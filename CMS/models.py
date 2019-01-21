@@ -19,7 +19,7 @@ class ApplicationMasterTypes(models.Model):
         return self.name
 
     class meta:
-        unique_together = ('name', 'type')
+        unique_together = ('name', 'type',)
 
     def delete(self):
         """
