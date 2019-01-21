@@ -21,6 +21,13 @@ class ApplicationMasterTypes(models.Model):
     class meta:
         unique_together = ('name', 'type')
 
+    def delete(self):
+        """
+        Delete employee
+        """
+        self.status = 'Delete'
+        self.save()
+
 
 class Survey(models.Model):
     """
