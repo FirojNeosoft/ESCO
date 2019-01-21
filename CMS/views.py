@@ -45,9 +45,15 @@ class CreateApplicationMasterTypeView(SuccessMessageMixin, CreateView):
         """
         form = self.get_form()
         if form.is_valid():
-            survey = form.save()
-            # survey.created_by = request.user
-            survey.save()
+            instance_exists = ApplicationMasterTypes.objects.filter(name=request.POST['name'],
+                                                                    type=request.POST['type']).exists()
+            if not instance_exists:
+                survey = form.save()
+                # survey.created_by = request.user
+                survey.save()
+            else:
+                messages.error(request, 'Master type with this name and category is already exist')
+                return redirect('add_master_type')
         else:
             logger.error(form.errors)
             messages.error(request, form.errors)

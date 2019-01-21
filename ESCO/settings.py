@@ -200,7 +200,7 @@ LOGGING = {
 
 # Required choices variables
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
-STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))
+STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'))
 BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
 SBC = (('Yes', 'Yes'),)
