@@ -14,6 +14,8 @@ from CMS.models import *
 from CMS.forms import *
 from CMS.resources import *
 
+from tablib import Dataset
+
 logger = logging.getLogger('cms_log')
 
 
