@@ -113,7 +113,7 @@ class Survey(models.Model):
                                     null=True)
     agreement_length = models.PositiveIntegerField('Length of Agreement (in months)', blank=True, null=True)
     contract_start_date = models.DateField('Contractual Start Date', blank=True, null=True)
-    document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
+    # document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
     # deal_description = models.TextField(null=True, blank=True)
     # internal_data_available = models.CharField('Internal Data Available', max_length=3, choices=settings.BINARY_CHOICES,\
     #                                            blank=False, null=False, default='Yes')
@@ -153,3 +153,10 @@ class Survey(models.Model):
 
     def __str__(self):
         return '%s' % (self.customer_name)
+
+
+class Doc(models.Model):
+    survey = models.ForeignKey('Survey', related_name='survey_doc', blank=False, null=False, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, blank=True)
+    document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)

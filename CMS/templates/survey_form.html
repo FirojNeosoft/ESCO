@@ -424,11 +424,41 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    43. {{ form.document.label_tag }}
-                                      <span style="color:red;">{{ form.document.errors }}</span>
-                                      {{ form.document }}
-                                      {{ form.document.help_text }}
+                                      43. <label>Documents (Max limit- 3 docs)</label>
+                                    <div class="table-responsive">
+                                        <table class="table docs_table">
+                                            {{ docs.management_form }}
+
+                                            {% for form in docs.forms %}
+                                                <!--{% if forloop.first %}-->
+                                                    <!--<thead>-->
+                                                    <!--<tr>-->
+                                                        <!--{% for field in form.visible_fields %}-->
+                                                            <!--<th>{{ field.label|capfirst }}</th>-->
+                                                        <!--{% endfor %}-->
+                                                    <!--</tr>-->
+                                                    <!--</thead>-->
+                                                <!--{% endif %}-->
+                                                <tr class="{% cycle row1 row2 %} formset_row">
+                                                    {% for field in form.visible_fields %}
+                                                        <td>
+                                                            {# Include the hidden fields in the form #}
+                                                            {% if forloop.first %}
+                                                                {% for hidden in form.hidden_fields %}
+                                                                    {{ hidden }}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                            <br>
+                                                            {{ field.errors.as_ul }}
+                                                            {{ field }}
+
+                                                        </td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
                                   </div>
+                                 </div>
                                  </div>
                           </fieldset>
                            <br>
@@ -663,6 +693,7 @@
 {% endblock %}
 
 {% block static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js"></script>
 <script>
   $(document).ready(function(){
    $("#id_survey_completed_by").addClass( "form-control" );
@@ -754,6 +785,13 @@
    $("#id_hedge_product_volume").addClass( "form-control" );
    $("#id_hedge_price").addClass( "form-control" );
    $("#id_estimated_annual_hedge_volume").addClass( "form-control" );
+   $(".docs_table").find('td input:checkbox').next("label") .andSelf() .remove();
+   if ($('.docs_table tr').length > 2){
+   $('.add-row').hide();
+   }
+   else{
+     $('.add-row').show();
+   }
     });
     $('#check-address').on('change', function (e) {
       if ($('#check-address').is(":checked")){
@@ -770,6 +808,23 @@
         $("#id_billing_address_zip_code").val("");
       }
     });
+        $('.formset_row').formset({
+        addText: 'Add New',
+        deleteText: 'Remove',
+        prefix: 'survey_doc'
+    });
+
+     $('.add-row').on('click', function (e) {
+      if ($('.docs_table tr').length > 2){
+       $('.add-row').hide();
+       }
+      });
+
+         $('.delete-row').on('click', function (e) {
+      if ($('.docs_table tr').length < 10){
+       $('.add-row').show();
+       }
+     });
 </script>
 <style>
 .form-group .btn {
@@ -777,6 +832,14 @@
 }
 .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
     width: 50%;
+}
+   a[class="add-row"]{
+    color: darkblue;
+    font-size: 125%;
+}
+   a[class="delete-row"]{
+    color: red;
+    font-size: 125%
 }
 </style>
 {% endblock %}

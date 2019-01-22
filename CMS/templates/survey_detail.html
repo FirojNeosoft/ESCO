@@ -183,6 +183,9 @@
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
                                       23. <label>Passthru: </label>
+                                      {% for p in passthru %}
+                                      <p>{{ p.name }}</p>
+                                      {% endfor %}
                                   </div>
                                  </div>
                           </fieldset>
@@ -226,6 +229,9 @@
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
                                       29. <label>Zone: </label>
+                                      {% for z in zones %}
+                                      <p>{{ z.name }}</p>
+                                      {% endfor %}
                                   </div>
                                  </div>
                                  <div class="form-row col-md-6">
@@ -313,8 +319,10 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      43. <label>Document: </label>
-                                      {{ object.document }}
+                                      43. <label>Document: </label> (Max limit- 3 docs)
+                                      {% for d in doc_list %}
+                                      <p><a href="/media/{{ d.document }}">{{ d.document }}</a></p>
+                                      {% endfor %}
                                   </div>
                                  </div>
                           </fieldset>

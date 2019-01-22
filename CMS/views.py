@@ -3,6 +3,7 @@ import logging, datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+from django.db import transaction
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
@@ -118,21 +119,45 @@ class CreateSurveyView(SuccessMessageMixin, CreateView):
     success_message = "Survey was created successfully"
     success_url = reverse_lazy('list_surveys')
 
-    def post(self, request, *args, **kwargs):
-        """
-        Handle POST requests: instantiate a form instance with the passed
-        POST variables and then check if it's valid.
-        """
-        form = self.get_form()
-        if form.is_valid():
-            survey = form.save()
-            # survey.created_by = request.user
-            survey.save()
+    def get_context_data(self, **kwargs):
+        data = super(CreateSurveyView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['docs'] = DocFormSet(self.request.POST, self.request.FILES)
         else:
-            logger.error(form.errors)
-            messages.error(request, form.errors)
-            return redirect('add_survey')
-        return HttpResponseRedirect(reverse('list_surveys'))
+            data['docs'] = DocFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        docs = context['docs']
+        with transaction.atomic():
+            if docs.is_valid():
+                self.object = form.save()
+                # self.object.created_by = request.user
+                self.object.save()
+                docs.instance = self.object
+                docs.save()
+            else:
+                logger.error(docs.errors)
+                messages.error(self.request, "Error occured while uploading documents")
+                return redirect('add_survey')
+        return super(CreateSurveyView, self).form_valid(form)
+
+    # def post(self, request, *args, **kwargs):
+    #     """
+    #     Handle POST requests: instantiate a form instance with the passed
+    #     POST variables and then check if it's valid.
+    #     """
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         survey = form.save()
+    #         # survey.created_by = request.user
+    #         survey.save()
+    #     else:
+    #         logger.error(form.errors)
+    #         messages.error(request, form.errors)
+    #         return redirect('add_survey')
+    #     return HttpResponseRedirect(reverse('list_surveys'))
 
 
 class UpdateSurveyView(SuccessMessageMixin, UpdateView):
@@ -145,23 +170,49 @@ class UpdateSurveyView(SuccessMessageMixin, UpdateView):
     success_message = "Survey was updated successfully"
     success_url = reverse_lazy('list_surveys')
 
-    def post(self, request, pk):
-        """
-        Handle POST requests: instantiate a form instance with the passed
-        POST variables and then check if it's valid.
-        """
-        self.object = Survey.objects.get(id=pk)
-        form = self.get_form()
-        if form.is_valid():
-            survey = form.save()
-            # survey.modified_by = request.user
-            survey.modified_at = datetime.datetime.now()
-            survey.save()
+    def get_context_data(self, **kwargs):
+        data = super(UpdateSurveyView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['docs'] = DocFormSet(self.request.POST, self.request.FILES, instance=self.object)
+            data['docs'].full_clean()
         else:
-            logger.error(form.errors)
-            messages.error(request, form.errors)
-            return redirect('update_survey', pk)
-        return HttpResponseRedirect(reverse('list_surveys'))
+            data['docs'] = DocFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        docs = context['docs']
+        with transaction.atomic():
+            self.object = form.save()
+            # survey.modified_by = request.user
+            self.object.modified_at = datetime.datetime.now()
+            self.object.save()
+            if docs.is_valid():
+                docs.instance = self.object
+                docs.save()
+            else:
+                logger.error(docs.errors)
+                messages.error(self.request, "Error occured while uploading documents")
+                return redirect('update_survey', self.object.id)
+        return super(UpdateSurveyView, self).form_valid(form)
+
+    # def post(self, request, pk):
+    #     """
+    #     Handle POST requests: instantiate a form instance with the passed
+    #     POST variables and then check if it's valid.
+    #     """
+    #     self.object = Survey.objects.get(id=pk)
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         survey = form.save()
+    #         # survey.modified_by = request.user
+    #         survey.modified_at = datetime.datetime.now()
+    #         survey.save()
+    #     else:
+    #         logger.error(form.errors)
+    #         messages.error(request, form.errors)
+    #         return redirect('update_survey', pk)
+    #     return HttpResponseRedirect(reverse('list_surveys'))
 
 
 class DeleteSurveyView(DeleteView):
@@ -176,6 +227,14 @@ class DeleteSurveyView(DeleteView):
 class DetailSurveyView(DetailView):
     model = Survey
     template_name = 'survey_detail.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context['passthru'] = kwargs['object'].passthru.all()
+        context['zones'] = kwargs['object'].zone.all()
+        context['doc_list'] = Doc.objects.filter(survey=kwargs['object'])
+        return context
 
 
 def survey_export_csv(request):

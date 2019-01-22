@@ -2,6 +2,8 @@ from django import forms
 from django.conf import settings
 from django.forms import ModelForm
 
+from django.forms.models import inlineformset_factory
+
 from CMS.models import *
 
 
@@ -93,3 +95,11 @@ class SurveyForm(ModelForm):
             self._errors['electric_index_rate'] = self.error_class(['This field is required'])
         if not self.cleaned_data['passthru']:
             self._errors['passthru'] = self.error_class(['This field is required'])
+
+
+class DocForm(ModelForm):
+    class Meta:
+        model = Doc
+        fields = ('survey', 'document')
+
+DocFormSet = inlineformset_factory(Survey, Doc, form=DocForm, extra=1, min_num=1, max_num=3, validate_min=True, validate_max=True)
