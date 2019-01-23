@@ -14,9 +14,9 @@ class ApplicationMasterTypesForm(ModelForm):
 
 
 class SurveyForm(ModelForm):
-    agreement_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+    agreement_date = forms.DateField(input_formats = ('%m/%d/%Y',), required=False,
                       widget=forms.DateInput(format = '%m/%d/%Y'))
-    contract_start_date = forms.DateField(input_formats = ('%m/%d/%Y',),
+    contract_start_date = forms.DateField(input_formats = ('%m/%d/%Y',), required=False,
                       widget=forms.DateInput(format = '%m/%d/%Y'))
     # usage_from_date = forms.DateField(input_formats = ('%m/%d/%Y',),
     #                   widget=forms.DateInput(format = '%m/%d/%Y'))
