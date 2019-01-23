@@ -18,7 +18,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views import *
+
 urlpatterns = [
+    path('login/', LoginView.as_view(), name="sys_login"),
+    path('logout/', LogoutView.as_view(), name="sys_logout"),
+    path('change_password/', ChangePasswordView.as_view(), name="change_password"),
     path('admin/', admin.site.urls),
     path('cms/', include('CMS.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

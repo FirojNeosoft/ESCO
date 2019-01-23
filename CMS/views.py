@@ -75,7 +75,7 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('list_users')
 
 
-class ListApplicationMasterTypesView(ListView):
+class ListApplicationMasterTypesView(LoginRequiredMixin, ListView):
     """
     List ApplicationMasterTypes
     """
@@ -84,7 +84,7 @@ class ListApplicationMasterTypesView(ListView):
     template_name = 'list_app_master_types.html'
 
 
-class CreateApplicationMasterTypeView(SuccessMessageMixin, CreateView):
+class CreateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Create new ApplicationMasterType
     """
@@ -117,7 +117,7 @@ class CreateApplicationMasterTypeView(SuccessMessageMixin, CreateView):
         return HttpResponseRedirect(reverse('list_master_types'))
 
 
-class UpdateApplicationMasterTypeView(SuccessMessageMixin, UpdateView):
+class UpdateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
     Update existing ApplicationMasterType
     """
@@ -146,7 +146,7 @@ class UpdateApplicationMasterTypeView(SuccessMessageMixin, UpdateView):
         return HttpResponseRedirect(reverse('list_master_types'))
 
 
-class DeleteApplicationMasterTypeView(DeleteView):
+class DeleteApplicationMasterTypeView(LoginRequiredMixin, DeleteView):
     """
     Delete existing ApplicationMasterType
     """
@@ -155,7 +155,7 @@ class DeleteApplicationMasterTypeView(DeleteView):
     success_url = reverse_lazy('list_master_types')
 
 
-class ListSurveyView(ListView):
+class ListSurveyView(LoginRequiredMixin, ListView):
     """
     List Survey
     """
@@ -164,7 +164,7 @@ class ListSurveyView(ListView):
     template_name = 'list_surveys.html'
 
 
-class CreateSurveyView(SuccessMessageMixin, CreateView):
+class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Create new survey
     """
@@ -215,7 +215,7 @@ class CreateSurveyView(SuccessMessageMixin, CreateView):
     #     return HttpResponseRedirect(reverse('list_surveys'))
 
 
-class UpdateSurveyView(SuccessMessageMixin, UpdateView):
+class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
     Update existing survey
     """
@@ -270,7 +270,7 @@ class UpdateSurveyView(SuccessMessageMixin, UpdateView):
     #     return HttpResponseRedirect(reverse('list_surveys'))
 
 
-class DeleteSurveyView(DeleteView):
+class DeleteSurveyView(LoginRequiredMixin, DeleteView):
     """
     Delete existing survey
     """
@@ -279,7 +279,7 @@ class DeleteSurveyView(DeleteView):
     success_url = reverse_lazy('list_surveys')
 
 
-class DetailSurveyView(DetailView):
+class DetailSurveyView(LoginRequiredMixin, DetailView):
     model = Survey
     template_name = 'survey_detail.html'
 
@@ -302,7 +302,7 @@ def survey_export_csv(request):
     return response
 
 
-class ImportDataView(View):
+class ImportDataView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'import.html')
