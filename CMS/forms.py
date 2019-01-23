@@ -10,7 +10,7 @@ from CMS.models import *
 class ApplicationMasterTypesForm(ModelForm):
     class Meta:
         model = ApplicationMasterTypes
-        exclude = ('created_at', 'created_by', 'modified_at', 'modified_by')
+        exclude = ('status', 'created_at', 'created_by', 'modified_at', 'modified_by')
 
 
 class SurveyForm(ModelForm):
