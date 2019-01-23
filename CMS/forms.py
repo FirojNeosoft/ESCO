@@ -102,4 +102,4 @@ class DocForm(ModelForm):
         model = Doc
         fields = ('survey', 'document')
 
-DocFormSet = inlineformset_factory(Survey, Doc, form=DocForm, extra=1, min_num=1, max_num=3, validate_min=True, validate_max=True)
+DocFormSet = inlineformset_factory(Survey, Doc, form=DocForm, extra=1, max_num=3, validate_max=True)

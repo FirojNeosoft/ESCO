@@ -146,8 +146,6 @@ class Survey(models.Model):
     created_by = models.ForeignKey(User, blank=True, related_name='survey_created_by', null=True,
                                    on_delete=models.SET_NULL)
     modified_at = models.DateTimeField(blank=True, null=True)
-
-
     modified_by = models.ForeignKey(User, blank=True, related_name='survey_modified_by', null=True,
                                 on_delete=models.SET_NULL)
 

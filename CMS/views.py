@@ -188,7 +188,7 @@ class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         with transaction.atomic():
             if docs.is_valid():
                 self.object = form.save()
-                # self.object.created_by = request.user
+                self.object.created_by = self.request.user
                 self.object.save()
                 docs.instance = self.object
                 docs.save()
@@ -239,7 +239,7 @@ class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         docs = context['docs']
         with transaction.atomic():
             self.object = form.save()
-            # survey.modified_by = request.user
+            self.object.modified_by = self.request.user
             self.object.modified_at = datetime.datetime.now()
             self.object.save()
             if docs.is_valid():
