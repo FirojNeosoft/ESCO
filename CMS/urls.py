@@ -6,6 +6,11 @@ from django.conf.urls.static import static
 from CMS.views import *
 
 urlpatterns = [
+      path('users/', ListUsersView.as_view(), name='list_users'),
+      path('user/add/', CreateUserView.as_view(), name='add_user'),
+      path('user/<int:pk>/edit/', UpdateUserView.as_view(), name='update_user'),
+      path('user/<int:pk>/delete/', DeleteUserView.as_view(), name='delete_user'),
+
       path('', ListSurveyView.as_view(), name='list_surveys'),
       path('add/', CreateSurveyView.as_view(), name='add_survey'),
       path('<int:pk>/edit/', UpdateSurveyView.as_view(), name='update_survey'),
