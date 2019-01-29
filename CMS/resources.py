@@ -16,7 +16,10 @@ class ExportSurveyResource(resources.ModelResource):
                 'created_at': {'format': '%m/%d/%Y %I:%M %p'},
                 }
     def dehydrate_survey_completed_by(self, survey):
-        return '%s' % (survey.survey_completed_by.username)
+        if survey.survey_completed_by:
+            return '%s' % (survey.survey_completed_by.username)
+        else:
+            return None
 
 class ImportSurveyResource(resources.ModelResource):
     # survey_completed_by = Field(attribute='survey_completed_by')

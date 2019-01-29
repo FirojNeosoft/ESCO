@@ -10,6 +10,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.utils.decorators import method_decorator
+
+from ESCO.decorators import *
 
 logger = logging.getLogger('tracker_log')
 
@@ -33,6 +36,7 @@ class LoginView(View):
             return HttpResponseRedirect('')
 
 
+@method_decorator(check_validity_of_license, name='dispatch')
 class LogoutView(LoginRequiredMixin, View):
     """
     Logout view
@@ -42,6 +46,7 @@ class LogoutView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse('sys_login'))
 
 
+@method_decorator(check_validity_of_license, name='dispatch')
 class ChangePasswordView(LoginRequiredMixin, View):
     """
     Change Password

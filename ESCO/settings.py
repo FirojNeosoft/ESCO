@@ -234,3 +234,7 @@ MASTER_TYPES = (('Customer Type', 'Customer Type'), ('Gas Utility Type', 'Gas Ut
 # config for django-import-export package
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
+
+# Date Format = 'MM/DD/YYYY'
+APP_LICENSE_EXPIRY_DATE = '02/22/2019'
+

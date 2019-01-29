@@ -1,24 +1,28 @@
 import logging, datetime
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.db import transaction
 from django.views.generic import View
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from CMS.models import *
 from CMS.forms import *
 from CMS.resources import *
+from ESCO.decorators import *
 
 from tablib import Dataset
 
 logger = logging.getLogger('cms_log')
 
+@method_decorator(check_validity_of_license, name='dispatch')
 class ListUsersView(LoginRequiredMixin, ListView):
     """
     List Users
@@ -27,7 +31,7 @@ class ListUsersView(LoginRequiredMixin, ListView):
     queryset = User.objects.all()
     template_name = 'user_list.html'
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class CreateUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Create new user
@@ -54,7 +58,7 @@ class CreateUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             return redirect('add_user')
         return HttpResponseRedirect(reverse('list_users'))
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class UpdateUserView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
     Update existing user
@@ -65,7 +69,7 @@ class UpdateUserView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = "%(username)s was updated successfully"
     success_url = reverse_lazy('list_users')
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     """
     Delete existing user
@@ -74,7 +78,7 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
     template_name = 'user_confirm_delete.html'
     success_url = reverse_lazy('list_users')
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class ListApplicationMasterTypesView(LoginRequiredMixin, ListView):
     """
     List ApplicationMasterTypes
@@ -83,7 +87,7 @@ class ListApplicationMasterTypesView(LoginRequiredMixin, ListView):
     queryset = ApplicationMasterTypes.objects.all()
     template_name = 'list_app_master_types.html'
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class CreateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Create new ApplicationMasterType
@@ -116,7 +120,7 @@ class CreateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, C
             return redirect('add_master_type')
         return HttpResponseRedirect(reverse('list_master_types'))
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class UpdateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
     Update existing ApplicationMasterType
@@ -145,7 +149,7 @@ class UpdateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, U
             return redirect('update_master_type', pk)
         return HttpResponseRedirect(reverse('list_master_types'))
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class DeleteApplicationMasterTypeView(LoginRequiredMixin, DeleteView):
     """
     Delete existing ApplicationMasterType
@@ -154,7 +158,7 @@ class DeleteApplicationMasterTypeView(LoginRequiredMixin, DeleteView):
     template_name = 'app_master_type_confirm_delete.html'
     success_url = reverse_lazy('list_master_types')
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class ListSurveyView(LoginRequiredMixin, ListView):
     """
     List Survey
@@ -163,7 +167,7 @@ class ListSurveyView(LoginRequiredMixin, ListView):
     queryset = Survey.objects.all()
     template_name = 'list_surveys.html'
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     Create new survey
@@ -214,7 +218,7 @@ class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     #         return redirect('add_survey')
     #     return HttpResponseRedirect(reverse('list_surveys'))
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
     Update existing survey
@@ -269,7 +273,7 @@ class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     #         return redirect('update_survey', pk)
     #     return HttpResponseRedirect(reverse('list_surveys'))
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class DeleteSurveyView(LoginRequiredMixin, DeleteView):
     """
     Delete existing survey
@@ -278,7 +282,7 @@ class DeleteSurveyView(LoginRequiredMixin, DeleteView):
     template_name = 'survey_confirm_delete.html'
     success_url = reverse_lazy('list_surveys')
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class DetailSurveyView(LoginRequiredMixin, DetailView):
     model = Survey
     template_name = 'survey_detail.html'
@@ -291,7 +295,8 @@ class DetailSurveyView(LoginRequiredMixin, DetailView):
         context['doc_list'] = Doc.objects.filter(survey=kwargs['object'])
         return context
 
-
+@login_required
+@check_validity_of_license
 def survey_export_csv(request):
     survey_resource = ExportSurveyResource()
     dataset = survey_resource.export()
@@ -301,7 +306,7 @@ def survey_export_csv(request):
     response['Content-Disposition'] = 'attachment; filename="survey.xls"'
     return response
 
-
+@method_decorator(check_validity_of_license, name='dispatch')
 class ImportDataView(LoginRequiredMixin, View):
 
     def get(self, request):

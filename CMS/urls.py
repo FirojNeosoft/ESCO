@@ -17,7 +17,7 @@ urlpatterns = [
       path('<int:pk>/delete/', DeleteSurveyView.as_view(), name='delete_survey'),
       path('<int:pk>/detail/', DetailSurveyView.as_view(), name='survey_detail'),
 
-      path('type', ListApplicationMasterTypesView.as_view(), name='list_master_types'),
+      path('type/', ListApplicationMasterTypesView.as_view(), name='list_master_types'),
       path('type/add/', CreateApplicationMasterTypeView.as_view(), name='add_master_type'),
       path('type/<int:pk>/edit/', UpdateApplicationMasterTypeView.as_view(), name='update_master_type'),
       path('type/<int:pk>/delete/', DeleteApplicationMasterTypeView.as_view(), name='delete_master_type'),
