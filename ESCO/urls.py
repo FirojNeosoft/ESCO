@@ -22,6 +22,7 @@ from .views import *
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name="sys_login"),
+    path('verification/', UserVerificationView.as_view(), name="otp_verification"),
     path('logout/', LogoutView.as_view(), name="sys_logout"),
     path('change_password/', ChangePasswordView.as_view(), name="change_password"),
     path('admin/', admin.site.urls),

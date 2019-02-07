@@ -98,10 +98,10 @@
 </head>
 <body>
 <div class="login-form">
-    <form action="{% url 'sys_login' %}" method="post">
+    <form action="{% url 'otp_verification' %}" method="post">
       {% csrf_token %}
-		<div class="avatar"><i class="material-icons">&#xE7FF;</i></div>
-    	<h4 class="modal-title">Login to Your Account</h4>
+		<div class="avatar"><i class="fas fa-lock"></i></div>
+    	<h4 class="modal-title">Enter Your OTP</h4>
         <div class="box-header">
             {% if messages %}
             <ul class="messages alert alert-danger">
@@ -112,17 +112,10 @@
             {% endif %}
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+            <input type="hidden" value={{ username }} name="username" required="required">
+            <input type="text" class="form-control" name="otp" placeholder="OTP" required="required">
         </div>
-        <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
-        </div>
-        <div class="form-group small clearfix">
-            <label class="checkbox-inline"><input type="checkbox"> <span style="padding-left: 4px;">Remember me</span></label>
-            <!--<a href="" class="forgot-link">Forgot Password?</a>-->
-        </div>
-        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
-        <!--<div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>-->
+        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit">
     </form>
 </div>
 </body>

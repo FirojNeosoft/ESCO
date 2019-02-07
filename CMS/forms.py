@@ -1,10 +1,21 @@
 from django import forms
 from django.conf import settings
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 from django.forms.models import inlineformset_factory
 
 from CMS.models import *
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email', 'is_staff']
+
+    def clean(self):
+        if not self.cleaned_data['email']:
+            self._errors['email'] = self.error_class(['This field is required'])
 
 
 class ApplicationMasterTypesForm(ModelForm):

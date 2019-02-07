@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 
 
+class UserVerification(models.Model):
+    user = models.ForeignKey(User, related_name='user_verification', blank=False, null=False, on_delete=models.CASCADE)
+    otp = models.PositiveIntegerField(unique=True, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class ApplicationMasterTypes(models.Model):
     name = models.CharField(max_length=64, blank=False, null=False)
     type = models.CharField(max_length=128, choices=settings.MASTER_TYPES, blank=False, null=False)
@@ -158,3 +164,4 @@ class Doc(models.Model):
     title = models.CharField(max_length=255, blank=True)
     document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+

@@ -37,7 +37,7 @@ class CreateUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     Create new user
     """
     model = User
-    fields = ['username', 'password', 'email', 'is_staff']
+    form_class = UserForm
     template_name = 'user_form.html'
     success_message = "%(username)s was created successfully"
     success_url = reverse_lazy('list_users')
@@ -64,7 +64,7 @@ class UpdateUserView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     Update existing user
     """
     model = User
-    fields = ['username', 'password', 'email', 'is_staff']
+    form_class = UserForm
     template_name = 'user_form.html'
     success_message = "%(username)s was updated successfully"
     success_url = reverse_lazy('list_users')
