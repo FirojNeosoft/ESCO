@@ -26,5 +26,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name="sys_logout"),
     path('change_password/', ChangePasswordView.as_view(), name="change_password"),
     path('admin/', admin.site.urls),
+    path('auth/', include('django.contrib.auth.urls')),
     path('cms/', include('CMS.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
