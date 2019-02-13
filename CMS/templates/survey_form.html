@@ -78,10 +78,10 @@
                                  </div>
                                <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    5. {{ form.customer_name.label_tag }} <span style="color:red;">*</span>
-                                      <span style="color:red;">{{ form.customer_name.errors }}</span>
-                                      {{ form.customer_name }}
-                                      {{ form.customer_name.help_text }}
+                                    5. {{ form.customer.label_tag }} <span style="color:red;">*</span>
+                                      <span style="color:red;">{{ form.customer.errors }}</span>
+                                      {{ form.customer }}
+                                      {{ form.customer.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
@@ -703,7 +703,13 @@
        changeMonth: true,
        changeYear: true,
        });
-   $("#id_customer_name").addClass( "form-control" );
+   $("#id_customer").addClass( "form-control" );
+       <!--var availableCustomers = [-->
+     <!--{% for cust in customers %}-->
+          <!--"{{cust}}",-->
+      <!--{%endfor%}-->
+      <!--];-->
+   <!--$("#id_customer").autocomplete({});-->
    $("#id_completed_by").addClass( "form-control" );
    $("#id_customer_phone").addClass( "form-control" );
    $("#id_customer_email").addClass( "form-control" );

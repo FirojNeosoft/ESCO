@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+<div class="page-title">
+    <div class="title_left">
+        <h3>{% if form.instance.id %}Edit {% else %}Add New {% endif %}Customer</h3>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <section class="content">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="">
+                            <div class="box-header">
+                              {% if messages %}
+                                <ul class="messages alert alert-danger">
+                                  {% for message in messages %}
+                                    {{ message }}
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <form method="post" enctype="multipart/form-data">
+                                   {% csrf_token %}
+                              {% for hidden_field in form.hidden_fields %}
+                                {{ hidden_field.errors }}
+                                {{ hidden_field }}
+                              {% endfor %}
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  1.  {{ form.name.label_tag }}
+                                  <span style="color:red;">{{ form.name.errors }}</span>
+                                  {{ form.name }}
+                                  {{ form.name.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  2.  {{ form.description.label_tag }}
+                                  <span style="color:red;">{{ form.description.errors }}</span>
+                                  {{ form.description }}
+                                  {{ form.description.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  3.  {{ form.phone.label_tag }}
+                                  <span style="color:red;">{{ form.phone.errors }}</span>
+                                  {{ form.phone }}
+                                  {{ form.phone.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  4.  {{ form.email.label_tag }}
+                                  <span style="color:red;">{{ form.email.errors }}</span>
+                                  {{ form.email }}
+                                  {{ form.email.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  5.  {{ form.status.label_tag }}
+                                  <span style="color:red;">{{ form.status.errors }}</span>
+                                  <select name="status" id="id_status">
+                                      <option value="Active" selected>Active</option>
+                                      <option value="Inactive" {% if form.instance.id and form.instance.status == "Inactive" %}selected{% endif %}>Inactive</option>
+                                  </select>
+                                  {{ form.status.help_text }}
+                              </div>
+                             </div>
+                             <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                      6. <label>Utility account number(s)</label> <span style="color:red;">*</span>
+                                    <div class="table-responsive">
+                                        <table class="table docs_table">
+                                            {{ utility_accounts.management_form }}
+
+                                            {% for form in utility_accounts.forms %}
+                                                <!--{% if forloop.first %}-->
+                                                    <!--<thead>-->
+                                                    <!--<tr>-->
+                                                        <!--{% for field in form.visible_fields %}-->
+                                                            <!--<th>{{ field.label|capfirst }}</th>-->
+                                                        <!--{% endfor %}-->
+                                                    <!--</tr>-->
+                                                    <!--</thead>-->
+                                                <!--{% endif %}-->
+                                                <tr class="{% cycle row1 row2 %} formset_row">
+                                                    {% for field in form.visible_fields %}
+                                                        <td>
+                                                            {# Include the hidden fields in the form #}
+                                                            {% if forloop.first %}
+                                                                {% for hidden in form.hidden_fields %}
+                                                                    {{ hidden }}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                            <br>
+                                                            {{ field.errors.as_ul }}
+                                                            {{ field }}
+
+                                                        </td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                  </div>
+                                 </div>
+                                 </div>
+                                <!--<div class="ln_solid"></div>-->
+                              <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                  <a href="{% url 'list_customers' %}" class='btn btn-primary' >Cancel</a>
+                                  <button class="btn btn-primary" type="reset">Reset</button>
+                                  <input type="submit" class="btn btn-success"/>
+                                </div>
+                              </div>
+                                </form>
+                            </div>
+                            <!-- /.box-body -->
+                          </div>
+                          <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js"></script>
+<script>
+  $(document).ready(function(){
+   $("#id_name").addClass( "form-control" );
+   $("#id_description").addClass( "form-control" );
+   $("#id_description").attr( "cols", 10 );
+   $("#id_description").attr( "rows", 2 );
+   $("#id_email").addClass( "form-control" );
+   $("#id_phone").addClass( "form-control" );
+   $("#id_status").addClass( "form-control" );
+   $("#id_customer_email").addClass( "form-control" );
+   if ($('.docs_table tr').length > 50){
+   $('.add-row').hide();
+   }
+   else{
+     $('.add-row').show();
+   }
+    });
+        $('.formset_row').formset({
+        addText: 'Add New',
+        deleteText: 'Remove',
+        prefix: 'cust_utility_no'
+    });
+
+     $('.add-row').on('click', function (e) {
+      if ($('.docs_table tr').length > 50){
+       $('.add-row').hide();
+       }
+      });
+
+         $('.delete-row').on('click', function (e) {
+      if ($('.docs_table tr').length < 10){
+       $('.add-row').show();
+       }
+     });
+</script>
+<style>
+.form-group .btn {
+    margin-bottom: 0px;
+}
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    width: 50%;
+}
+   a[class="add-row"]{
+    color: darkblue;
+    font-size: 125%;
+}
+   a[class="delete-row"]{
+    color: red;
+    font-size: 125%
+}
+</style>
+{% endblock %}

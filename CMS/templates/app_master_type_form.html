@@ -52,9 +52,12 @@
                              </div>
                              <div class="form-row">
                               <div class="form-group col-md-6">
-                                  {{ form.status.label_tag }}
+                                   {{ form.status.label_tag }}
                                   <span style="color:red;">{{ form.status.errors }}</span>
-                                  {{ form.status }}
+                                  <select name="status" id="id_status">
+                                      <option value="Active" selected>Active</option>
+                                      <option value="Inactive" {% if form.instance.id and form.instance.status == "Inactive" %}selected{% endif %}>Inactive</option>
+                                  </select>
                                   {{ form.status.help_text }}
                               </div>
                              </div>

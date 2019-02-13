@@ -84,7 +84,7 @@ class ListApplicationMasterTypesView(LoginRequiredMixin, ListView):
     List ApplicationMasterTypes
     """
     model = ApplicationMasterTypes
-    queryset = ApplicationMasterTypes.objects.all()
+    queryset = ApplicationMasterTypes.objects.exclude(status='Delete')
     template_name = 'list_app_master_types.html'
 
 @method_decorator(check_validity_of_license, name='dispatch')
@@ -159,6 +159,99 @@ class DeleteApplicationMasterTypeView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('list_master_types')
 
 @method_decorator(check_validity_of_license, name='dispatch')
+class ListCustomerView(LoginRequiredMixin, ListView):
+    """
+    List Customer
+    """
+    model = Customer
+    queryset = Customer.objects.exclude(status='Delete')
+    template_name = 'customer_list.html'
+
+@method_decorator(check_validity_of_license, name='dispatch')
+class CreateCustomerView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """
+    Create new customer
+    """
+    model = Customer
+    form_class = CustomerForm
+    template_name = 'customer_form.html'
+    success_message = "Customer was created successfully"
+    success_url = reverse_lazy('list_customers')
+
+    def get_context_data(self, **kwargs):
+        data = super(CreateCustomerView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['utility_accounts'] = CustomerUtilityNumberFormSet(self.request.POST)
+        else:
+            data['utility_accounts'] = CustomerUtilityNumberFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        utility_accounts = context['utility_accounts']
+        with transaction.atomic():
+            if utility_accounts.is_valid():
+                self.object = form.save()
+                self.object.created_by = self.request.user
+                self.object.save()
+                utility_accounts.instance = self.object
+                utility_accounts.save()
+            else:
+                logger.error(utility_accounts.errors)
+                messages.error(self.request, "Error occured while adding utility accounts")
+                return redirect('add_customer')
+        return super(CreateCustomerView, self).form_valid(form)
+
+
+@method_decorator(check_validity_of_license, name='dispatch')
+class UpdateCustomerView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    Update existing customer
+    """
+    model = Customer
+    form_class = CustomerForm
+    template_name = 'customer_form.html'
+    success_message = "Customer was updated successfully"
+    success_url = reverse_lazy('list_customers')
+
+    def get_context_data(self, **kwargs):
+        data = super(UpdateCustomerView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['utility_accounts'] = CustomerUtilityNumberFormSet(self.request.POST, instance=self.object)
+            data['utility_accounts'].full_clean()
+        else:
+            data['utility_accounts'] = CustomerUtilityNumberFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        utility_accounts = context['utility_accounts']
+        with transaction.atomic():
+            self.object = form.save()
+            self.object.modified_by = self.request.user
+            self.object.modified_at = datetime.datetime.now()
+            self.object.save()
+            if utility_accounts.is_valid():
+                utility_accounts.instance = self.object
+                utility_accounts.save()
+            else:
+                logger.error(utility_accounts.errors)
+                messages.error(self.request, "Error occured while editing customers")
+                return redirect('update_customer', self.object.id)
+        return super(UpdateCustomerView, self).form_valid(form)
+
+
+@method_decorator(check_validity_of_license, name='dispatch')
+class DeleteCustomerView(LoginRequiredMixin, DeleteView):
+    """
+    Delete existing customer
+    """
+    model = Customer
+    template_name = 'customer_confirm_delete.html'
+    success_url = reverse_lazy('list_customers')
+
+
+@method_decorator(check_validity_of_license, name='dispatch')
 class ListSurveyView(LoginRequiredMixin, ListView):
     """
     List Survey
@@ -184,6 +277,7 @@ class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             data['docs'] = DocFormSet(self.request.POST, self.request.FILES)
         else:
             data['docs'] = DocFormSet()
+            data['customers'] = Customer.objects.filter(status='Active')
         return data
 
     def form_valid(self, form):

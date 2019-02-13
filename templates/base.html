@@ -66,15 +66,25 @@
                 <h3>General</h3>
                   {% if request.user.is_superuser %}
                    <ul class="nav side-menu">
-                      <li><a href="{% url 'list_users' %}"><i class="fa fa-users"></i> System Users </a></li>
+                      <li><a href="{% url 'list_users' %}"><i class="fa fa-user"></i> System Users </a></li>
                    </ul>
-                  {% endif %}
                 <ul class="nav side-menu">
                    <li><a href="{% url 'list_master_types' %}"><i class="fa fa-cog fa-fw"></i> Master Types </a></li>
+                </ul>
+                {% endif %}
+                {% if request.user.is_staff or not request.user.is_superuser and not request.user.is_staff%}
+                <ul class="nav side-menu">
+                   <li><a href="{% url 'list_customers' %}"><i class="fa fa-users"></i> Customers </a></li>
                 </ul>
                 <ul class="nav side-menu">
                    <li><a href="{% url 'list_surveys' %}"><i class="fa fa-cog fa-clipboard"></i> Contract </a></li>
                 </ul>
+                 {% endif %}
+                  {% if request.user.is_superuser %}
+                <ul class="nav side-menu">
+                   <li><a href=""><i class="fa fa-cog fa-clipboard"></i> Reports </a></li>
+                </ul>
+                  {% endif %}
               </div>
             </div>
             <!-- /sidebar menu -->

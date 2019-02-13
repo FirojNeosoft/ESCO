@@ -11,6 +11,11 @@ urlpatterns = [
       path('user/<int:pk>/edit/', UpdateUserView.as_view(), name='update_user'),
       path('user/<int:pk>/delete/', DeleteUserView.as_view(), name='delete_user'),
 
+      path('customer/', ListCustomerView.as_view(), name='list_customers'),
+      path('customer/add/', CreateCustomerView.as_view(), name='add_customer'),
+      path('customer/<int:pk>/edit/', UpdateCustomerView.as_view(), name='update_customer'),
+      path('customer/<int:pk>/delete/', DeleteCustomerView.as_view(), name='delete_customer'),
+
       path('', ListSurveyView.as_view(), name='list_surveys'),
       path('add/', CreateSurveyView.as_view(), name='add_survey'),
       path('<int:pk>/edit/', UpdateSurveyView.as_view(), name='update_survey'),

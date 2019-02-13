@@ -11,17 +11,38 @@ from CMS.models import *
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'is_staff']
+        fields = ['username', 'password', 'email', 'first_name', 'last_name', 'is_superuser', 'is_staff', 'is_active']
+        help_texts = {
+            'is_superuser': 'Designates that this user has admin role',
+            'is_staff': 'Designates that this user has staff role',
+        }
 
     def clean(self):
-        if not self.cleaned_data['email']:
+        if self.cleaned_data['email']:
+            if User.objects.filter(email=self.cleaned_data['email']).exclude(username=self.cleaned_data['username']).exists():
+                self._errors['email'] = self.error_class(['This email is already used'])
+        else:
             self._errors['email'] = self.error_class(['This field is required'])
 
 
 class ApplicationMasterTypesForm(ModelForm):
     class Meta:
         model = ApplicationMasterTypes
-        exclude = ('status', 'created_at', 'created_by', 'modified_at', 'modified_by')
+        exclude = ('created_at', 'created_by', 'modified_at', 'modified_by')
+
+
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+        exclude = ('created_at', 'created_by', 'modified_at', 'modified_by')
+
+
+class CustomerUtilityNumberForm(ModelForm):
+    class Meta:
+        model = CustomerUtilityNumber
+        fields = ('customer', 'utility_no')
+
+CustomerUtilityNumberFormSet = inlineformset_factory(Customer, CustomerUtilityNumber, form=CustomerUtilityNumberForm, extra=1, max_num=50, validate_max=True)
 
 
 class SurveyForm(ModelForm):
@@ -38,6 +59,24 @@ class SurveyForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SurveyForm, self).__init__(*args, **kwargs)
+        if kwargs.get('instance'):
+            self.fields['customer'].queryset = Customer.objects.exclude(status='Delete')
+            self.fields['customer_type'].queryset = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
+            self.fields['electric_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(
+                status='Delete')
+            self.fields['gas_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Gas Utility Type').exclude(status='Delete')
+            self.fields['delivery_type'].queryset = ApplicationMasterTypes.objects.filter(type='Delivery Type').exclude(status='Delete')
+            self.fields['passthru'].queryset = ApplicationMasterTypes.objects.filter(type='Passthru').exclude(status='Delete')
+            self.fields['zone'].queryset = ApplicationMasterTypes.objects.filter(type='Zone').exclude(status='Delete')
+        else:
+            self.fields['customer'].queryset = Customer.objects.filter(status='Active')
+            self.fields['customer_type'].queryset = ApplicationMasterTypes.objects.filter(type='Customer Type', status='Active')
+            self.fields['electric_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Utility Type', status='Active')
+            self.fields['gas_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Gas Utility Type', status='Active')
+            self.fields['delivery_type'].queryset = ApplicationMasterTypes.objects.filter(type='Delivery Type', status='Active')
+            self.fields['passthru'].queryset = ApplicationMasterTypes.objects.filter(type='Passthru', status='Active')
+            self.fields['zone'].queryset = ApplicationMasterTypes.objects.filter(type='Zone', status='Active')
+        self.fields['survey_completed_by'].queryset = User.objects.filter(is_active = True)
         passthru = ApplicationMasterTypes.objects.get(type='Passthru', name='Not listed')
         zone = ApplicationMasterTypes.objects.get(type='Zone', name='Not listed')
         self.fields['passthru'].initial = passthru

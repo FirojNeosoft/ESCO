@@ -5,23 +5,19 @@
 {% block body %}
        <div class="page-title">
             <div class="title_left">
-                <h3>Contract</h3>
+                <h3>Customer</h3>
             </div>
-           <a href="{% url 'download_surveys' %}" class="list-inline pull-right btn btn-success downloadControl"><i class="fa fa-download"></i></a>
             <div class="clearfix"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="">
                             <ul class="list-inline pull-right controls">
-                                {% if request.user.is_staff %}
                                 <li>
-                                    <a class="btn btn-primary download-excel" href="{% url 'upload_surveys' %}"> <i class="fa fa-upload"></i> Upload Data</a>
+                                    {% if request.user.is_staff %}
+                                    <a class="btn btn-primary download-excel" href="{% url 'add_customer' %}"> <i class="fa fa-plus"></i> Add New Customer</a>
+                                    {% endif %}
                                 </li>
-                                <li>
-                                    <a class="btn btn-primary download-excel" href="{% url 'add_survey' %}"> <i class="fa fa-plus"></i> Add New Contract</a>
-                                </li>
-                                {% endif %}
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -40,27 +36,26 @@
                                 <table id="surveys_table" class="cell-border hover row-border order-column">
                                     <thead>
                                     <tr>
-                                      <th class="sorting">Survey Completed By</th>
                                       <th class="sorting">Customer Name</th>
-                                      <th class="sorting">Salesperson Name</th>
-                                      <th class="sorting">Created At</th>
+                                      <th class="sorting">Email</th>
+                                      <th class="sorting">Phone No</th>
+                                      <th class="sorting">Status</th>
                                       <th class="no-sort">Action</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for survey in survey_list %}
-                                      <tr class="survey" id="{{ survey.id }}" >
-                                          <td>{{ survey.survey_completed_by.username }}</td>
-                                          <td>{{ survey.customer.name }}</td>
-                                          <td>{{ survey.salesperson_name }}</td>
-                                          <td>{{ survey.created_at|date:'M d,Y h:m A' }}</td>
+                                    {% for customer in customer_list %}
+                                      <tr class="customer" id="{{ customer.id }}" >
+                                          <td>{{ customer.name }}</td>
+                                          <td>{{ customer.email }}</td>
+                                          <td>{{ customer.phone }}</td>
+                                          <td>{{ customer.status }}</td>
                                         <td>
-                                          <a class="fa fa-eye" href="{% url 'survey_detail' survey.id %}"></a>
-                                            {% if request.user.is_staff %}
-                                          <a class="fa fa-pencil-square-o" href="{% url 'update_survey' survey.id %}" style="padding-left:50px;"></a>
-                                          <a class="fa fa-times client_delete_icon" href="{% url 'delete_survey' survey.id %}" obj_name='' style="padding-left:50px;"></a>
-                                            {% endif %}
+                                         {% if request.user.is_staff %}
+                                          <a class="fa fa-pencil-square-o" href="{% url 'update_customer' customer.id %}" style="padding-left:50px;"></a>
+                                          <a class="fa fa-times client_delete_icon" href="{% url 'delete_customer' customer.id %}" obj_name='' style="padding-left:50px;"></a>
+                                         {% endif %}
                                         </td>
                                       </tr>
                                     {% endfor %}

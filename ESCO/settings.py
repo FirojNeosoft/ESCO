@@ -91,7 +91,7 @@ DATABASES = {
 #         'NAME': 'ESCO_CMS',
 #         'USER': '',
 #         'PASSWORD': '',
-#         'HOST': '166.62.119.178\SQLEXPRESS2014',
+#         'HOST': '',
 #         'PORT': '11433',
 #         'OPTIONS': {
 #             'driver': 'ODBC Driver 17 for SQL Server',
@@ -200,7 +200,7 @@ LOGGING = {
 
 # Required choices variables
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
-STATUS_CHOICES = (('Active', 'Active'), )
+STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))
 BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
 SBC = (('Yes', 'Yes'),)

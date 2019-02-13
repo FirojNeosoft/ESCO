@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
@@ -35,6 +36,40 @@ class ApplicationMasterTypes(models.Model):
         self.save()
 
 
+class Customer(models.Model):
+    """
+    Customer
+    """
+    name = models.CharField('Customer Name', max_length=512, blank=False, null=False)
+    description = models.TextField(null=True, blank=True)
+    phone = models.CharField('Customer Phone', validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
+        message="Phone number must be entered in the format:'+999999999'. Up to 15 digits allowed.")], max_length=15,\
+        blank=False, null=False)
+    email = models.EmailField('Customer Email', blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, blank=True, related_name='customer_created_by', null=True,
+                                   on_delete=models.SET_NULL)
+    modified_at = models.DateTimeField(blank=True, null=True)
+    modified_by = models.ForeignKey(User, blank=True, related_name='customer_managed_by', null=True,
+                                on_delete=models.SET_NULL)
+    status = models.CharField(max_length=10, choices=settings.STATUS_CHOICES, default='Active')
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+    def delete(self):
+        """
+        Delete employee
+        """
+        self.status = 'Delete'
+        self.save()
+
+
+class CustomerUtilityNumber(models.Model):
+    customer = models.ForeignKey('Customer', related_name='cust_utility_no', blank=False, null=False, on_delete=models.CASCADE)
+    utility_no = models.PositiveIntegerField('Utility No', blank=False, null=False)
+
+
 class Survey(models.Model):
     """
     Survey model
@@ -43,7 +78,9 @@ class Survey(models.Model):
     agreement_date = models.DateField('Agreement Date', blank=True, null=True)
     account_type = models.CharField(max_length=16, choices=settings.ACCOUNT_TYPE, blank=False, null=False, default='New Customer')
     customer_description = models.TextField(null=True, blank=True)
-    customer_name = models.CharField('Customer Name', max_length=512, blank=False, null=False)
+    # customer_name = models.CharField('Customer Name', max_length=512, blank=False, null=False)
+    customer = models.ForeignKey(Customer, related_name='survey_customer', blank=False, null=True, on_delete=models.SET_NULL,\
+                                 limit_choices_to=Q(status='Active') | Q(status='Inactive'))
     service_address_line1 = models.CharField(max_length=128, blank=True, null=True)
     service_address_line2 = models.CharField(max_length=128, blank=True, null=True)
     service_address_city = models.CharField(max_length=128, blank=False, null=False)
@@ -64,21 +101,21 @@ class Survey(models.Model):
     salesperson_name = models.CharField('Salesperson/Broker Name', max_length=512, blank=False, null=False)
     door_to_door = models.CharField('Door To Door', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
-    customer_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Customer Type', 'status':'Active'},\
+    customer_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to= Q(type='Customer Type') & Q(status='Active') | Q(status='Inactive'),\
                                       related_name='contract_cust_type', blank=False, null=False, default='Residential',\
                                                                                           on_delete=models.SET_DEFAULT)
     billing = models.CharField('Billing', max_length=16, choices=settings.BILLING, blank=False, null=False, default='POR')
     utility_description = models.TextField(null=True, blank=True)
-    passthru = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to={'type': 'Passthru', 'status':'Active'},\
+    passthru = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to=Q(type='Passthru') & Q(status='Active') | Q(status='Inactive'),\
                                       related_name='contract_passthru', default='Not listed')
     rate_class = models.CharField('Rate Class', max_length=8, blank=True, null=True)
     gas_rate_class = models.CharField('Gas Rate Class', max_length=8, blank=True, null=True)
     utility_pool = models.DecimalField('Utility Pool(%)', max_digits=10, decimal_places=2, default=0)
-    electric_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Electric Utility Type', 'status':'Active'},
+    electric_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to=Q(type='Electric Utility Type') & Q(status='Active') | Q(status='Inactive'),
                       related_name='contract_electric_utility', blank=False, null=False, default='ConEdison',\
                                          on_delete=models.SET_DEFAULT)
 
-    gas_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Gas Utility Type', 'status':'Active'},
+    gas_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to=Q(type='Gas Utility Type') & Q(status='Active') | Q(status='Inactive'),
                       related_name='contract_gas_utility', blank=False, null=False, default='ConEdison',\
                                          on_delete=models.SET_DEFAULT)
     utility_account_type = models.CharField('Account Type', max_length=8, blank=True, null=True)
@@ -86,7 +123,7 @@ class Survey(models.Model):
     gas_description = models.TextField(null=True, blank=True)
     commodity_gas = models.CharField('Commodity Gas', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
-    delivery_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to={'type': 'Delivery Type', 'status':'Active'},
+    delivery_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to=Q(type='Delivery Type') & Q(status='Active') | Q(status='Inactive'),
                       related_name='contract_delivery_type', blank=True, null=True, on_delete=models.SET_NULL)
     gas_price_plan = models.CharField('Price Plan- Gas', max_length=8, choices=settings.PRICE_PLAN, blank=True,\
                                     null=True)
@@ -95,7 +132,7 @@ class Survey(models.Model):
                                     null=False, default='No')
     green = models.CharField('100% Green', max_length=3, choices=settings.BINARY_CHOICES, blank=True,\
                                     null=True)
-    zone = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to={'type': 'Zone', 'status':'Active'},\
+    zone = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to=Q(type='Zone') & Q(status='Active') | Q(status='Inactive'),\
                                       related_name='contract_zone', default='Not listed')
     electric_price_type = models.CharField('Electric Price Type', max_length=8, choices=settings.PRICE_PLAN, blank=True,\
                                     null=True)
@@ -156,7 +193,7 @@ class Survey(models.Model):
                                 on_delete=models.SET_NULL)
 
     def __str__(self):
-        return '%s' % (self.customer_name)
+        return '%s' % (self.customer.name)
 
 
 class Doc(models.Model):
