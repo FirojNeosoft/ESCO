@@ -2,7 +2,6 @@ from django import forms
 from django.conf import settings
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-
 from django.forms.models import inlineformset_factory
 
 from CMS.models import *
@@ -17,12 +16,15 @@ class UserForm(ModelForm):
             'is_staff': 'Designates that this user has staff role',
         }
 
-    def clean(self):
-        if self.cleaned_data['email']:
-            if User.objects.filter(email=self.cleaned_data['email']).exclude(username=self.cleaned_data['username']).exists():
-                self._errors['email'] = self.error_class(['This email is already used'])
-        else:
+    def clean_email(self):
+        if not self.cleaned_data['email']:
             self._errors['email'] = self.error_class(['This field is required'])
+
+        if self.cleaned_data['email'] and User.objects.filter(email=self.cleaned_data['email']).\
+                                                               exclude(username=self.cleaned_data['username']).exists():
+            self._errors['email'] = self.error_class(['This email is already used'])
+
+        return self.cleaned_data['email']
 
 
 class ApplicationMasterTypesForm(ModelForm):
@@ -37,31 +39,21 @@ class CustomerForm(ModelForm):
         exclude = ('created_at', 'created_by', 'modified_at', 'modified_by')
 
 
-class CustomerUtilityNumberForm(ModelForm):
-    class Meta:
-        model = CustomerUtilityNumber
-        fields = ('customer', 'utility_no')
-
-CustomerUtilityNumberFormSet = inlineformset_factory(Customer, CustomerUtilityNumber, form=CustomerUtilityNumberForm, extra=1, max_num=50, validate_max=True)
-
-
 class SurveyForm(ModelForm):
     agreement_date = forms.DateField(input_formats = ('%m/%d/%Y',), required=False,
                       widget=forms.DateInput(format = '%m/%d/%Y'))
     contract_start_date = forms.DateField(input_formats = ('%m/%d/%Y',), required=False,
                       widget=forms.DateInput(format = '%m/%d/%Y'))
-    # usage_from_date = forms.DateField(input_formats = ('%m/%d/%Y',),
-    #                   widget=forms.DateInput(format = '%m/%d/%Y'))
-    # usage_to_date = forms.DateField(input_formats = ('%m/%d/%Y',),
-    #                   widget=forms.DateInput(format = '%m/%d/%Y'))
-    # zone = forms.MultipleChoiceField(choices=settings.ZONE)
-
 
     def __init__(self, *args, **kwargs):
         super(SurveyForm, self).__init__(*args, **kwargs)
         if kwargs.get('instance'):
             self.fields['customer'].queryset = Customer.objects.exclude(status='Delete')
             self.fields['customer_type'].queryset = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
+            self.fields['electric_rate_class'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Rate Class').exclude(
+                status='Delete')
+            self.fields['gas_rate_class'].queryset = ApplicationMasterTypes.objects.filter(type='Gas Rate Class').exclude(
+                status='Delete')
             self.fields['electric_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(
                 status='Delete')
             self.fields['gas_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Gas Utility Type').exclude(status='Delete')
@@ -71,6 +63,10 @@ class SurveyForm(ModelForm):
         else:
             self.fields['customer'].queryset = Customer.objects.filter(status='Active')
             self.fields['customer_type'].queryset = ApplicationMasterTypes.objects.filter(type='Customer Type', status='Active')
+            self.fields['electric_rate_class'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Rate Class',
+                                                                                          status='Active')
+            self.fields['gas_rate_class'].queryset = ApplicationMasterTypes.objects.filter(type='Gas Rate Class',
+                                                                                          status='Active')
             self.fields['electric_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Utility Type', status='Active')
             self.fields['gas_utility'].queryset = ApplicationMasterTypes.objects.filter(type='Gas Utility Type', status='Active')
             self.fields['delivery_type'].queryset = ApplicationMasterTypes.objects.filter(type='Delivery Type', status='Active')
@@ -92,34 +88,25 @@ class SurveyForm(ModelForm):
           'service_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
           'service_address_city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
           'service_address_state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
-          # 'service_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
           'service_address_zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code', 'class': 'form-control'}),
           'billing_address_line1': forms.TextInput(attrs={'placeholder': 'Line 1', 'class': 'form-control'}),
           'billing_address_line2': forms.TextInput(attrs={'placeholder': 'Line 2', 'class': 'form-control'}),
           'billing_address_city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
           'billing_address_state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
-          # 'billing_address_country': forms.TextInput(attrs={'placeholder': 'Country', 'class': 'form-control'}),
           'billing_address_zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code', 'class': 'form-control'}),
           'customer_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200 }),
           'utility_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
           'gas_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200 }),
           'electric_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
           'billing_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
-          # 'deal_description': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'maxlength': 200}),
           'account_type': forms.RadioSelect(),
           'door_to_door': forms.RadioSelect(),
           'billing': forms.RadioSelect(),
           'commodity_gas': forms.RadioSelect(),
-          # 'delivery_type': forms.RadioSelect(),
-          # 'gas_price_plan': forms.RadioSelect(),
           'electric': forms.RadioSelect(),
-          # 'green': forms.RadioSelect(),
-          # 'zone': forms.RadioSelect(),
-          # 'electric_price_type': forms.RadioSelect(),
           'therm': forms.RadioSelect(),
           'tax_exempt': forms.RadioSelect(),
           'monthly_budget': forms.RadioSelect(),
-          # 'internal_data_available': forms.RadioSelect()
         }
 
     def clean(self):

@@ -199,41 +199,19 @@ LOGGING = {
 }
 
 # Required choices variables
-GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
-STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))
-BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
-ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
 SBC = (('Yes', 'Yes'),)
-CUSTOMER_TYPE = (('Commercial', 'Commercial'), ('Residential', 'Residential'), ('Industrial', 'Industrial'),\
-                 ('Religious', 'Religious'), ('Anders', 'Anders'), ('Large Non-Residential', 'Large Non-Residential'),\
-                 ('Small Non-Residential', 'Small Non-Residential'))
+BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 BILLING = (('POR', 'POR'), ('DUAL', 'DUAL'))
-PASSTHRU = (('Not listed', 'Not listed'), ('GRT', 'GRT'), ('REC/ZEC', 'REC/ZEC'), ('ICAP', 'ICAP'), ('TRANS', 'TRANS'), ('OPTION5', 'OPTION5'),\
-            ('OPTION6', 'OPTION6'))
-RATE_CLASS = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'), ('OPTION4', 'OPTION4'), ('OPTION5', 'OPTION5'),\
-            ('OPTION6', 'OPTION6'))
-ELECTRIC_UTILITY = (('ConEdison', 'ConEdison'), ('PSEG-LIPA', 'PSEG-LIPA'), ('National Grid', 'National Grid'), ('NYSEG', 'NYSEG'), ('RGE', 'RGE'),\
-            ('CHUD', 'CHUD'), ('OPTION7', 'OPTION7'), ('OPTION8', 'OPTION8'))
-GAS_UTILITY = (('ConEdison', 'ConEdison'), ('PSEG-LIPA', 'PSEG-LIPA'), ('National Grid', 'National Grid'), ('NYSEG', 'NYSEG'), ('RGE', 'RGE'),\
-            ('CHUD', 'CHUD'), ('OPTION7', 'OPTION7'), ('OPTION8', 'OPTION8'))
-UTILITY_ACCOUNT_TYPE = (('OPTION1', 'OPTION1'), ('OPTION2', 'OPTION2'), ('OPTION3', 'OPTION3'))
-DELIVERY_TYPE = (('Firm', 'Firm'), ('Interruptible', 'Interruptible'))
+ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
 PRICE_PLAN = (('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index'))
-ZONE = (('Not listed', 'Not listed'), ('Zone A', 'Zone A'), ('Zone B', 'Zone B'), ('Zone C', 'Zone C'), ('Zone D', 'Zone D'), ('Zone E', 'Zone E'), \
-        ('Zone F', 'Zone F'), ('Zone G', 'Zone G'), ('Zone H', 'Zone H'), ('Zone I', 'Zone I'), ('Zone J', 'Zone J'), \
-        ('Zone K', 'Zone K'), ('PSEG', 'PSEG'), ('JCPL', 'JCPL'), ('ACEC', 'ACEC'), ('DPL', 'DPL'), \
-        ('AE', 'AE'), ('CAPITL', 'CAPITL'), ('CENTRL', 'CENTRL'), ('DUNWOD', 'DUNWOD'), ('G', 'G'),
-        ('GENESEE', 'GENESEE'), ('H', 'H'), ('HUD VALLEY', 'HUD VALLEY'), ('J', 'J'),\
-        ('JC01', 'JC01'), ('LONGIL', 'LONGIL'), ('MHK VALLEY', 'MHK VALLEY'), ('MILL WD', 'MILL WD'),\
-        ('N.Y.C.', 'N.Y.C.'), ('NORTH', 'NORTH'), ('WEST', 'WEST'))
-
+STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))
 MASTER_TYPES = (('Customer Type', 'Customer Type'), ('Gas Utility Type', 'Gas Utility Type'),\
                 ('Electric Utility Type', 'Electric Utility Type'), ('Delivery Type', 'Delivery Type'),\
-                ('Passthru', 'Passthru'), ('Zone', 'Zone'))
+                ('Passthru', 'Passthru'), ('Zone', 'Zone'), ('Gas Rate Class', 'Gas Rate Class'),\
+                ('Electric Rate Class', 'Electric Rate Class'))
 
 # config for django-import-export package
 IMPORT_EXPORT_USE_TRANSACTIONS = True
-
 
 # Date Format = 'MM/DD/YYYY'
 APP_LICENSE_EXPIRY_DATE = '02/22/2019'
@@ -246,6 +224,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
-
-
-

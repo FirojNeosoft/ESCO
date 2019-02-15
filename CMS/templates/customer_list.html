@@ -37,8 +37,6 @@
                                     <thead>
                                     <tr>
                                       <th class="sorting">Customer Name</th>
-                                      <th class="sorting">Email</th>
-                                      <th class="sorting">Phone No</th>
                                       <th class="sorting">Status</th>
                                       <th class="no-sort">Action</th>
 
@@ -48,8 +46,6 @@
                                     {% for customer in customer_list %}
                                       <tr class="customer" id="{{ customer.id }}" >
                                           <td>{{ customer.name }}</td>
-                                          <td>{{ customer.email }}</td>
-                                          <td>{{ customer.phone }}</td>
                                           <td>{{ customer.status }}</td>
                                         <td>
                                          {% if request.user.is_staff %}

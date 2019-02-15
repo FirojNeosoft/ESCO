@@ -15,7 +15,7 @@ class ApplicationMasterTypes(models.Model):
     name = models.CharField(max_length=64, blank=False, null=False)
     type = models.CharField(max_length=128, choices=settings.MASTER_TYPES, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, blank=True, related_name='type_created_by', null=True,
+    created_by = models.ForeignKey(User, blank=False, related_name='type_created_by', null=True,
                                    on_delete=models.SET_NULL)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.ForeignKey(User, blank=True, related_name='type_modified_by', null=True,
@@ -40,14 +40,9 @@ class Customer(models.Model):
     """
     Customer
     """
-    name = models.CharField('Customer Name', max_length=512, blank=False, null=False)
-    description = models.TextField(null=True, blank=True)
-    phone = models.CharField('Customer Phone', validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
-        message="Phone number must be entered in the format:'+999999999'. Up to 15 digits allowed.")], max_length=15,\
-        blank=False, null=False)
-    email = models.EmailField('Customer Email', blank=False, null=False)
+    name = models.CharField('Customer Name', max_length=512, blank=False, null=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, blank=True, related_name='customer_created_by', null=True,
+    created_by = models.ForeignKey(User, blank=False, related_name='customer_created_by', null=True,
                                    on_delete=models.SET_NULL)
     modified_at = models.DateTimeField(blank=True, null=True)
     modified_by = models.ForeignKey(User, blank=True, related_name='customer_managed_by', null=True,
@@ -65,11 +60,6 @@ class Customer(models.Model):
         self.save()
 
 
-class CustomerUtilityNumber(models.Model):
-    customer = models.ForeignKey('Customer', related_name='cust_utility_no', blank=False, null=False, on_delete=models.CASCADE)
-    utility_no = models.PositiveIntegerField('Utility No', blank=False, null=False)
-
-
 class Survey(models.Model):
     """
     Survey model
@@ -78,20 +68,17 @@ class Survey(models.Model):
     agreement_date = models.DateField('Agreement Date', blank=True, null=True)
     account_type = models.CharField(max_length=16, choices=settings.ACCOUNT_TYPE, blank=False, null=False, default='New Customer')
     customer_description = models.TextField(null=True, blank=True)
-    # customer_name = models.CharField('Customer Name', max_length=512, blank=False, null=False)
     customer = models.ForeignKey(Customer, related_name='survey_customer', blank=False, null=True, on_delete=models.SET_NULL,\
                                  limit_choices_to=Q(status='Active') | Q(status='Inactive'))
     service_address_line1 = models.CharField(max_length=128, blank=True, null=True)
     service_address_line2 = models.CharField(max_length=128, blank=True, null=True)
     service_address_city = models.CharField(max_length=128, blank=False, null=False)
     service_address_state = models.CharField(max_length=128, blank=False, null=False)
-    # service_address_country = models.CharField(max_length=128, blank=False, null=False)
     service_address_zip_code = models.PositiveIntegerField('Zip Code', blank=True, null=True)
     billing_address_line1 = models.CharField(max_length=128, blank=True, null=True)
     billing_address_line2 = models.CharField(max_length=128, blank=True, null=True)
     billing_address_city = models.CharField(max_length=128, blank=False, null=False)
     billing_address_state = models.CharField(max_length=128, blank=False, null=False)
-    # billing_address_country = models.CharField(max_length=128, blank=False, null=False)
     billing_address_zip_code = models.PositiveIntegerField('Zip Code', blank=True, null=True)
     customer_phone = models.CharField('Customer Phone', validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
         message="Phone number must be entered in the format:'+999999999'. Up to 15 digits allowed.")], max_length=15,\
@@ -101,30 +88,35 @@ class Survey(models.Model):
     salesperson_name = models.CharField('Salesperson/Broker Name', max_length=512, blank=False, null=False)
     door_to_door = models.CharField('Door To Door', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
-    customer_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to= Q(type='Customer Type') & Q(status='Active') | Q(status='Inactive'),\
-                                      related_name='contract_cust_type', blank=False, null=False, default='Residential',\
-                                                                                          on_delete=models.SET_DEFAULT)
+    customer_type = models.ForeignKey(ApplicationMasterTypes, related_name='contract_cust_type',\
+                                    limit_choices_to= Q(type='Customer Type') & Q(status='Active') | Q(status='Inactive'), \
+                                    blank=False, null=False, default=1, on_delete=models.SET_DEFAULT)
     billing = models.CharField('Billing', max_length=16, choices=settings.BILLING, blank=False, null=False, default='POR')
     utility_description = models.TextField(null=True, blank=True)
-    passthru = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to=Q(type='Passthru') & Q(status='Active') | Q(status='Inactive'),\
-                                      related_name='contract_passthru', default='Not listed')
-    rate_class = models.CharField('Rate Class', max_length=8, blank=True, null=True)
-    gas_rate_class = models.CharField('Gas Rate Class', max_length=8, blank=True, null=True)
+    passthru = models.ManyToManyField(ApplicationMasterTypes, related_name='contract_passthru', default=1,\
+                                      limit_choices_to=Q(type='Passthru') & Q(status='Active') | Q(status='Inactive'))
+    electric_rate_class = models.ForeignKey(ApplicationMasterTypes, related_name='contract_electrict_rate_class', \
+                                   limit_choices_to=Q(type='Electric Rate Class') & Q(status='Active') | Q(status='Inactive'),\
+                                    blank=False, null=True, on_delete=models.SET_NULL)
+    gas_rate_class = models.ForeignKey(ApplicationMasterTypes, related_name='contract_gas_rate_class', \
+                                   limit_choices_to=Q(type='Gas Rate Class') & Q(status='Active') | Q(status='Inactive'),\
+                                    blank=False, null=True, on_delete=models.SET_NULL)
     utility_pool = models.DecimalField('Utility Pool(%)', max_digits=10, decimal_places=2, default=0)
-    electric_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to=Q(type='Electric Utility Type') & Q(status='Active') | Q(status='Inactive'),
-                      related_name='contract_electric_utility', blank=False, null=False, default='ConEdison',\
-                                         on_delete=models.SET_DEFAULT)
+    electric_utility = models.ForeignKey(ApplicationMasterTypes, related_name='contract_electric_utility',\
+                            limit_choices_to=Q(type='Electric Utility Type') & Q(status='Active') | Q(status='Inactive'),\
+                            blank=False, null=False, default=1, on_delete=models.SET_DEFAULT)
 
-    gas_utility = models.ForeignKey(ApplicationMasterTypes, limit_choices_to=Q(type='Gas Utility Type') & Q(status='Active') | Q(status='Inactive'),
-                      related_name='contract_gas_utility', blank=False, null=False, default='ConEdison',\
-                                         on_delete=models.SET_DEFAULT)
+    gas_utility = models.ForeignKey(ApplicationMasterTypes, related_name='contract_gas_utility',\
+                        limit_choices_to=Q(type='Gas Utility Type') & Q(status='Active') | Q(status='Inactive'),\
+                        blank=False, null=False, default=1,on_delete=models.SET_DEFAULT)
     utility_account_type = models.CharField('Account Type', max_length=8, blank=True, null=True)
     utility_account_nos = models.CharField('Utility Account #s', max_length=1024, blank=True, null=True)
     gas_description = models.TextField(null=True, blank=True)
     commodity_gas = models.CharField('Commodity Gas', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
-    delivery_type = models.ForeignKey(ApplicationMasterTypes, limit_choices_to=Q(type='Delivery Type') & Q(status='Active') | Q(status='Inactive'),
-                      related_name='contract_delivery_type', blank=True, null=True, on_delete=models.SET_NULL)
+    delivery_type = models.ForeignKey(ApplicationMasterTypes, related_name='contract_delivery_type',\
+                                      limit_choices_to=Q(type='Delivery Type') & Q(status='Active') | Q(status='Inactive'),\
+                                      blank=True, null=True, on_delete=models.SET_NULL)
     gas_price_plan = models.CharField('Price Plan- Gas', max_length=8, choices=settings.PRICE_PLAN, blank=True,\
                                     null=True)
     electric_description = models.TextField(null=True, blank=True)
@@ -132,8 +124,8 @@ class Survey(models.Model):
                                     null=False, default='No')
     green = models.CharField('100% Green', max_length=3, choices=settings.BINARY_CHOICES, blank=True,\
                                     null=True)
-    zone = models.ManyToManyField(ApplicationMasterTypes, limit_choices_to=Q(type='Zone') & Q(status='Active') | Q(status='Inactive'),\
-                                      related_name='contract_zone', default='Not listed')
+    zone = models.ManyToManyField(ApplicationMasterTypes, related_name='contract_zone', default=1,\
+                                  limit_choices_to=Q(type='Zone') & Q(status='Active') | Q(status='Inactive'))
     electric_price_type = models.CharField('Electric Price Type', max_length=8, choices=settings.PRICE_PLAN, blank=True,\
                                     null=True)
     billing_description = models.TextField(null=True, blank=True)
@@ -156,35 +148,6 @@ class Survey(models.Model):
                                     null=True)
     agreement_length = models.PositiveIntegerField('Length of Agreement (in months)', blank=True, null=True)
     contract_start_date = models.DateField('Contractual Start Date', blank=True, null=True)
-    # document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
-    # deal_description = models.TextField(null=True, blank=True)
-    # internal_data_available = models.CharField('Internal Data Available', max_length=3, choices=settings.BINARY_CHOICES,\
-    #                                            blank=False, null=False, default='Yes')
-    # utility_service_class = models.CharField('Utility Service Class', max_length=512, blank=False, null=False)
-    # broker_margin = models.DecimalField('Broker Margin $/kWh', max_digits=10, decimal_places=2, default=0)
-    # usage_from_date = models.DateField('Usage From Date', blank=False, null=False)
-    # usage_to_date = models.DateField('Usage To Date', blank=False, null=False)
-    # base_icap = models.CharField('Base ICAP', max_length=512, blank=False, null=False)
-    # base_trans_tag = models.CharField('Base Trans tag (E)', max_length=512, blank=False, null=False)
-    # base = models.CharField('Base (G)', max_length=512, blank=False, null=False)
-    # slope = models.CharField('Slope (G)', max_length=512, blank=False, null=False)
-    # term_volume = models.DecimalField('Term Volume (monthly average volume x term length)', max_digits=10,\
-    #                                   decimal_places=2, default=0)
-    # utilized_term_net_margin = models.DecimalField('Unitized Term Net Margin', max_digits=10, decimal_places=2, default=0)
-    # salesperson_or_team = models.CharField('Salesperson/Team', max_length=512, blank=True, null=True)
-    # energy_deal_component = models.CharField('Deal Components- Energy', max_length=512, blank=True, null=True)
-    # capacity_deal_component = models.CharField('Deal Components- Capacity', max_length=512, blank=True, null=True)
-    # line_looses_deal_component = models.CharField('Deal Components- Line Looses', max_length=512, blank=True, null=True)
-    # rec_or_zec = models.CharField('REC/ZEC', max_length=512, blank=True, null=True)
-    # srec = models.CharField('SREC', max_length=512, blank=True, null=True)
-    # nits = models.CharField('NITS', max_length=512, blank=True, null=True)
-    # taxes = models.DecimalField('Taxes', max_digits=10, decimal_places=2, default=0)
-    # swing_rate = models.DecimalField('Swing Rate', max_digits=10, decimal_places=2, default=0)
-    # hedge_type = models.CharField('Hedge Type', max_length=512, blank=True, null=True)
-    # hedge_product_volume = models.PositiveIntegerField('Hedge Product Volume', blank=False, null=False, default=0)
-    # hedge_price = models.DecimalField('Hedge Price', max_digits=10, decimal_places=2, default=0)
-    # estimated_annual_hedge_volume = models.PositiveIntegerField('Est. Annual equivalent hedged volume', blank=False,\
-    #                                                             null=False, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, blank=True, related_name='survey_created_by', null=True,
                                    on_delete=models.SET_NULL)
@@ -201,4 +164,3 @@ class Doc(models.Model):
     title = models.CharField(max_length=255, blank=True)
     document = models.FileField('Document', upload_to='upload_docs/', null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-

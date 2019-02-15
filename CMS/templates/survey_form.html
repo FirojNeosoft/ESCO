@@ -194,10 +194,10 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    17. {{ form.rate_class.label_tag }}
-                                      <span style="color:red;">{{ form.rate_class.errors }}</span>
-                                      {{ form.rate_class }}
-                                      {{ form.rate_class.help_text }}
+                                    17. {{ form.electric_rate_class.label_tag }}
+                                      <span style="color:red;">{{ form.electric_rate_class.errors }}</span>
+                                      {{ form.electric_rate_class }}
+                                      {{ form.electric_rate_class.help_text }}
                                   </div>
                                  </div>
                                  <div class="form-row">
@@ -461,212 +461,6 @@
                                  </div>
                                  </div>
                           </fieldset>
-                           <br>
-                          <!--<fieldset>-->
-                              <!--<legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Deal Booking - Internal</h3></legend>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.deal_description.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.deal_description.errors }}</span>-->
-                                      <!--{{ form.deal_description }}-->
-                                      <!--{{ form.deal_description.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                   <!--<label for="id_internal_data_available_0">Internal Data Available:</label> <span style="color:red;">*</span>-->
-                                    <!--<label for="id_internal_data_available_0"><input type="radio" name="internal_data_available" value="Yes" required id="id_internal_data_available_0" {% if form.instance.id and form.instance.internal_data_available == "Yes" or not form.instance.id %}checked{% endif %}>-->
-                                     <!--Yes</label>-->
-
-                                    <!--<label for="id_internal_data_available_1"><input type="radio" name="internal_data_available" value="No" required id="id_internal_data_available_1" {% if form.instance.id and form.instance.internal_data_available == "No" %}checked{% endif %}>-->
-                                     <!--No</label>-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.utility_service_class.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.utility_service_class.errors }}</span>-->
-                                      <!--{{ form.utility_service_class }}-->
-                                      <!--{{ form.utility_service_class.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.usage_from_date.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.usage_from_date.errors }}</span>-->
-                                      <!--{{ form.usage_from_date }}-->
-                                      <!--{{ form.usage_from_date.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.usage_to_date.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.usage_to_date.errors }}</span>-->
-                                      <!--{{ form.usage_to_date }}-->
-                                      <!--{{ form.usage_to_date.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.broker_margin.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.broker_margin.errors }}</span>-->
-                                      <!--{{ form.broker_margin }}-->
-                                      <!--{{ form.broker_margin.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.base_icap.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.base_icap.errors }}</span>-->
-                                      <!--{{ form.base_icap }}-->
-                                      <!--{{ form.base_icap.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.base_trans_tag.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.base_trans_tag.errors }}</span>-->
-                                      <!--{{ form.base_trans_tag }}-->
-                                      <!--{{ form.base_trans_tag.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.base.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.base.errors }}</span>-->
-                                      <!--{{ form.base }}-->
-                                      <!--{{ form.base.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.slope.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.slope.errors }}</span>-->
-                                      <!--{{ form.slope }}-->
-                                      <!--{{ form.slope.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.term_volume.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.term_volume.errors }}</span>-->
-                                      <!--{{ form.term_volume }}-->
-                                      <!--{{ form.term_volume.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.utilized_term_net_margin.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.utilized_term_net_margin.errors }}</span>-->
-                                      <!--{{ form.utilized_term_net_margin }}-->
-                                      <!--{{ form.utilized_term_net_margin.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.salesperson_or_team.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.salesperson_or_team.errors }}</span>-->
-                                      <!--{{ form.salesperson_or_team }}-->
-                                      <!--{{ form.salesperson_or_team.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.energy_deal_component.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.energy_deal_component.errors }}</span>-->
-                                      <!--{{ form.energy_deal_component }}-->
-                                      <!--{{ form.energy_deal_component.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.capacity_deal_component.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.capacity_deal_component.errors }}</span>-->
-                                      <!--{{ form.capacity_deal_component }}-->
-                                      <!--{{ form.capacity_deal_component.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.line_looses_deal_component.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.line_looses_deal_component.errors }}</span>-->
-                                      <!--{{ form.line_looses_deal_component }}-->
-                                      <!--{{ form.line_looses_deal_component.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.rec_or_zec.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.rec_or_zec.errors }}</span>-->
-                                      <!--{{ form.rec_or_zec }}-->
-                                      <!--{{ form.rec_or_zec.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.srec.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.srec.errors }}</span>-->
-                                      <!--{{ form.srec }}-->
-                                      <!--{{ form.srec.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.nits.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.nits.errors }}</span>-->
-                                      <!--{{ form.nits }}-->
-                                      <!--{{ form.nits.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.taxes.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.taxes.errors }}</span>-->
-                                      <!--{{ form.taxes }}-->
-                                      <!--{{ form.taxes.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.swing_rate.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.swing_rate.errors }}</span>-->
-                                      <!--{{ form.swing_rate }}-->
-                                      <!--{{ form.swing_rate.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.hedge_type.label_tag }}-->
-                                      <!--<span style="color:red;">{{ form.hedge_type.errors }}</span>-->
-                                      <!--{{ form.hedge_type }}-->
-                                      <!--{{ form.hedge_type.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.hedge_product_volume.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.hedge_product_volume.errors }}</span>-->
-                                      <!--{{ form.hedge_product_volume }}-->
-                                      <!--{{ form.hedge_product_volume.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.hedge_price.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.hedge_price.errors }}</span>-->
-                                      <!--{{ form.hedge_price }}-->
-                                      <!--{{ form.hedge_price.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                                 <!--<div class="form-row">-->
-                                  <!--<div class="form-group col-md-6">-->
-                                    <!--{{ form.estimated_annual_hedge_volume.label_tag }} <span style="color:red;">*</span>-->
-                                      <!--<span style="color:red;">{{ form.estimated_annual_hedge_volume.errors }}</span>-->
-                                      <!--{{ form.estimated_annual_hedge_volume }}-->
-                                      <!--{{ form.estimated_annual_hedge_volume.help_text }}-->
-                                  <!--</div>-->
-                                 <!--</div>-->
-                          <!--</fieldset>-->
                                 <!--<div class="ln_solid"></div>-->
                               <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -718,7 +512,7 @@
    $("#id_customer_type").addClass( "form-control" );
    $("#id_passthru").addClass( "form-control" );
    $("#id_passthru").bootstrapDualListbox();
-   $("#id_rate_class").addClass( "form-control" );
+   $("#id_electric_rate_class").addClass( "form-control" );
    $("#id_gas_rate_class").addClass( "form-control" );
    $("#id_electric_utility").addClass( "form-control" );
    $("#id_gas_utility").addClass( "form-control" );
@@ -750,47 +544,6 @@
        changeMonth: true,
        changeYear: true,
        });
-   $("#id_deal_description").addClass( "form-control" );
-   $("#id_utility_service_class").addClass( "form-control" );
-   $("#id_broker_margin").addClass( "form-control" );
-   $("#id_usage_from_date").addClass( "form-control" );
-   $('#id_usage_from_date').datepicker({
-       'dateFormat': 'mm/dd/yy',
-        changeMonth: true,
-       changeYear: true,
-       onSelect: function(selected) {
-          $("#id_usage_to_date").datepicker("option","minDate", selected)
-        }
-    });
-   $("#id_usage_to_date").addClass( "form-control" );
-   $('#id_usage_to_date').datepicker({
-       'dateFormat': 'mm/dd/yy',
-       changeMonth: true,
-       changeYear: true,
-       'maxDate': 3650,
-        onSelect: function(selected) {
-           $("#id_usage_from_date").datepicker("option","maxDate", selected)
-        }
-   });
-   $("#id_base_icap").addClass( "form-control" );
-   $("#id_base_trans_tag").addClass( "form-control" );
-   $("#id_base").addClass( "form-control" );
-   $("#id_slope").addClass( "form-control" );
-   $("#id_term_volume").addClass( "form-control" );
-   $("#id_utilized_term_net_margin").addClass( "form-control" );
-   $("#id_salesperson_or_team").addClass( "form-control" );
-   $("#id_energy_deal_component").addClass( "form-control" );
-   $("#id_capacity_deal_component").addClass( "form-control" );
-   $("#id_line_looses_deal_component").addClass( "form-control" );
-   $("#id_rec_or_zec").addClass( "form-control" );
-   $("#id_srec").addClass( "form-control" );
-   $("#id_nits").addClass( "form-control" );
-   $("#id_taxes").addClass( "form-control" );
-   $("#id_swing_rate").addClass( "form-control" );
-   $("#id_hedge_type").addClass( "form-control" );
-   $("#id_hedge_product_volume").addClass( "form-control" );
-   $("#id_hedge_price").addClass( "form-control" );
-   $("#id_estimated_annual_hedge_volume").addClass( "form-control" );
    $(".docs_table").find('td input:checkbox').next("label") .andSelf() .remove();
    if ($('.docs_table tr').length > 2){
    $('.add-row').hide();

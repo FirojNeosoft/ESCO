@@ -108,9 +108,9 @@ class CreateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, C
             instance_exists = ApplicationMasterTypes.objects.filter(name=request.POST['name'],
                                                                     type=request.POST['type']).exists()
             if not instance_exists:
-                survey = form.save()
-                # survey.created_by = request.user
-                survey.save()
+                master_type = form.save()
+                master_type.created_by = request.user
+                master_type.save()
             else:
                 messages.error(request, 'Master type with this name and category is already exist')
                 return redirect('add_master_type')
@@ -139,10 +139,10 @@ class UpdateApplicationMasterTypeView(LoginRequiredMixin, SuccessMessageMixin, U
         self.object = ApplicationMasterTypes.objects.get(id=pk)
         form = self.get_form()
         if form.is_valid():
-            survey = form.save()
-            # survey.modified_by = request.user
-            survey.modified_at = datetime.datetime.now()
-            survey.save()
+            master_type = form.save()
+            master_type.modified_by = request.user
+            master_type.modified_at = datetime.datetime.now()
+            master_type.save()
         else:
             logger.error(form.errors)
             messages.error(request, form.errors)
@@ -178,29 +178,21 @@ class CreateCustomerView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = "Customer was created successfully"
     success_url = reverse_lazy('list_customers')
 
-    def get_context_data(self, **kwargs):
-        data = super(CreateCustomerView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['utility_accounts'] = CustomerUtilityNumberFormSet(self.request.POST)
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            customer = form.save()
+            customer.created_by = request.user
+            customer.save()
         else:
-            data['utility_accounts'] = CustomerUtilityNumberFormSet()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        utility_accounts = context['utility_accounts']
-        with transaction.atomic():
-            if utility_accounts.is_valid():
-                self.object = form.save()
-                self.object.created_by = self.request.user
-                self.object.save()
-                utility_accounts.instance = self.object
-                utility_accounts.save()
-            else:
-                logger.error(utility_accounts.errors)
-                messages.error(self.request, "Error occured while adding utility accounts")
-                return redirect('add_customer')
-        return super(CreateCustomerView, self).form_valid(form)
+            logger.error(form.errors)
+            messages.error(request, form.errors)
+            return redirect('add_customer')
+        return HttpResponseRedirect(reverse('list_customers'))
 
 
 @method_decorator(check_validity_of_license, name='dispatch')
@@ -214,31 +206,23 @@ class UpdateCustomerView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = "Customer was updated successfully"
     success_url = reverse_lazy('list_customers')
 
-    def get_context_data(self, **kwargs):
-        data = super(UpdateCustomerView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['utility_accounts'] = CustomerUtilityNumberFormSet(self.request.POST, instance=self.object)
-            data['utility_accounts'].full_clean()
+    def post(self, request, pk):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        self.object = Customer.objects.get(id=pk)
+        form = self.get_form()
+        if form.is_valid():
+            customer = form.save()
+            customer.modified_by = request.user
+            customer.modified_at = datetime.datetime.now()
+            customer.save()
         else:
-            data['utility_accounts'] = CustomerUtilityNumberFormSet(instance=self.object)
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        utility_accounts = context['utility_accounts']
-        with transaction.atomic():
-            self.object = form.save()
-            self.object.modified_by = self.request.user
-            self.object.modified_at = datetime.datetime.now()
-            self.object.save()
-            if utility_accounts.is_valid():
-                utility_accounts.instance = self.object
-                utility_accounts.save()
-            else:
-                logger.error(utility_accounts.errors)
-                messages.error(self.request, "Error occured while editing customers")
-                return redirect('update_customer', self.object.id)
-        return super(UpdateCustomerView, self).form_valid(form)
+            logger.error(form.errors)
+            messages.error(request, form.errors)
+            return redirect('update_customer', pk)
+        return HttpResponseRedirect(reverse('list_customers'))
 
 
 @method_decorator(check_validity_of_license, name='dispatch')
@@ -296,22 +280,6 @@ class CreateSurveyView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
                 return redirect('add_survey')
         return super(CreateSurveyView, self).form_valid(form)
 
-    # def post(self, request, *args, **kwargs):
-    #     """
-    #     Handle POST requests: instantiate a form instance with the passed
-    #     POST variables and then check if it's valid.
-    #     """
-    #     form = self.get_form()
-    #     if form.is_valid():
-    #         survey = form.save()
-    #         # survey.created_by = request.user
-    #         survey.save()
-    #     else:
-    #         logger.error(form.errors)
-    #         messages.error(request, form.errors)
-    #         return redirect('add_survey')
-    #     return HttpResponseRedirect(reverse('list_surveys'))
-
 @method_decorator(check_validity_of_license, name='dispatch')
 class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
@@ -348,24 +316,6 @@ class UpdateSurveyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
                 messages.error(self.request, "Error occured while uploading documents")
                 return redirect('update_survey', self.object.id)
         return super(UpdateSurveyView, self).form_valid(form)
-
-    # def post(self, request, pk):
-    #     """
-    #     Handle POST requests: instantiate a form instance with the passed
-    #     POST variables and then check if it's valid.
-    #     """
-    #     self.object = Survey.objects.get(id=pk)
-    #     form = self.get_form()
-    #     if form.is_valid():
-    #         survey = form.save()
-    #         # survey.modified_by = request.user
-    #         survey.modified_at = datetime.datetime.now()
-    #         survey.save()
-    #     else:
-    #         logger.error(form.errors)
-    #         messages.error(request, form.errors)
-    #         return redirect('update_survey', pk)
-    #     return HttpResponseRedirect(reverse('list_surveys'))
 
 @method_decorator(check_validity_of_license, name='dispatch')
 class DeleteSurveyView(LoginRequiredMixin, DeleteView):
@@ -408,7 +358,6 @@ class ImportDataView(LoginRequiredMixin, View):
 
     def post(self, request):
         try:
-            # import pdb; pdb.set_trace()
             contract_resource = ImportSurveyResource()
             dataset = Dataset()
             new_contracts = request.FILES['myfile']
@@ -420,4 +369,4 @@ class ImportDataView(LoginRequiredMixin, View):
                 contract_resource.import_data(dataset, dry_run=False)  # Actually import now
             return redirect('list_surveys')
         except Exception as inst:
-            print(">>>", inst)
+            logger.error(inst)
