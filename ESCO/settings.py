@@ -199,7 +199,6 @@ LOGGING = {
 }
 
 # Required choices variables
-SBC = (('Yes', 'Yes'),)
 BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 BILLING = (('POR', 'POR'), ('DUAL', 'DUAL'))
 ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))

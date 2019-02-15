@@ -84,7 +84,7 @@ class Survey(models.Model):
         message="Phone number must be entered in the format:'+999999999'. Up to 15 digits allowed.")], max_length=15,\
         blank=True, null=True)
     customer_email = models.EmailField('Customer Email', blank=True, null=True)
-    sbc = models.CharField('SBC', max_length=16, choices=settings.SBC, blank=True, null=True)
+    sbc = models.CharField('SBC', max_length=16, blank=True, null=True)
     salesperson_name = models.CharField('Salesperson/Broker Name', max_length=512, blank=False, null=False)
     door_to_door = models.CharField('Door To Door', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')

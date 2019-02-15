@@ -33,7 +33,7 @@ class LoginView(View):
         if user is None:
             logger.error('wrong credentials for user {}'.format(request.POST['username']))
             messages.error(request, 'Please check credentials.')
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect(reverse('sys_login'))
         elif user is not None and settings.TWO_FACTOR_AUTHENTICATION == False:
             login(request, user)
             return HttpResponseRedirect(reverse('list_surveys'))
