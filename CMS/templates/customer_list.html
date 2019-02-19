@@ -57,6 +57,29 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                                {% if is_paginated %}
+                                  <!--<ul class="pagination" style="float:right;">-->
+                                    <!--{% if page_obj.has_previous %}-->
+                                      <!--<li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>-->
+                                    <!--{% else %}-->
+                                      <!--<li class="disabled"><span>&laquo;</span></li>-->
+                                    <!--{% endif %}-->
+                                    <!--{% for i in paginator.page_range %}-->
+                                      <!--{% if page_obj.number == i %}-->
+                                        <!--<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+                                      <!--{% endif %}-->
+                                    <!--{% endfor %}-->
+                                    <!--{% if page_obj.has_next %}-->
+                                      <!--<li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>-->
+                                    <!--{% else %}-->
+                                      <!--<li class="disabled"><span>&raquo;</span></li>-->
+                                    <!--{% endif %}-->
+                                  <!--</ul>-->
+                                  <div style="float:right;">
+                                    <input type="text" id="page_id" placeholder='Page No' size="4"><button id="go_btn">GO</button>
+                                  </div><br>
+                                    <b>Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} entries {{ page_obj }}</b>
+                               {% endif %}
                             </div>
                         </div>
                     </div>
@@ -68,11 +91,19 @@
 {% block static %}
 <script>
   $(document).ready(function(){
-  $('#surveys_table').DataTable();
+  $('#surveys_table').DataTable({
+    "paging": false,
+  });
+    $('#surveys_table_info').empty();
    $(".survey").on('click', function(){
     var survey_id = $(this).attr('id');
     window.location.href = '/cms/'+survey_id+'/edit/';
   });
+  $("#go_btn").on('click', function(){
+    var page_id = $('#page_id').val();
+    window.location.href = '/cms/customer/?page='+page_id;
+  });
+
   });
 </script>
 {% endblock %}

@@ -61,7 +61,7 @@
                                <div class="form-row">
                                   <div class="form-group col-md-6">
                                       5. <label>Customer Name: </label>
-                                      {{ object.customer_name }}
+                                      {{ object.customer.name }}
                                   </div>
                                  </div>
                                  <div class="form-row">
@@ -122,9 +122,21 @@
 
 
                                  <div class="form-row">
-                                  <div class="form-group col-md-4">
+                                  <div class="form-group col-md-6">
                                      14. <label>Door to door: </label>
                                       {{ object.door_to_door }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                     15. <label>Billing Contact: </label>
+                                      {{ object.billing_contact }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-4">
+                                     16. <label>Billing Method: </label>
+                                      {{ object.billing_method }}
                                   </div>
                                  </div>
                           </fieldset>
@@ -133,56 +145,56 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Pricing & Utility Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      15. <label>Utility Description: </label>
+                                      17. <label>Utility Description: </label>
                                       {{ object.utility_description }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    16. <label>Utility Pool(%): </label>
+                                    18. <label>Utility Pool(%): </label>
                                       {{ object.utility_pool }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    17. <label>Electric Rate Class: </label>
+                                    19. <label>Electric Rate Class: </label>
                                       {{ object.electric_rate_class }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      18. <label>Gas Rate Class: </label>
+                                      20. <label>Gas Rate Class: </label>
                                       {{ object.gas_rate_class }}
                                   </div>
                                  </div>
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      19. <label>Electric Utility: </label>
+                                      21. <label>Electric Utility: </label>
                                       {{ object.electric_utility }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    20. <label>Gas Utility: </label>
+                                    22. <label>Gas Utility: </label>
                                       {{ object.gas_utility }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    21. <label>Account Type: </label>
+                                    23. <label>Account Type: </label>
                                       {{ object.utility_account_type }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    22. <label>Account Nos: </label>
+                                    24. <label>Account Nos: </label>
                                       {{ object.utility_account_nos }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      23. <label>Passthru: </label>
+                                      25. <label>Passthru: </label>
                                       {% for p in passthru %}
                                       <p>{{ p.name }}</p>
                                       {% endfor %}
@@ -194,19 +206,19 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Gas Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    24. <label>Commodity Gas: </label>
+                                    26. <label>Commodity Gas: </label>
                                        {{ object.commodity_gas }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group">
-                                      25. <label>Delivery Type: </label>
+                                      27. <label>Delivery Type: </label>
                                       {{ object.delivery_type }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group">
-                                      26. <label>Gas Price Plan</label>
+                                      28. <label>Gas Price Plan</label>
                                       {{ object.gas_price_plan }}
                                   </div>
                                  </div>
@@ -216,19 +228,19 @@
 
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    27. <label>Electric:</label>
+                                    29. <label>Electric:</label>
                                         {{ object.electric }}
                                   </div>
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                      28. <label>Green: </label>
+                                      30. <label>Green: </label>
                                       {{ object.green }}
                                   </div>
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                      29. <label>Zone: </label>
+                                      31. <label>Zone: </label>
                                       {% for z in zones %}
                                       <p>{{ z.name }}</p>
                                       {% endfor %}
@@ -236,7 +248,7 @@
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                      30. <label>Electric Price Type: </label>
+                                      32. <label>Electric Price Type: </label>
                                           {{ object.electric_price_type }}
                                   </div>
                                  </div>
@@ -246,80 +258,80 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Commodity Billing Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                     31. <label>Therm:</label>
+                                     33. <label>Therm:</label>
                                           {{ object.therm }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    32. <label>Tax Exempt:</label>
+                                    34. <label>Tax Exempt:</label>
                                       {{ object.tax_exempt }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    33. <label>Monthly Budget:</label>
+                                    35. <label>Monthly Budget:</label>
                                       {{ object.monthly_budget }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      34. <label>Budget Amount: </label>
+                                      36. <label>Budget Amount: </label>
                                       {{ object.budget_amount }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      35. <label>Gas Bandwidth Usage: </label>
+                                      37. <label>Gas Bandwidth Usage: </label>
                                       {{ object.gas_bandwidth_usage }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      36. <label>Electric Bandwidth Usage: </label>
+                                      38. <label>Electric Bandwidth Usage: </label>
                                       {{ object.electric_bandwidth_usage }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      37. <label>Gas Fixed Rate: </label>
+                                      39. <label>Gas Fixed Rate: </label>
                                       {{ object.gas_fixed_rate }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      38. <label>Electric Fixed Rate: </label>
+                                      34. <label>Electric Fixed Rate: </label>
                                       {{ object.electric_fixed_rate }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      39. <label>Gas Index Rate: </label>
+                                      41. <label>Gas Index Rate: </label>
                                       {{ form.gas_index_rate }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      40. <label>Electric Index Rate: </label>
+                                      42. <label>Electric Index Rate: </label>
                                       {{ object.electric_index_rate }}
                                   </div>
                                  </div>
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      41. <label>Agreement Lenght: </label>
+                                      43. <label>Agreement Lenght: </label>
                                       {{ object.agreement_length }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      42. <label>Contract Start Date: </label>
+                                      44. <label>Contract Start Date: </label>
                                       {{ object.contract_start_date }}
                                   </div>
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      43. <label>Document: (Max limit- 3 docs)</label>
+                                      45. <label>Document: (Max limit- 3 docs)</label>
                                       {% for d in doc_list %}
                                       <p><a href="/media/{{ d.document }}">{{ d.document }}</a></p>
                                       {% endfor %}

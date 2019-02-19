@@ -92,6 +92,9 @@ class Survey(models.Model):
                                     limit_choices_to= Q(type='Customer Type') & Q(status='Active') | Q(status='Inactive'), \
                                     blank=False, null=False, default=1, on_delete=models.SET_DEFAULT)
     billing = models.CharField('Billing', max_length=16, choices=settings.BILLING, blank=False, null=False, default='POR')
+    billing_method = models.CharField('Billing Method', max_length=8, choices=settings.BILLING_METHOD, blank=False, null=False,\
+                                       default='Mail')
+    billing_contact = models.CharField('Billing Contact', max_length=64, blank=True, null=True)
     utility_description = models.TextField(null=True, blank=True)
     passthru = models.ManyToManyField(ApplicationMasterTypes, related_name='contract_passthru', default=1,\
                                       limit_choices_to=Q(type='Passthru') & Q(status='Active') | Q(status='Inactive'))

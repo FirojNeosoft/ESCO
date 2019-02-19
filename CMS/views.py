@@ -165,6 +165,7 @@ class ListCustomerView(LoginRequiredMixin, ListView):
     """
     model = Customer
     queryset = Customer.objects.exclude(status='Delete')
+    paginate_by = 1
     template_name = 'customer_list.html'
 
 @method_decorator(check_validity_of_license, name='dispatch')
@@ -242,6 +243,7 @@ class ListSurveyView(LoginRequiredMixin, ListView):
     """
     model = Survey
     queryset = Survey.objects.all()
+    paginate_by = 2
     template_name = 'list_surveys.html'
 
 @method_decorator(check_validity_of_license, name='dispatch')

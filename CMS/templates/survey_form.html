@@ -172,13 +172,32 @@
                                          No</label>
                                   </div>
                                  </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    15. {{ form.billing_contact.label_tag }}
+                                      <span style="color:red;">{{ form.billing_contact.errors }}</span>
+                                      {{ form.billing_contact }}
+                                      {{ form.billing_contact.help_text }}
+                                  </div>
+                                 </div>
+                                 <div class="form-row">
+                                  <div class="form-group col-md-4">
+                                     16. <label for="id_billing_method_0">Billing Method:</label> <span style="color:red;">*</span>
+
+                                          <label for="id_billing_method_0"><input type="radio" name="billing_method" value="Mail" required id="id_billing_method_0" {% if form.instance.id and form.instance.billing_method == "Mail" or not form.instance.id %}checked{% endif %}>
+                                         Mail</label>
+
+                                        <label for="id_billing_method_1"><input type="radio" name="billing_method" value="Email" required id="id_billing_method_1" {% if form.instance.id and form.instance.billing_method == "Email" %}checked{% endif %}>
+                                         Email</label>
+                                  </div>
+                                 </div>
                           </fieldset>
                           <br>
                           <fieldset>
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Pricing & Utility Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    15. {{ form.utility_description.label_tag }}
+                                    17. {{ form.utility_description.label_tag }}
                                       <span style="color:red;">{{ form.utility_description.errors }}</span>
                                       {{ form.utility_description }}
                                       {{ form.utility_description.help_text }}
@@ -186,7 +205,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    16. {{ form.utility_pool.label_tag }} <span style="color:red;">*</span>
+                                    18. {{ form.utility_pool.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.utility_pool.errors }}</span>
                                       {{ form.utility_pool }}
                                       {{ form.utility_pool.help_text }}
@@ -194,7 +213,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    17. {{ form.electric_rate_class.label_tag }}
+                                    19. {{ form.electric_rate_class.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_rate_class.errors }}</span>
                                       {{ form.electric_rate_class }}
                                       {{ form.electric_rate_class.help_text }}
@@ -202,7 +221,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    18. {{ form.gas_rate_class.label_tag }}
+                                    20. {{ form.gas_rate_class.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_rate_class.errors }}</span>
                                       {{ form.gas_rate_class }}
                                       {{ form.gas_rate_class.help_text }}
@@ -211,7 +230,7 @@
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    19. {{ form.electric_utility.label_tag }} <span style="color:red;">*</span>
+                                    21. {{ form.electric_utility.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_utility.errors }}</span>
                                       {{ form.electric_utility }}
                                       {{ form.electric_utility.help_text }}
@@ -219,7 +238,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    20. {{ form.gas_utility.label_tag }} <span style="color:red;">*</span>
+                                    22. {{ form.gas_utility.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_utility.errors }}</span>
                                       {{ form.gas_utility }}
                                       {{ form.gas_utility.help_text }}
@@ -227,7 +246,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    21. {{ form.utility_account_type.label_tag }}
+                                    23. {{ form.utility_account_type.label_tag }}
                                       <span style="color:red;">{{ form.utility_account_type.errors }}</span>
                                       {{ form.utility_account_type }}
                                       {{ form.utility_account_type.help_text }}
@@ -235,7 +254,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    22. {{ form.utility_account_nos.label_tag }}
+                                    24. {{ form.utility_account_nos.label_tag }}
                                       <span style="color:red;">{{ form.utility_account_nos.errors }}</span>
                                       {{ form.utility_account_nos }}
                                       {{ form.utility_account_nos.help_text }}
@@ -243,7 +262,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    23. {{ form.passthru.label_tag }} <span style="color:red;">*</span>
+                                    25. {{ form.passthru.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.passthru.errors }}</span>
                                       {{ form.passthru }}
                                       {{ form.passthru.help_text }}
@@ -255,7 +274,7 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Gas Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    24. <label for="id_commodity_gas_0">Commodity Gas:</label> <span style="color:red;">*</span>
+                                    26. <label for="id_commodity_gas_0">Commodity Gas:</label> <span style="color:red;">*</span>
                                     <label for="id_commodity_gas_0"><input type="radio" name="commodity_gas" value="Yes" required id="id_commodity_gas_0" {% if form.instance.id and form.instance.commodity_gas == "Yes"%}checked{% endif %}>
                                      Yes</label>
 
@@ -265,7 +284,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    25. {{ form.delivery_type.label_tag }}
+                                    27. {{ form.delivery_type.label_tag }}
                                       <span style="color:red;">{{ form.delivery_type.errors }}</span>
                                       {{ form.delivery_type }}
                                       {{ form.delivery_type.help_text }}
@@ -273,7 +292,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group">
-                                    26. {{ form.gas_price_plan.label_tag }}
+                                    28. {{ form.gas_price_plan.label_tag }}
                                       <span style="color:red;">{{ form.gas_price_plan.errors }}</span>
                                       {{ form.gas_price_plan }}
                                       {{ form.gas_price_plan.help_text }}
@@ -285,7 +304,7 @@
 
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    27. <label for="id_electric_0">Electric:</label> <span style="color:red;">*</span>
+                                    29. <label for="id_electric_0">Electric:</label> <span style="color:red;">*</span>
                                     <label for="id_electric_0"><input type="radio" name="electric" value="Yes" required id="id_electric_0" {% if form.instance.id and form.instance.electric == "Yes"%}checked{% endif %}>
                                      Yes</label>
                                     <label for="id_electric_1"><input type="radio" name="electric" value="No" required id="id_electric_1" {% if form.instance.id and form.instance.electric == "No" or not form.instance.id  %}checked{% endif %}>
@@ -294,7 +313,7 @@
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    28. {{ form.green.label_tag }}
+                                    30. {{ form.green.label_tag }}
                                       <span style="color:red;">{{ form.green.errors }}</span>
                                       {{ form.green }}
                                       {{ form.green.help_text }}
@@ -302,7 +321,7 @@
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    29. {{ form.zone.label_tag }}
+                                    31. {{ form.zone.label_tag }}
                                       <span style="color:red;">{{ form.zone.errors }}</span>
                                       {{ form.zone }}
                                       {{ form.zone.help_text }}
@@ -310,7 +329,7 @@
                                  </div>
                                  <div class="form-row col-md-6">
                                   <div class="form-group">
-                                    30. {{ form.electric_price_type.label_tag }}
+                                    32. {{ form.electric_price_type.label_tag }}
                                       <span style="color:red;">{{ form.electric_price_type.errors }}</span>
                                       {{ form.electric_price_type }}
                                       {{ form.electric_price_type.help_text }}
@@ -322,7 +341,7 @@
                               <legend style="background-color:#867c7c;"><h3 style="color:white; padding-left:15px;">Commodity Billing Information</h3></legend>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                     31. <label for="id_therm_0">Therm:</label> <span style="color:red;">*</span>
+                                     33. <label for="id_therm_0">Therm:</label> <span style="color:red;">*</span>
 
                                      <label for="id_therm_0"><input type="radio" name="therm" value="Yes" required id="id_therm_0" {% if form.instance.id and form.instance.therm == "Yes" %}checked{% endif %}>
                                      Yes</label>
@@ -333,7 +352,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    32. <label for="id_tax_exempt_0">Tax Exempt:</label> <span style="color:red;">*</span>
+                                    34. <label for="id_tax_exempt_0">Tax Exempt:</label> <span style="color:red;">*</span>
                                     <label for="id_tax_exempt_0"><input type="radio" name="tax_exempt" value="Yes" required id="id_tax_exempt_0" {% if form.instance.id and form.instance.tax_exempt == "Yes" %}checked{% endif %}>
                                      Yes</label>
                                     <label for="id_tax_exempt_1"><input type="radio" name="tax_exempt" value="No" required id="id_tax_exempt_1" {% if form.instance.id and form.instance.tax_exempt == "No" or not form.instance.id  %}checked{% endif %}>
@@ -342,7 +361,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    33. <label for="id_monthly_budget_0">Monthly Budget:</label> <span style="color:red;">*</span>
+                                    35. <label for="id_monthly_budget_0">Monthly Budget:</label> <span style="color:red;">*</span>
                                     <label for="id_monthly_budget_0"><input type="radio" name="monthly_budget" value="Yes" required id="id_monthly_budget_0" {% if form.instance.id and form.instance.monthly_budget == "Yes" %}checked{% endif %}>
                                      Yes</label>
                                     <label for="id_monthly_budget_1"><input type="radio" name="monthly_budget" value="No" required id="id_monthly_budget_1" {% if form.instance.id and form.instance.monthly_budget == "No" or not form.instance.id  %}checked{% endif %}>
@@ -351,7 +370,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    34. {{ form.budget_amount.label_tag }}
+                                    36. {{ form.budget_amount.label_tag }}
                                       <span style="color:red;">{{ form.budget_amount.errors }}</span>
                                       {{ form.budget_amount }}
                                       {{ form.budget_amount.help_text }}
@@ -359,7 +378,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    35. {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
+                                    37. {{ form.gas_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_bandwidth_usage.errors }}</span>
                                       {{ form.gas_bandwidth_usage }}
                                       {{ form.gas_bandwidth_usage.help_text }}
@@ -367,7 +386,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    36. {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
+                                    38. {{ form.electric_bandwidth_usage.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_bandwidth_usage.errors }}</span>
                                       {{ form.electric_bandwidth_usage }}
                                       {{ form.electric_bandwidth_usage.help_text }}
@@ -375,7 +394,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    37. {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
+                                    39. {{ form.gas_fixed_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_fixed_rate.errors }}</span>
                                       {{ form.gas_fixed_rate }}
                                       {{ form.gas_fixed_rate.help_text }}
@@ -383,7 +402,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    38. {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
+                                    40. {{ form.electric_fixed_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_fixed_rate.errors }}</span>
                                       {{ form.electric_fixed_rate }}
                                       {{ form.electric_fixed_rate.help_text }}
@@ -391,7 +410,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    39. {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
+                                    41. {{ form.gas_index_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.gas_index_rate.errors }}</span>
                                       {{ form.gas_index_rate }}
                                       {{ form.gas_index_rate.help_text }}
@@ -399,7 +418,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    40. {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
+                                    42. {{ form.electric_index_rate.label_tag }} <span style="color:red;">*</span>
                                       <span style="color:red;">{{ form.electric_index_rate.errors }}</span>
                                       {{ form.electric_index_rate }}
                                       {{ form.electric_index_rate.help_text }}
@@ -408,7 +427,7 @@
 
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    41. {{ form.agreement_length.label_tag }}
+                                    43. {{ form.agreement_length.label_tag }}
                                       <span style="color:red;">{{ form.agreement_length.errors }}</span>
                                       {{ form.agreement_length }}
                                       {{ form.agreement_length.help_text }}
@@ -416,7 +435,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                    42. {{ form.contract_start_date.label_tag }}
+                                    44. {{ form.contract_start_date.label_tag }}
                                       <span style="color:red;">{{ form.contract_start_date.errors }}</span>
                                       {{ form.contract_start_date }}
                                       {{ form.contract_start_date.help_text }}
@@ -424,7 +443,7 @@
                                  </div>
                                  <div class="form-row">
                                   <div class="form-group col-md-6">
-                                      43. <label>Documents (Max limit- 3 docs)</label>
+                                      45. <label>Documents (Max limit- 3 docs)</label>
                                     <div class="table-responsive">
                                         <table class="table docs_table">
                                             {{ docs.management_form }}
@@ -509,6 +528,7 @@
    $("#id_customer_email").addClass( "form-control" );
    $("#id_salesperson_name").addClass( "form-control" );
    $("#id_sbc").addClass( "form-control" );
+   $("#id_billing_contact").addClass( "form-control" );
    $("#id_customer_type").addClass( "form-control" );
    $("#id_passthru").addClass( "form-control" );
    $("#id_passthru").bootstrapDualListbox();

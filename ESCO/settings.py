@@ -201,6 +201,7 @@ LOGGING = {
 # Required choices variables
 BINARY_CHOICES = (('Yes', 'Yes'), ('No', 'No'))
 BILLING = (('POR', 'POR'), ('DUAL', 'DUAL'))
+BILLING_METHOD = (('Mail', 'Mail'), ('Email', 'Email'))
 ACCOUNT_TYPE = (('New Customer', 'New Customer'), ('Renewal', 'Renewal'))
 PRICE_PLAN = (('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index'))
 STATUS_CHOICES = (('Active', 'Active'), ('Inactive', 'Inactive'), ('Delete', 'Delete'))

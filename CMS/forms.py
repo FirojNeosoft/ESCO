@@ -102,6 +102,7 @@ class SurveyForm(ModelForm):
           'account_type': forms.RadioSelect(),
           'door_to_door': forms.RadioSelect(),
           'billing': forms.RadioSelect(),
+          'billing_method': forms.RadioSelect(),
           'commodity_gas': forms.RadioSelect(),
           'electric': forms.RadioSelect(),
           'therm': forms.RadioSelect(),
