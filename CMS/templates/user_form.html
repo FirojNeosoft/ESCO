@@ -89,6 +89,9 @@
    {
    $("#id_password").prop('readonly', 'readonly');
    }
+   {% if form.instance.id and form.instance == request.user %}
+     $("#id_is_active").attr('disabled','disabled');
+   {% endif %}
    $("label[for='id_email']").html("Email Address");
    $("label[for='id_is_staff']").html("Is Staff");
    $("label[for='id_is_superuser']").html("Is Admin");

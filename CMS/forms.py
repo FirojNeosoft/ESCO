@@ -133,6 +133,12 @@ class SurveyForm(ModelForm):
             self._errors['electric_index_rate'] = self.error_class(['This field is required'])
         if not self.cleaned_data['passthru']:
             self._errors['passthru'] = self.error_class(['This field is required'])
+        if self.cleaned_data['utility_pool'] < 0 or self.cleaned_data['utility_pool'] > 100:
+            self._errors['utility_pool'] = self.error_class(['Value should be between 0 to 100.'])
+        if self.cleaned_data['electric_bandwidth_usage'] < 0 or self.cleaned_data['electric_bandwidth_usage'] > 100:
+            self._errors['electric_bandwidth_usage'] = self.error_class(['Value should be between 0 to 100.'])
+        if self.cleaned_data['gas_bandwidth_usage'] < 0 or self.cleaned_data['gas_bandwidth_usage'] > 100:
+            self._errors['gas_bandwidth_usage'] = self.error_class(['Value should be between 0 to 100.'])
 
 
 class DocForm(ModelForm):

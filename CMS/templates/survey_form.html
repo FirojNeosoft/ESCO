@@ -541,6 +541,14 @@
    $("#id_utility_description").addClass( "form-control" );
    $("#id_gas_description").addClass( "form-control" );
    $("#id_utility_pool").addClass( "form-control" );
+   $('input#id_utility_pool').blur(function(){
+    var num = parseFloat($(this).val());
+    var cleanNum = num.toFixed(2);
+    $(this).val(cleanNum);
+    if(num/cleanNum < 1){
+        $('#error').text('Please enter only 2 decimal places, we have truncated extra points');
+        }
+    });
    $("#id_delivery_type").addClass( "form-control" );
    $("#id_gas_price_plan").addClass( "form-control" );
    $("#id_green").addClass( "form-control" );
@@ -552,7 +560,23 @@
    $("#id_billing_description").addClass( "form-control" );
    $("#id_budget_amount").addClass( "form-control" );
    $("#id_electric_bandwidth_usage").addClass( "form-control" );
+      $('input#id_electric_bandwidth_usage').blur(function(){
+    var num = parseFloat($(this).val());
+    var cleanNum = num.toFixed(2);
+    $(this).val(cleanNum);
+    if(num/cleanNum < 1){
+        $('#error').text('Please enter only 2 decimal places, we have truncated extra points');
+        }
+    });
    $("#id_gas_bandwidth_usage").addClass( "form-control" );
+   $('input#id_gas_bandwidth_usage').blur(function(){
+    var num = parseFloat($(this).val());
+    var cleanNum = num.toFixed(2);
+    $(this).val(cleanNum);
+    if(num/cleanNum < 1){
+        $('#error').text('Please enter only 2 decimal places, we have truncated extra points');
+        }
+    });
    $("#id_electric_fixed_rate").addClass( "form-control" );
    $("#id_electric_index_rate").addClass( "form-control" );
    $("#id_gas_fixed_rate").addClass( "form-control" );

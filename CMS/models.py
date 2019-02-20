@@ -104,7 +104,7 @@ class Survey(models.Model):
     gas_rate_class = models.ForeignKey(ApplicationMasterTypes, related_name='contract_gas_rate_class', \
                                    limit_choices_to=Q(type='Gas Rate Class') & Q(status='Active') | Q(status='Inactive'),\
                                     blank=False, null=True, on_delete=models.SET_NULL)
-    utility_pool = models.DecimalField('Utility Pool(%)', max_digits=10, decimal_places=2, default=0)
+    utility_pool = models.DecimalField('Utility Pool(%)', max_digits=5, decimal_places=2, default=0)
     electric_utility = models.ForeignKey(ApplicationMasterTypes, related_name='contract_electric_utility',\
                             limit_choices_to=Q(type='Electric Utility Type') & Q(status='Active') | Q(status='Inactive'),\
                             blank=False, null=False, default=1, on_delete=models.SET_DEFAULT)
@@ -139,8 +139,8 @@ class Survey(models.Model):
     monthly_budget = models.CharField('Monthly Budget', max_length=3, choices=settings.BINARY_CHOICES, blank=False,\
                                     null=False, default='No')
     budget_amount = models.DecimalField('Budget Amount', max_digits=10, decimal_places=2, blank=True, null=True, default=0)
-    electric_bandwidth_usage = models.DecimalField('Bandwidth Usage- Electric(%)', max_digits=10, decimal_places=2, default=0)
-    gas_bandwidth_usage = models.DecimalField('Bandwidth Usage- Gas(%)', max_digits=10, decimal_places=2, default=0)
+    electric_bandwidth_usage = models.DecimalField('Bandwidth Usage- Electric(%)', max_digits=5, decimal_places=2, default=0)
+    gas_bandwidth_usage = models.DecimalField('Bandwidth Usage- Gas(%)', max_digits=5, decimal_places=2, default=0)
     electric_fixed_rate = models.DecimalField('Electric Fixed Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
                                     null=True)
     electric_index_rate = models.DecimalField('Electric Index Rate $/kWh', max_digits=10, decimal_places=6, blank=True,\
