@@ -147,3 +147,18 @@ class DocForm(ModelForm):
         fields = ('survey', 'document')
 
 DocFormSet = inlineformset_factory(Survey, Doc, form=DocForm, extra=1, max_num=3, validate_max=True)
+
+
+class SearchReportForm(forms.Form):
+    commodity = forms.ChoiceField(choices=[('All', 'All'), ('Electric', 'Electric'), ('Gas', 'Gas')])
+    price_type = forms.ChoiceField(choices=[('All', 'All'), ('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index')])
+    term = forms.CharField()
+    utility_type = forms.ChoiceField(choices=[('All', 'All')])
+    account_type = forms.ChoiceField(choices=[('All', 'All'), ('New Customer', 'New Customer'), ('Renewal', 'Renewal')])
+    customer_type = forms.ChoiceField(choices=[('All', 'All')])
+
+    def __init__(self, *args, **kwargs):
+        super(SearchReportForm, self).__init__(*args, **kwargs)
+        self.fields['customer_type'].queryset = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
+        self.fields['utility_type'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(
+            status='Delete')

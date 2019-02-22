@@ -29,4 +29,8 @@ urlpatterns = [
 
       path('download/', survey_export_csv, name='download_surveys'),
       path('upload/', ImportDataView.as_view(), name='upload_surveys'),
+
+      path('report/customer/', CustomerSummaryReportView.as_view(), name='customer_summary_report'),
+      path('report/ldc/', LdcSummaryReportView.as_view(), name='ldc_summary_report'),
+      path('report/customertype/', CustomerTypeSummaryReportView.as_view(), name='customer_type_summary_report'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

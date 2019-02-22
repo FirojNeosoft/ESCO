@@ -2,6 +2,7 @@ import logging, datetime
 
 from django.contrib import messages
 from django.db import transaction
+from django.db.models import Sum, Avg, Count
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -12,9 +13,11 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from CMS.models import *
 from CMS.forms import *
+from CMS.utils import *
 from CMS.resources import *
 from ESCO.decorators import *
 
@@ -372,3 +375,108 @@ class ImportDataView(LoginRequiredMixin, View):
             return redirect('list_surveys')
         except Exception as inst:
             logger.error(inst)
+
+
+class CustomerSummaryReportView(LoginRequiredMixin, View):
+    """
+    Customer summary report
+    """
+    def get(self, request):
+        form = SearchReportForm()
+        customer_types = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
+        utility_types = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(status='Delete')
+        return render(request, 'customer_summary_report.html', {'form': form, 'customer_types': customer_types, 'utility_types':utility_types })
+
+    def post(self, request):
+        try:
+            form = SearchReportForm(request.POST)
+            # import pdb; pdb.set_trace()
+            page = request.GET.get('page', 1)
+            if form.is_valid():
+                contracts = get_contracts(form.cleaned_data['commodity'], form.cleaned_data['price_type'], form.cleaned_data['term'],\
+                         form.cleaned_data['utility_type'], form.cleaned_data['account_type'], form.cleaned_data['customer_type'])
+                if 'submit_btn' in request.POST:
+                    paginator = Paginator(contracts, 10)
+                    try:
+                        result = paginator.page(page)
+                    except PageNotAnInteger:
+                        result = paginator.page(1)
+                    except EmptyPage:
+                        result = paginator.page(paginator.num_pages)
+                    return render(request, 'customer_summary_report.html', {'form': form, 'result': result})
+                else:
+                    return Render.pdf_file('customer_summary_report_tpl.html', { 'result': contracts })
+            else:
+                return render(request, 'customer_summary_report.html', {'form': form, 'messages': form.errors})
+        except Exception as e:
+            logger.error("{}, error occured while searching customer summary report.".format(e))
+            messages.error(request, "Error occured while searching customer summary report.")
+            return redirect('customer_summary_report')
+
+
+class CustomerTypeSummaryReportView(LoginRequiredMixin, View):
+    """
+    Customer type summary report
+    """
+    def get(self, request):
+        form = SearchReportForm()
+        customer_types = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
+        utility_types = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(status='Delete')
+        return render(request, 'customer_type_summary_report.html', {'form': form, 'customer_types': customer_types, 'utility_types':utility_types })
+
+    # def post(self, request):
+    #     try:
+    #         form = SearchForm(request.POST)
+    #         emps = Employee.objects.exclude(status='Delete').order_by('first_name')
+    #
+    #         if form.is_valid():
+    #             result = get_expense_report(form.cleaned_data['resource_name'], form.cleaned_data['from_date'],\
+    #                                              form.cleaned_data['to_date'])
+    #
+    #             return render(request, 'search_expense_report.html', {'form':form, 'emps':emps, 'result': result})
+    #         else:
+    #             return render(request, 'search_expense_report.html', {'form': form, 'emps':emps, 'messages': form.errors})
+    #     except Exception as e:
+    #         logger.error("{}, error occured while searching expense report.".format(e))
+    #         messages.error(request, "Error occured while searching expense report.")
+    #         return redirect('expense_report')
+
+
+class LdcSummaryReportView(LoginRequiredMixin, View):
+    """
+    lds summary report
+    """
+    def get(self, request):
+        form = SearchReportForm()
+        customer_types = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
+        utility_types = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(status='Delete')
+        return render(request, 'ldc_summary_report.html', {'form': form, 'customer_types': customer_types, 'utility_types':utility_types })
+
+    def post(self, request):
+        try:
+            form = SearchReportForm(request.POST)
+            page = request.GET.get('page', 1)
+            if form.is_valid():
+                contracts = get_contracts(form.cleaned_data['commodity'], form.cleaned_data['price_type'],
+                                          form.cleaned_data['term'], \
+                                          form.cleaned_data['utility_type'], form.cleaned_data['account_type'],
+                                          form.cleaned_data['customer_type'])
+                grp_contracts = contracts.values('electric_utility__name', 'electric_price_type').\
+                    annotate(count_customer=Count('customer'), avg_term=Avg('agreement_length'))
+                if 'submit_btn' in request.POST:
+                    paginator = Paginator(grp_contracts, 10)
+                    try:
+                        result = paginator.page(page)
+                    except PageNotAnInteger:
+                        result = paginator.page(1)
+                    except EmptyPage:
+                        result = paginator.page(paginator.num_pages)
+                    return render(request, 'ldc_summary_report.html', {'form': form, 'result': result})
+                else:
+                    return Render.pdf_file('ldc_summary_report_tpl.html', {'result': grp_contracts})
+            else:
+                return render(request, 'ldc_summary_report.html', {'form': form, 'messages': form.errors})
+        except Exception as e:
+            logger.error("{}, error occured while searching customer summary report.".format(e))
+            messages.error(request, "Error occured while searching customer summary report.")
+            return redirect('ldc_summary_report')

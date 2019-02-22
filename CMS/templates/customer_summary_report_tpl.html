@@ -1,0 +1,62 @@
+{% load static %}
+<html>
+  <head>
+    <style>
+       td,th {
+         text-align: center;
+       }
+       .cell-border{
+         border: 1px solid black;
+         padding: 1px 1px 1px 1px;
+        }
+        .heading-space{
+         padding-left: 1px;
+        }
+    </style>
+  </head>
+  <body>
+     <div style="text-align: center;"><h2>Customer Summary Report</h2></div>
+      <table id="report_table" class="cell-border">
+            <thead>
+            <tr>
+                <th class="no-sort">Customer Name</th>
+                <th class="no-sort">Customer Type</th>
+                <th class="no-sort">Annual Usage</th>
+                <th class="no-sort">Commodity</th>
+                <th class="no-sort">Price Type</th>
+                <th class="no-sort">Price</th>
+                <th class="no-sort">Term</th>
+                <th class="no-sort">Utility</th>
+                <th class="no-sort">Account Type</th>
+                <th class="no-sort">Billing Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for r in result %}
+              <tr>
+                  <td>{{ r.customer.name }}</td>
+                  <td>{{ r.customer_type.name }}</td>
+                  <td>0</td>
+                  <td>{% if r.electric == 'Yes' %}electric<br>{% endif %}
+                      {% if r.commodity_gas == 'Yes' %}gas{% endif %}
+                  </td>
+                  <td>{% if r.electric == 'Yes' %}electric- {{ r.electric_price_type }}<br>{% endif %}
+                      {% if r.commodity_gas == 'Yes' %}gas- {{ r.gas_price_plan }}{% endif %}
+                  </td>
+                  <td>{% if r.electric == 'Yes' and r.electric_price_type == 'Fixed' %}electric- {{ r.electric_fixed_rate }}<br>{% endif %}
+                      {% if r.electric == 'Yes' and r.electric_price_type == 'Index' %}electric- {{ r.electric_index_rate }}<br>{% endif %}
+                      {% if r.commodity_gas == 'Yes' and r.gas_price_plan == 'Fixed' %}gas- {{ r.gas_fixed_rate }}<br>{% endif %}
+                      {% if r.commodity_gas == 'Yes' and r.gas_price_plan == 'Index' %}gas- {{ r.gas_index_rate }}{% endif %}
+                  </td>
+                  <td>{{ r.agreement_length }}</td>
+                  <td>{% if r.electric == 'Yes' %}electric- {{ r.electric_utility }}<br>{% endif %}
+                      {% if r.commodity_gas == 'Yes' %}gas- {{ r.gas_utility }}{% endif %}
+                  </td>
+                  <td>{{ r.account_type }}</td>
+                  <td>{{ r.billing }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+  </body>
+</html>

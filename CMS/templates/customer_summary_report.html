@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+<div class="page-title">
+    <div class="title_left">
+        <h3><b>Customer Summary Report</b></h3>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <form method="post" enctype="multipart/form-data">
+                                   {% csrf_token %}
+
+                <div class="x_content">
+                    <br />
+                    <section class="content">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="">
+                            <div class="box-header">
+                              {% if messages %}
+                                <ul class="messages alert alert-danger">
+                                  {% for message in messages %}
+                                    {{ message }}
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+
+                                               <!--{% for field in form.visible_fields %}-->
+                                 <!--<div class="form-row">-->
+                                  <!--<div class="form-group col-md-6">-->
+                                    <!--{{ field.label_tag }}-->
+                                      <!--<span style="color:red;">{{ field.errors }}</span>-->
+                                      <!--{{ field }}-->
+                                      <!--{{ field.help_text }}-->
+                                  <!--</div>-->
+                                <!--{% endfor %}-->
+
+                                     <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  {{ form.commodity.label_tag }}
+                                  <span style="color:red;">{{ form.commodity.errors }}</span>
+                                  {{ form.commodity }}
+                                  {{ form.commodity.help_text }}
+                              </div>
+                             </div>
+                                     <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  {{ form.term.label_tag }} (In months)
+                                  <span style="color:red;">{{ form.term.errors }}</span>
+                                  <input name="term" value="All" min="0" id="id_term" required="" list="list_terms" class="form-control">
+                                    <datalist id="list_terms">
+                                      <option value="All">
+                                      <option value="6">
+                                      <option value="12">
+                                      <option value="18">
+                                      <option value="24">
+                                      <option value="36">
+                                    </datalist>
+                                  {{ form.term.help_text }}
+                              </div>
+                             </div>
+                                <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  {{ form.price_type.label_tag }}
+                                  <span style="color:red;">{{ form.price_type.errors }}</span>
+                                  {{ form.price_type }}
+                                  {{ form.price_type.help_text }}
+                              </div>
+                                    <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  {{ form.utility_type.label_tag }}
+                                  <span style="color:red;">{{ form.utility_type.errors }}</span>
+                                      <select name="utility_type" id="id_utility_type">
+                                       <option value="All">All</option>
+                                       {% for utility in  utility_types%}
+                                       <option value="{{utility}}">{{utility}}</option>
+                                       {% endfor %}
+                                  </select>
+                                  {{ form.utility_type.help_text }}
+                              </div>
+                             </div>
+                                    <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  {{ form.account_type.label_tag }}
+                                  <span style="color:red;">{{ form.account_type.errors }}</span>
+                                  {{ form.account_type }}
+                                  {{ form.account_type.help_text }}
+                              </div>
+                             </div>
+                                    <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  {{ form.customer_type.label_tag }}
+                                  <span style="color:red;">{{ form.customer_type.errors }}</span>
+                                  <select name="customer_type" id="id_customer_type">
+                                      <option value="All">All</option>
+                                      {% for cust in  customer_types%}
+                                        <option value="{{cust}}">{{cust}}</option>
+                                      {% endfor %}
+                                  </select>
+                                  {{ form.customer_type.help_text }}
+                              </div>
+                              </div>
+
+                                  <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
+                                      <button class="btn btn-primary" type="reset">Reset</button>
+                                      <input name="submit_btn" type="submit" class="btn btn-success"/>
+                                    </div>
+                                  </div>
+                               </div>
+                            </div>
+                            <!-- /.box-body -->
+                          </div>
+                          <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                    </section>
+                </div>
+<br>
+
+        {% if result %}
+         <div class="x_panel">
+            <table id="report_table" class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="no-sort">Customer Name</th>
+                    <th class="no-sort">Customer Type</th>
+                    <th class="no-sort">Annual Usage</th>
+                    <th class="no-sort">Commodity</th>
+                    <th class="no-sort">Price Type</th>
+                    <th class="no-sort">Price</th>
+                    <th class="no-sort">Term</th>
+                    <th class="no-sort">Utility</th>
+                    <th class="no-sort">Account Type</th>
+                    <th class="no-sort">Billing Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for r in result %}
+                  <tr>
+                      <td>{{ r.customer.name }}</td>
+                      <td>{{ r.customer_type.name }}</td>
+                      <td>0</td>
+                      <td>{% if r.electric == 'Yes' %}electric<br>{% endif %}
+                          {% if r.commodity_gas == 'Yes' %}gas{% endif %}
+                      </td>
+                      <td>{% if r.electric == 'Yes' %}electric- {{ r.electric_price_type }}<br>{% endif %}
+                          {% if r.commodity_gas == 'Yes' %}gas- {{ r.gas_price_plan }}{% endif %}
+                      </td>
+                      <td>{% if r.electric == 'Yes' and r.electric_price_type == 'Fixed' %}electric- {{ r.electric_fixed_rate }}<br>{% endif %}
+                          {% if r.electric == 'Yes' and r.electric_price_type == 'Index' %}electric- {{ r.electric_index_rate }}<br>{% endif %}
+                          {% if r.commodity_gas == 'Yes' and r.gas_price_plan == 'Fixed' %}gas- {{ r.gas_fixed_rate }}<br>{% endif %}
+                          {% if r.commodity_gas == 'Yes' and r.gas_price_plan == 'Index' %}gas- {{ r.gas_index_rate }}{% endif %}
+                      </td>
+                      <td>{{ r.agreement_length }}</td>
+                      <td>{% if r.electric == 'Yes' %}electric- {{ r.electric_utility }}<br>{% endif %}
+                          {% if r.commodity_gas == 'Yes' %}gas- {{ r.gas_utility }}{% endif %}
+                      </td>
+                      <td>{{ r.account_type }}</td>
+                      <td>{{ r.billing }}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
+              <button class="btn btn-primary" type="submit" name="export_btn">Export Report</button>
+            </div>
+                 </div>
+     {% endif %}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block static %}
+<script>
+  $(document).ready(function(){
+  $('#report_table').DataTable();
+  $("#id_commodity").addClass( "form-control" );
+  $("#id_price_type").addClass( "form-control" );
+  $("#id_term").addClass( "form-control" );
+  $("#id_utility_type").addClass( "form-control" );
+  $("#id_customer_type").addClass( "form-control" );
+  $("#id_account_type").addClass( "form-control" );
+    });
+</script>
+<style>
+ label
+{
+    padding-left: 20px;
+}
+#id_submit_btn{
+    margin-left: 10px;
+}
+</style>
+{% endblock %}

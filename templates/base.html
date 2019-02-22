@@ -69,7 +69,7 @@
                       <li><a href="{% url 'list_users' %}"><i class="fa fa-user"></i> System Users </a></li>
                    </ul>
                 <ul class="nav side-menu">
-                   <li><a href="{% url 'list_master_types' %}"><i class="fa fa-cog fa-image"></i> Master Types </a></li>
+                   <li><a href="{% url 'list_master_types' %}"><i class="fa fa-cog fa-report"></i> Master Types </a></li>
                 </ul>
                 {% endif %}
                 {% if request.user.is_staff or not request.user.is_superuser and not request.user.is_staff%}
@@ -82,7 +82,12 @@
                  {% endif %}
                   {% if request.user.is_superuser %}
                 <ul class="nav side-menu">
-                   <li><a href=""><i class="fa fa-cog fa-report"></i> Reports </a><i class="far fa-file-image"></i>
+                  <li><a><i class="fa fa-search"></i><span class="fa fa-chevron-down"></span>Search Report</a>
+                            <ul class="nav child_menu">
+                                <li><a href="{% url 'customer_summary_report' %}">Customer summary</a></li>
+                                <li><a href="{% url 'ldc_summary_report' %}">LDC Summary</a></li>
+                                <li><a href="{% url 'customer_type_summary_report' %}">Customer Type Summary</a></li>
+                            </ul>
                 </ul>
                   {% endif %}
               </div>
