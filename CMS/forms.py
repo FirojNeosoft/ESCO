@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
 
 from CMS.models import *
+from CMS.utils import *
 
 
 class UserForm(ModelForm):
@@ -153,12 +154,6 @@ class SearchReportForm(forms.Form):
     commodity = forms.ChoiceField(choices=[('All', 'All'), ('Electric', 'Electric'), ('Gas', 'Gas')])
     price_type = forms.ChoiceField(choices=[('All', 'All'), ('Fixed', 'Fixed'), ('Variable', 'Variable'), ('Index', 'Index')])
     term = forms.CharField()
-    utility_type = forms.ChoiceField(choices=[('All', 'All')])
+    utility_type = forms.ChoiceField(choices = get_utility_types())
     account_type = forms.ChoiceField(choices=[('All', 'All'), ('New Customer', 'New Customer'), ('Renewal', 'Renewal')])
-    customer_type = forms.ChoiceField(choices=[('All', 'All')])
-
-    def __init__(self, *args, **kwargs):
-        super(SearchReportForm, self).__init__(*args, **kwargs)
-        self.fields['customer_type'].queryset = ApplicationMasterTypes.objects.filter(type='Customer Type').exclude(status='Delete')
-        self.fields['utility_type'].queryset = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(
-            status='Delete')
+    customer_type = forms.ChoiceField(choices = get_customer_types())

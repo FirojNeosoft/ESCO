@@ -5,13 +5,13 @@
 {% block body %}
 <div class="page-title">
     <div class="title_left">
-        <h3>LDC Summary Report</h3>
+        <h3><b>LDC Summary Report</b></h3>
     </div>
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <form method="post" enctype="multipart/form-data">
-                                   {% csrf_token %}
+                {% csrf_token %}
             <div class="x_panel">
                 <div class="x_content">
                     <br />
@@ -54,15 +54,14 @@
                                   {{ form.term.label_tag }} (In months)
                                   <span style="color:red;">{{ form.term.errors }}</span>
                                   <input name="term" value="All" min="0" id="id_term" required="" list="list_terms" class="form-control">
-
-<datalist id="list_terms">
-  <option value="All">
-  <option value="6">
-  <option value="12">
-  <option value="18">
-  <option value="24">
-  <option value="36">
-</datalist>
+                                    <datalist id="list_terms">
+                                      <option value="All">
+                                      <option value="6">
+                                      <option value="12">
+                                      <option value="18">
+                                      <option value="24">
+                                      <option value="36">
+                                    </datalist>
                                   {{ form.term.help_text }}
                               </div>
                              </div>
@@ -73,16 +72,11 @@
                                   {{ form.price_type }}
                                   {{ form.price_type.help_text }}
                               </div>
-                                         <div class="form-row">
+                             <div class="form-row">
                               <div class="form-group col-md-4">
                                   {{ form.utility_type.label_tag }}
-                                  <span style="color:red;">{{ form.utility_type.errors }}</span>
-                                      <select name="utility_type" id="id_utility_type">
-                                       <option value="All">All</option>
-                                       {% for utility in  utility_types%}
-                                       <option value="{{utility}}">{{utility}}</option>
-                                       {% endfor %}
-                                  </select>
+                                <span style="color:red;">{{ form.price_type.errors }}</span>
+                                  {{ form.utility_type }}
                                   {{ form.utility_type.help_text }}
                               </div>
                              </div>
@@ -94,16 +88,11 @@
                                   {{ form.account_type.help_text }}
                               </div>
                              </div>
-                                         <div class="form-row">
+                             <div class="form-row">
                               <div class="form-group col-md-4">
                                   {{ form.customer_type.label_tag }}
                                   <span style="color:red;">{{ form.customer_type.errors }}</span>
-                                  <select name="customer_type" id="id_customer_type">
-                                      <option value="All">All</option>
-                                      {% for cust in  customer_types%}
-                                        <option value="{{cust}}">{{cust}}</option>
-                                      {% endfor %}
-                                  </select>
+                                  {{ form.customer_type }}
                                   {{ form.customer_type.help_text }}
                               </div>
                               </div>
@@ -126,12 +115,12 @@
                     </section>
                 </div>
             </div>
-            <div class="x_panel">
-            {% if result %}
+            <div class="search_form">
             <table id="report_table" class="table table-bordered">
                 <thead>
                 <tr>
                     <th class="no-sort">Group by Utility</th>
+                    <th class="no-sort">Commodity</th>
                     <th class="no-sort">Group by Price Type</th>
                     <th class="no-sort">Count(Customers)</th>
                     <th class="no-sort">Sum(Annual)</th>
@@ -142,25 +131,29 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if result %}
                 {% for r in result %}
                   <tr>
-                      <td>{{ r.electric_utility__name }}</td>
-                      <td>{{ r.electric_price_type }}</td>
+                      <td>{% if r.electric == 'Yes' %}{{ r.electric_utility__name }}{% else %}{{ r.gas_utility__name }}{% endif %}</td>
+                      <td>{% if r.electric == 'Yes' %}Electric{% else %}Gas{% endif %}</td>
+                      <td>{% if r.electric == 'Yes' %}{{ r.electric_price_type }}{% else %}{{ r.gas_price_plan }}{% endif %}</td>
                       <td>{{ r.count_customer }}</td>
                       <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
+                      <td>{{ r.min_fix }}</td>
+                      <td>{{ r.max_fix }}</td>
+                      <td>{{ r.sum_fix }}</td>
                       <td>{{ r.avg_term }}</td>
                   </tr>
                 {% endfor %}
+                {% endif %}
                 </tbody>
             </table>
+            {% if result %}
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
               <button class="btn btn-primary" type="submit" name="export_btn">Export Report</button>
             </div>
-     {% endif %}
-                   </div>
+           {% endif %}
+             </div>
             </form>
         </div>
     </div>
@@ -186,6 +179,17 @@
 }
 #id_submit_btn{
     margin-left: 10px;
+}
+.search_form{
+width: 100%;
+padding: 10px 17px;
+display: inline-block;
+background: #fff;
+-webkit-column-break-inside: avoid;
+-moz-column-break-inside: avoid;
+column-break-inside: avoid;
+opacity: 1;
+transition: all .2s ease;
 }
 </style>
 {% endblock %}

@@ -1,0 +1,46 @@
+{% load static %}
+<html>
+  <head>
+    <style>
+       td,th {
+         text-align: center;
+       }
+       .cell-border{
+         border: 1px solid black;
+         padding: 1px 1px 1px 1px;
+        }
+        .heading-space{
+         padding-left: 1px;
+        }
+    </style>
+  </head>
+  <body>
+     <div style="text-align: center;"><h2>Customer Type Summary Report</h2></div>
+      <table id="report_table" class="cell-border">
+               <thead>
+                <tr>
+                    <th class="no-sort">Group by Utility</th>
+                    <th class="no-sort">Commodity</th>
+                    <th class="no-sort">Group by Price Type</th>
+                    <th class="no-sort">Billing</th>
+                    <th class="no-sort">Count(Billing)</th>
+                    <th class="no-sort">Avg(Term)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if result %}
+                {% for r in result %}
+                  <tr>
+                      <td>{% if r.electric == 'Yes' %}{{ r.electric_utility__name }}{% else %}{{ r.gas_utility__name }}{% endif %}</td>
+                      <td>{% if r.electric == 'Yes' %}Electric{% else %}Gas{% endif %}</td>
+                      <td>{% if r.electric == 'Yes' %}{{ r.electric_price_type }}{% else %}{{ r.gas_price_plan }}{% endif %}</td>
+                      <td>{{ r.billing }}</td>
+                      <td>{{ r.count_billing }}</td>
+                      <td>{{ r.avg_term }}</td>
+                  </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+  </body>
+</html>

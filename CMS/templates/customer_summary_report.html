@@ -11,8 +11,8 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <form method="post" enctype="multipart/form-data">
-                                   {% csrf_token %}
-
+                {% csrf_token %}
+               <div class="x_panel">
                 <div class="x_content">
                     <br />
                     <section class="content">
@@ -72,20 +72,15 @@
                                   {{ form.price_type }}
                                   {{ form.price_type.help_text }}
                               </div>
-                                    <div class="form-row">
+                              <div class="form-row">
                               <div class="form-group col-md-4">
                                   {{ form.utility_type.label_tag }}
-                                  <span style="color:red;">{{ form.utility_type.errors }}</span>
-                                      <select name="utility_type" id="id_utility_type">
-                                       <option value="All">All</option>
-                                       {% for utility in  utility_types%}
-                                       <option value="{{utility}}">{{utility}}</option>
-                                       {% endfor %}
-                                  </select>
+                                <span style="color:red;">{{ form.price_type.errors }}</span>
+                                  {{ form.utility_type }}
                                   {{ form.utility_type.help_text }}
                               </div>
                              </div>
-                                    <div class="form-row">
+                                         <div class="form-row">
                               <div class="form-group col-md-4">
                                   {{ form.account_type.label_tag }}
                                   <span style="color:red;">{{ form.account_type.errors }}</span>
@@ -93,16 +88,11 @@
                                   {{ form.account_type.help_text }}
                               </div>
                              </div>
-                                    <div class="form-row">
+                             <div class="form-row">
                               <div class="form-group col-md-4">
                                   {{ form.customer_type.label_tag }}
                                   <span style="color:red;">{{ form.customer_type.errors }}</span>
-                                  <select name="customer_type" id="id_customer_type">
-                                      <option value="All">All</option>
-                                      {% for cust in  customer_types%}
-                                        <option value="{{cust}}">{{cust}}</option>
-                                      {% endfor %}
-                                  </select>
+                                  {{ form.customer_type }}
                                   {{ form.customer_type.help_text }}
                               </div>
                               </div>
@@ -125,9 +115,7 @@
                     </section>
                 </div>
 <br>
-
-        {% if result %}
-         <div class="x_panel">
+         <div class="search_form">
             <table id="report_table" class="table table-bordered">
                 <thead>
                 <tr>
@@ -144,6 +132,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                  {% if result %}
                 {% for r in result %}
                   <tr>
                       <td>{{ r.customer.name }}</td>
@@ -168,30 +157,63 @@
                       <td>{{ r.billing }}</td>
                   </tr>
                 {% endfor %}
+                {% endif %}
                 </tbody>
             </table>
+                                   {% if is_paginated %}
+                                  <!--<ul class="pagination" style="float:right;">-->
+                                    <!--{% if page_obj.has_previous %}-->
+                                      <!--<li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>-->
+                                    <!--{% else %}-->
+                                      <!--<li class="disabled"><span>&laquo;</span></li>-->
+                                    <!--{% endif %}-->
+                                    <!--{% for i in paginator.page_range %}-->
+                                      <!--{% if page_obj.number == i %}-->
+                                        <!--<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+                                      <!--{% endif %}-->
+                                    <!--{% endfor %}-->
+                                    <!--{% if page_obj.has_next %}-->
+                                      <!--<li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>-->
+                                    <!--{% else %}-->
+                                      <!--<li class="disabled"><span>&raquo;</span></li>-->
+                                    <!--{% endif %}-->
+                                  <!--</ul>-->
+                                  <div style="float:right;">
+                                    <input type="text" id="page_id" placeholder='Page No' size="4"><button id="go_btn">GO</button>
+                                  </div><br>
+                                    <b>Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} entries {{ page_obj }}</b>
+                               {% endif %}
+             {% if result %}
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
               <button class="btn btn-primary" type="submit" name="export_btn">Export Report</button>
             </div>
+             {% endif %}
                  </div>
-     {% endif %}
+               </div>
             </form>
         </div>
     </div>
-
+</div>
 {% endblock %}
 
 {% block static %}
 <script>
   $(document).ready(function(){
-  $('#report_table').DataTable();
+  $('#report_table').DataTable({
+    "paging": false
+   });
   $("#id_commodity").addClass( "form-control" );
   $("#id_price_type").addClass( "form-control" );
   $("#id_term").addClass( "form-control" );
   $("#id_utility_type").addClass( "form-control" );
   $("#id_customer_type").addClass( "form-control" );
   $("#id_account_type").addClass( "form-control" );
+
     });
+  $("#go_btn").on('click', function(){
+    var page_id = $('#page_id').val();
+    window.location.href = '/cms/report/customer/?page='+page_id;
+  });
 </script>
 <style>
  label
@@ -200,6 +222,17 @@
 }
 #id_submit_btn{
     margin-left: 10px;
+}
+.search_form{
+width: 100%;
+padding: 10px 17px;
+display: inline-block;
+background: #fff;
+-webkit-column-break-inside: avoid;
+-moz-column-break-inside: avoid;
+column-break-inside: avoid;
+opacity: 1;
+transition: all .2s ease;
 }
 </style>
 {% endblock %}

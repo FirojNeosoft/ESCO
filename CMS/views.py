@@ -1,8 +1,9 @@
-import logging, datetime
+import pandas as pd
+import logging, datetime, os
 
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import Sum, Avg, Count
+from django.db.models import Sum, Avg, Count, Min, Max
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -390,7 +391,6 @@ class CustomerSummaryReportView(LoginRequiredMixin, View):
     def post(self, request):
         try:
             form = SearchReportForm(request.POST)
-            # import pdb; pdb.set_trace()
             page = request.GET.get('page', 1)
             if form.is_valid():
                 contracts = get_contracts(form.cleaned_data['commodity'], form.cleaned_data['price_type'], form.cleaned_data['term'],\
@@ -405,7 +405,18 @@ class CustomerSummaryReportView(LoginRequiredMixin, View):
                         result = paginator.page(paginator.num_pages)
                     return render(request, 'customer_summary_report.html', {'form': form, 'result': result})
                 else:
-                    return Render.pdf_file('customer_summary_report_tpl.html', { 'result': contracts })
+                    new_contracts = contracts.values('customer__name', 'customer_type__name', 'electric',
+                                                     'commodity_gas', 'electric_price_type', 'gas_price_plan',
+                                                     'electric_fixed_rate', 'electric_index_rate', 'gas_fixed_rate',
+                                                     'gas_index_rate', 'agreement_length', 'electric_utility__name',
+                                                     'gas_utility__name', 'account_type', 'billing')
+                    df = pd.DataFrame(list(new_contracts))
+                    path = 'docs/customer_report.xlsx'
+                    df.to_excel(path)
+                    response = HttpResponse(open(path, "rb"), content_type='application/xlsx')
+                    response['Content-Disposition'] = 'attachment; filename="docs/customer_report.xlsx"'
+                    return response
+                    # return Render.pdf_file('customer_summary_report_tpl.html', { 'result': contracts })
             else:
                 return render(request, 'customer_summary_report.html', {'form': form, 'messages': form.errors})
         except Exception as e:
@@ -424,27 +435,53 @@ class CustomerTypeSummaryReportView(LoginRequiredMixin, View):
         utility_types = ApplicationMasterTypes.objects.filter(type='Electric Utility Type').exclude(status='Delete')
         return render(request, 'customer_type_summary_report.html', {'form': form, 'customer_types': customer_types, 'utility_types':utility_types })
 
-    # def post(self, request):
-    #     try:
-    #         form = SearchForm(request.POST)
-    #         emps = Employee.objects.exclude(status='Delete').order_by('first_name')
-    #
-    #         if form.is_valid():
-    #             result = get_expense_report(form.cleaned_data['resource_name'], form.cleaned_data['from_date'],\
-    #                                              form.cleaned_data['to_date'])
-    #
-    #             return render(request, 'search_expense_report.html', {'form':form, 'emps':emps, 'result': result})
-    #         else:
-    #             return render(request, 'search_expense_report.html', {'form': form, 'emps':emps, 'messages': form.errors})
-    #     except Exception as e:
-    #         logger.error("{}, error occured while searching expense report.".format(e))
-    #         messages.error(request, "Error occured while searching expense report.")
-    #         return redirect('expense_report')
+    def post(self, request):
+        try:
+            form = SearchReportForm(request.POST)
+            page = request.GET.get('page', 1)
+            if form.is_valid():
+                contracts = get_contracts(form.cleaned_data['commodity'], form.cleaned_data['price_type'],
+                                          form.cleaned_data['term'], \
+                                          form.cleaned_data['utility_type'], form.cleaned_data['account_type'],
+                                          form.cleaned_data['customer_type'])
+                grp_contracts = []
+                if form.cleaned_data['commodity'] == 'Electric' or form.cleaned_data['commodity'] == 'All':
+                    grp_contracts.extend(contracts.values('account_type', 'electric_utility__name', 'electric', 'electric_price_type', 'billing').\
+                        annotate(avg_term=Avg('agreement_length'), count_billing=Count('billing')
+                                 ))
+
+                if form.cleaned_data['commodity'] == 'Gas' or form.cleaned_data['commodity'] == 'All':
+                    grp_contracts.extend(contracts.values('account_type', 'gas_utility__name', 'commodity_gas', 'gas_price_plan', 'billing').\
+                        annotate(avg_term=Avg('agreement_length'), count_billing=Count('billing')
+                                 ))
+                if 'submit_btn' in request.POST:
+                    paginator = Paginator(grp_contracts, 10)
+                    try:
+                        result = paginator.page(page)
+                    except PageNotAnInteger:
+                        result = paginator.page(1)
+                    except EmptyPage:
+                        result = paginator.page(paginator.num_pages)
+                    return render(request, 'customer_type_summary_report.html', {'form': form, 'result': result})
+                else:
+                    df = pd.DataFrame(list(grp_contracts))
+                    path = 'docs/customer_type_summary_report.xlsx'
+                    df.to_excel(path)
+                    response = HttpResponse(open(path, "rb"), content_type='application/xlsx')
+                    response['Content-Disposition'] = 'attachment; filename="docs/customer_type_summary_report.xlsx"'
+                    return response
+                    # return Render.pdf_file('customer_type_summary_report_tpl.html', {'result': grp_contracts })
+            else:
+                return render(request, 'customer_type_summary_report.html', {'form': form, 'messages': form.errors})
+        except Exception as e:
+            logger.error("{}, error occured while searching customer type summary report.".format(e))
+            messages.error(request, "Error occured while searching customer type summary report.")
+            return redirect('customer_type_summary_report')
 
 
 class LdcSummaryReportView(LoginRequiredMixin, View):
     """
-    lds summary report
+    ldc summary report
     """
     def get(self, request):
         form = SearchReportForm()
@@ -461,8 +498,22 @@ class LdcSummaryReportView(LoginRequiredMixin, View):
                                           form.cleaned_data['term'], \
                                           form.cleaned_data['utility_type'], form.cleaned_data['account_type'],
                                           form.cleaned_data['customer_type'])
-                grp_contracts = contracts.values('electric_utility__name', 'electric_price_type').\
-                    annotate(count_customer=Count('customer'), avg_term=Avg('agreement_length'))
+                grp_contracts = []
+                if form.cleaned_data['commodity'] == 'Electric' or form.cleaned_data['commodity'] == 'All':
+                    grp_contracts.extend(contracts.values('electric', 'electric_utility__name', 'electric_price_type').\
+                        annotate(count_customer=Count('customer'), avg_term=Avg('agreement_length'),\
+                                 sum_fix=Sum('electric_fixed_rate'), sum_index=Sum('electric_index_rate'), \
+                                 min_fix=Min('electric_fixed_rate'), min_index=Min('electric_index_rate'), \
+                                 max_fix=Max('electric_fixed_rate'), max_index=Max('electric_index_rate'), \
+                                 ))
+
+                if form.cleaned_data['commodity'] == 'Gas' or form.cleaned_data['commodity'] == 'All':
+                    grp_contracts.extend(contracts.values('commodity_gas', 'gas_utility__name', 'gas_price_plan').\
+                        annotate(count_customer=Count('customer'), avg_term=Avg('agreement_length'),\
+                                 sum_fix=Sum('gas_fixed_rate'), sum_index=Sum('gas_index_rate'), \
+                                 min_fix=Min('gas_fixed_rate'), min_index=Min('gas_index_rate'), \
+                                 max_fix=Max('gas_fixed_rate'), max_index=Max('gas_index_rate'), \
+                                 ))
                 if 'submit_btn' in request.POST:
                     paginator = Paginator(grp_contracts, 10)
                     try:
@@ -473,7 +524,13 @@ class LdcSummaryReportView(LoginRequiredMixin, View):
                         result = paginator.page(paginator.num_pages)
                     return render(request, 'ldc_summary_report.html', {'form': form, 'result': result})
                 else:
-                    return Render.pdf_file('ldc_summary_report_tpl.html', {'result': grp_contracts})
+                    df = pd.DataFrame(list(grp_contracts))
+                    path = 'docs/ldc_report.xlsx'
+                    df.to_excel(path)
+                    response = HttpResponse(open(path, "rb"), content_type='application/xlsx')
+                    response['Content-Disposition'] = 'attachment; filename="docs/ldc_report.xlsx"'
+                    return response
+                    #return Render.pdf_file('ldc_summary_report_tpl.html', {'result': grp_contracts})
             else:
                 return render(request, 'ldc_summary_report.html', {'form': form, 'messages': form.errors})
         except Exception as e:
