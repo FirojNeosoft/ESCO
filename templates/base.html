@@ -66,6 +66,9 @@
                 <h3>General</h3>
                   {% if request.user.is_superuser %}
                    <ul class="nav side-menu">
+                      <li><a href="{% url 'dashboard' %}"><i class="fa fa-home"></i> Dashboard </a></li>
+                   </ul>
+                   <ul class="nav side-menu">
                       <li><a href="{% url 'list_users' %}"><i class="fa fa-user"></i> System Users </a></li>
                    </ul>
                 <ul class="nav side-menu">
@@ -135,7 +138,7 @@
 
         <!-- footer content -->
         <footer>
-          <div class="pull-right">
+          <div>
             Developed By <a href="#">Triveni</a>
           </div>
           <div class="clearfix"></div>
@@ -165,6 +168,8 @@
     <script src="{% static 'js/jquery.inputmask.bundle.min.js' %}"></script>
 
     <script src="{% static 'js/jquery.bootstrap-duallistbox.js' %}"></script>
+    <!--high chart-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 	<!-- Custom Theme Scripts -->
     <script src="{% static 'js/custom.min.js' %}"></script>
     <script src="{% static 'js/chat.js' %}"></script>

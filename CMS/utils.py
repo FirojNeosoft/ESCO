@@ -1,6 +1,7 @@
+import datetime
 import xhtml2pdf.pisa as pisa
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 
 from CMS.models import *
@@ -68,3 +69,36 @@ def get_customer_types():
         customer_types.append((cust_type.name, cust_type.name))
     return customer_types
 
+def get_customers_count(customer_type):
+    cust_type = ApplicationMasterTypes.objects.get(type='Customer Type', name=customer_type)
+    customers_count = []
+    customers_count.append(
+        Survey.objects.filter(contract_start_date__year = datetime.date.today().year, customer_type = cust_type).count())
+    customers_count.append(
+        Survey.objects.filter(contract_start_date__year=datetime.date.today().year-1, customer_type=cust_type).count())
+    customers_count.append(
+        Survey.objects.filter(contract_start_date__year=datetime.date.today().year-2, customer_type=cust_type).count())
+    return customers_count
+
+
+def get_account_types_data(request):
+    year = request.GET.get('year', datetime.date.today().year)
+    yr_total_contracts = Survey.objects.filter(contract_start_date__year=int(year)).count()
+    new_customers = Survey.objects.filter(contract_start_date__year=int(year), account_type='New Customer').count()
+    renew_customers = Survey.objects.filter(contract_start_date__year=int(year), account_type='Renewal').count()
+    if yr_total_contracts > 0:
+        new_y = (new_customers / yr_total_contracts) * 100
+        renew_y = (renew_customers / yr_total_contracts) * 100
+    else:
+        new_y=0
+        renew_y=0
+    account_types_data = {"result": [{
+        'name': 'New Customer',
+        'y': new_y,
+        'sliced': 'true',
+        'selected': 'true'
+    }, {
+        'name': 'Renewal',
+        'y': renew_y
+    }]}
+    return JsonResponse(account_types_data)

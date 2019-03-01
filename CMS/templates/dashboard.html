@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+<div class="page-title">
+         <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <h1>{{ current_year }}</h1>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ current_yr_contracts_count }}</div>
+                                    <div>Contracts</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'list_surveys' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-green" style="background-color:#5cb85c">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="color:white;">
+                                    <h1>{{ current_year|add:"-1" }}</h1>
+                                </div>
+                                <div class="col-xs-9 text-right" style="color:white">
+                                    <div class="huge">{{ last_yr_contracts_count }}</div>
+                                    <div>Contracts</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'list_surveys' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-yellow" style="background-color:#f0ad4e">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="color:white;">
+                                    <h1>{{ current_year|add:"-2" }}</h1>
+                                </div>
+                                <div class="col-xs-9 text-right" style="color:white">
+                                    <div class="huge">{{ before_last_yr_contracts_count }}</div>
+                                    <div>Contracts</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'list_surveys' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+         </div>
+
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="row">
+                       <div class="col-md-8">
+                           <h4> Top Utilities </h4>
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th>Commodity Name</th>
+                                    <th>Utilities</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Electric</td>
+                                    <td>
+                                        <ol>
+                                        {% for utility in top_electric_utilities %}
+                                            <li>{{ utility.electric_utility__name }}</li>
+                                        {% endfor %}
+                                        </ol>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Gas</td>
+                                    <td>
+                                        <ol>
+                                        {% for utility in top_gas_utilities %}
+                                            <li>{{ utility.gas_utility__name }}</li>
+                                        {% endfor %}
+                                        </ol>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                           </div>
+                          <div class="col-md-4">
+                              <h4> Top Salespersons </h4>
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th>Salesperson Name</th>
+                                        <th>Number Of Contracts</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in top_salespersons %}
+                                      <tr>
+                                        <td>{{ item.salesperson_name }}</td>
+                                        <td>{{ item.count_contracts }}</td>
+                                      </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                  </table>
+                           </div>
+                       </div>
+                </div>
+            <!-- /.row -->
+            </div>
+        </div>
+        <div class="row">
+             <div id="container1" class="col-lg-5"></div>
+             <div class="col-lg-7">
+                      <div class="row">
+                          <div class="col-md-3" style="float:right;">
+                                <div class="form-group col-75">
+                                  <select name="year" id="id_year" class="form-control">
+                                      <option value="{{ current_year }}" selected>{{ current_year }}</option>
+                                      <option value="{{ current_year|add:'-1' }}">{{ current_year|add:"-1" }}</option>
+                                      <option value="{{ current_year|add:'-2' }}">{{ current_year|add:"-2" }}</option>
+                                  </select>
+                                </div>
+                          </div>
+                      </div>
+                  <div id="container2"></div>
+             </div>
+        </div>
+        <div class="row">
+             <div id="container3" class="col-lg-12"></div>
+        </div>
+   </div>
+</div>
+{% endblock %}
+
+{% block static %}
+<script>
+  $(document).ready(function(){
+
+Highcharts.chart('container1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Commodity Shares'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Commodity',
+        colorByPoint: true,
+        data: [{
+            name: 'Electric',
+            y: {{ count_electric_contracts }},
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Gas',
+            y: {{ count_gas_contracts }}
+        }]
+    }]
+});
+
+         account_types_data = [{
+            name: 'New Customer',
+            y: {{ new_contracts }},
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Renewal',
+            y: {{ renew_contracts }}
+        }]
+
+account_types_chart(account_types_data);
+
+Highcharts.chart('container3', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Customer Types For Last 3 Years'
+    },
+    xAxis: {
+        categories: [
+            {{ current_year }},
+            {{ current_year|add:"-1" }},
+            {{ current_year|add:"-2" }}
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Number Of Contracts'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} contracts</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Residential',
+        data: {{ residential_customers }}
+
+    }, {
+        name: 'Commercial',
+        data: {{ commercial_customers }}
+
+    }, {
+        name: 'Industrial',
+        data: {{ industrial_customers }}
+
+    }]
+});
+}); // end of document.ready
+
+function account_types_chart(chart_data)
+{
+Highcharts.chart('container2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Account Types'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Account Type',
+        colorByPoint: true,
+        data: chart_data
+    }]
+});
+} // end of account_types_chart function
+
+$( "#id_year" ).change(function() {
+      $.ajax({
+        url: "{% url 'account_type_summary' %}",
+        type: 'GET',
+        data: { 'year': $('#id_year').val() },
+        async: true,
+        dataType: "json",
+        success: function (data) {
+            account_types_chart(data.result);
+        }
+    });
+
+});
+</script>
+<style>
+ label
+{
+    padding-left: 20px;
+}
+#id_submit_btn{
+    margin-left: 10px;
+}
+.form-div{
+padding-top:15px;
+padding-bottom:15px;
+}
+</style>
+{% endblock %}

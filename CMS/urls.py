@@ -4,8 +4,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from CMS.views import *
+from CMS.utils import *
 
 urlpatterns = [
+      path('dashboard/', DashboardView.as_view(), name='dashboard'),
+
       path('users/', ListUsersView.as_view(), name='list_users'),
       path('user/add/', CreateUserView.as_view(), name='add_user'),
       path('user/<int:pk>/edit/', UpdateUserView.as_view(), name='update_user'),
@@ -33,4 +36,6 @@ urlpatterns = [
       path('report/customer/', CustomerSummaryReportView.as_view(), name='customer_summary_report'),
       path('report/ldc/', LdcSummaryReportView.as_view(), name='ldc_summary_report'),
       path('report/customertype/', CustomerTypeSummaryReportView.as_view(), name='customer_type_summary_report'),
+
+      path('accounttypes/', get_account_types_data, name='account_type_summary'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -26,6 +26,58 @@ from tablib import Dataset
 
 logger = logging.getLogger('cms_log')
 
+
+class DashboardView(LoginRequiredMixin, View):
+    """
+    Dashboard
+    """
+    def get(self, request):
+        """
+          dashboard
+        """
+        top_electric_utilities = Survey.objects.values('electric_utility__name').annotate(
+                                                           count_contracts=Count('id')).order_by('-count_contracts')[:3]
+        top_gas_utilities = Survey.objects.values('gas_utility__name').annotate(
+                                                           count_contracts=Count('id')).order_by('-count_contracts')[:3]
+        top_salespersons = Survey.objects.values('salesperson_name').annotate(
+                                                           count_contracts=Count('id')).order_by('-count_contracts')[:5]
+        total_contracts = Survey.objects.all().count()
+        current_yr_total_contracts = Survey.objects.filter(contract_start_date__year = datetime.date.today().year).count()
+        electric_contracts = Survey.objects.filter(electric='Yes').count()
+        gas_contracts = Survey.objects.filter(commodity_gas='Yes').count()
+        current_yr_new_customers = Survey.objects.filter(contract_start_date__year = datetime.date.today().year,\
+                                              account_type='New Customer').count()
+        current_yr_renew_customers = Survey.objects.filter(contract_start_date__year = datetime.date.today().year,\
+                                              account_type='Renewal').count()
+        if total_contracts > 0:
+            count_electric_contracts = (electric_contracts/total_contracts) * 100
+            count_gas_contracts = (gas_contracts / total_contracts) * 100
+        else:
+            count_electric_contracts = 0
+            count_gas_contracts = 0
+
+        if current_yr_total_contracts:
+            new_contracts = (current_yr_new_customers / current_yr_total_contracts) * 100
+            renew_contracts = (current_yr_renew_customers / current_yr_total_contracts) * 100
+        else:
+            new_contracts = 0
+            renew_contracts = 0
+
+        data = { "current_year": datetime.date.today().year,
+                 "current_yr_contracts_count" : current_yr_total_contracts, \
+                 "last_yr_contracts_count": Survey.objects.filter(
+                                                     contract_start_date__year=datetime.date.today().year-1).count(), \
+                 "before_last_yr_contracts_count": Survey.objects.filter(
+                                                    contract_start_date__year=datetime.date.today().year-2).count(),
+                 "top_electric_utilities": top_electric_utilities, "top_gas_utilities": top_gas_utilities, \
+                 "top_salespersons" : top_salespersons, "count_electric_contracts": count_electric_contracts, \
+                 "count_gas_contracts": count_gas_contracts, "new_contracts": new_contracts, \
+                 "renew_contracts": renew_contracts, "residential_customers": get_customers_count('Residential'), \
+                 "commercial_customers": get_customers_count('Commercial'), "industrial_customers": get_customers_count('Industrial')
+                 }
+        return render(request, 'dashboard.html', data)
+
+
 @method_decorator(check_validity_of_license, name='dispatch')
 class ListUsersView(LoginRequiredMixin, ListView):
     """
